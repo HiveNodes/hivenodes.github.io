@@ -1,15 +1,15 @@
 {
- "ok": true,
+ "ok": false,
  "date": "7 October 2026",
  "repo_sha": "55423babd5f98efdc1343869dc315beac77458d9",
- "checked": 6,
+ "checked": 3,
  "figures": [
-  "autopilot_core_files_per_commit",
-  "defects",
   "formation_fleet_max",
   "missions",
-  "nav_error_without_gps",
   "real_flights"
  ],
- "failures": []
+ "failures": [
+  "verdict tally: page does not carry '555 passed, 141 failed, 72 skipped'",
+  "campaigns: page does not carry '114 campaigns'"
+ ]
 }

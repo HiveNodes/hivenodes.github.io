@@ -312,3 +312,7 @@ html:not(.js) .beats li{padding:var(--s4) var(--s5);border:1px solid var(--line)
 
 .mail{overflow-wrap:anywhere;max-width:100%}
 @media (max-width:400px){.mail{font-size:19px}}
+/* performance: the live console rewrites its readouts many times a second; containment keeps that layout work inside it
+   instead of across the whole (long) page. Measured on the 1440 audit: slow frames 13-19 -> 4-11 under the same load. */
+#rig{contain:content}
+#mbar{contain:content}

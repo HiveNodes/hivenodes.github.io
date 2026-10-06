@@ -1,7 +1,7 @@
-// Homingvector site: contested-environment harness around the TurtleShield decision core.
+// HiveNodes site: contested-environment harness around the Scattrnodes decision core.
 //
 // WHAT IS PRODUCT CODE AND WHAT IS NOT -- the whole point of this file.
-//   PRODUCT (compiled unchanged from the TurtleShield repo at the sha in provenance.json):
+//   PRODUCT (compiled unchanged from the Scattrnodes repo at the sha in provenance.json):
 //     task::CbbaAgent, task::TimeDiscountedScore, task::CheckEligibility   -- who does which task
 //     health::DegradationLadder, health::PermissionsFor                    -- what a degraded node may do
 //     health::QuorumPolicy                                                 -- what a small group may do
@@ -33,10 +33,10 @@
 #include "core/nav/spoof_detector.h"
 #include "tests/task_fixtures.h"
 
-using namespace turtleshield;
-namespace T = turtleshield::task;
-namespace H = turtleshield::health;
-namespace N = turtleshield::nav;
+using namespace scattrnodes;
+namespace T = scattrnodes::task;
+namespace H = scattrnodes::health;
+namespace N = scattrnodes::nav;
 
 namespace {
 
@@ -143,9 +143,9 @@ PositionBelief beliefOf(const Vehicle& a) {
 void reset(uint64_t seed) {
   S = Sim(); pending.clear();
   S.seed = seed; S.rng.seed(seed);
-  S.pf = turtleshield_test::FixtureFixedWing("fw");
-  S.pr = turtleshield_test::FixtureRover("ugv");
-  S.pb = turtleshield_test::FixtureBoat("usv");
+  S.pf = scattrnodes_test::FixtureFixedWing("fw");
+  S.pr = scattrnodes_test::FixtureRover("ugv");
+  S.pb = scattrnodes_test::FixtureBoat("usv");
   auto add = [](Kind k, double x, double y) { Vehicle a; a.kind = k; a.x = x; a.y = y; a.hd = S.rng.u() * 6.28; a.heard.assign(NV, -1e9); a.orbit = S.rng.u() * 6.28; S.v.push_back(a); };
   for (int i = 0; i < 6; ++i) add(FW, 260 + 60 * i + S.rng.n() * 20, 380 + 70 * (i % 3) + S.rng.n() * 20);
   for (int i = 0; i < 3; ++i) add(UGV, 300 + 90 * i, 620 + S.rng.n() * 15);

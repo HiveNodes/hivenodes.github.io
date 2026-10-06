@@ -2,7 +2,7 @@
 // scripted attack must produce the product's reactions (not just "no crash").
 import { readFileSync } from 'node:fs';
 import { loadCore } from '../js/sim-core.js';
-const bytes = readFileSync(new URL('../sim/tscore.wasm', import.meta.url));
+const bytes = readFileSync(new URL('../sim/sncore.wasm', import.meta.url));
 const N = +(process.argv[2] || 1200);
 async function run(seed, attack, verbose) {
   const c = await loadCore(bytes); c.init(seed); let log = '';

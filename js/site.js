@@ -1,4 +1,4 @@
-// Homingvector site shell. Every effect here is driven by state -- film time, scroll position,
+// HiveNodes site shell. Every effect here is driven by state -- film time, scroll position,
 // pointer, or a simulation event. Nothing loops for its own sake.
 document.documentElement.classList.add('js');
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,7 +23,7 @@ const store = {                                   // storage can throw (private 
 })();
 
 /* ---------------- email, assembled here so it is not sitting in the HTML for scrapers ---------------- */
-(() => { const a = $('#mail'), u = 'nidhip.sharma.123', d = 'gmail.com'; a.textContent = `${u}@${d}`; a.href = `mailto:${u}@${d}?subject=Homingvector`; })();
+(() => { const a = $('#mail'), u = 'nidhip.sharma.123', d = 'gmail.com'; a.textContent = `${u}@${d}`; a.href = `mailto:${u}@${d}?subject=HiveNodes`; })();
 
 /* ---------------- visibility ---------------- */
 const watchers = [];
@@ -61,8 +61,8 @@ export function cue(kind) {
 }
 
 /* ---------------- film + strip telemetry (film time is the state) ---------------- */
-const CUE = [0, 6, 11, 17, 23, 28.5, 34, 40, 46];
-const CH = ['Seventy aircraft, one AI', 'Inside the wedge', 'Air, ground and water', 'GPS jammed', 'Radio degraded, relays climb', 'Aircraft lost, wedge re-forms', 'Split and search', 'Sensor lock', 'A person decides'];
+const CUE = [0, 6, 11, 17, 23, 28.5, 34, 40];
+const CH = ['Seventy aircraft, one AI', 'Inside the wedge', 'Air, ground and water', 'GPS jammed', 'Radio degraded, relays climb', 'Aircraft lost, wedge re-forms', 'Split and search', 'Sensor lock'];
 (() => {
   const v = $('#filmv'), steps = $$('.film-steps li'), btn = $('#film-toggle');
   const ft = $('#ft'), fc = $('#fc'), fs = $('#fs');
@@ -87,7 +87,7 @@ const CH = ['Seventy aircraft, one AI', 'Inside the wedge', 'Air, ground and wat
 })();
 
 /* ---------------- story: loops the film segment for the current step ---------------- */
-const SEG = [[0, 11], [6, 11], [11, 17], [17, 23], [23, 28.5], [28.5, 34], [34, 40], [40, 46], [46, 54]];
+const SEG = [[0, 11], [6, 11], [11, 17], [17, 23], [23, 28.5], [28.5, 34], [34, 40], [40, 46], [0, 6]];
 const sv = $('#storyv'); let svVisible = false, current = -1;
 const svPlay = () => { if (!RM) sv.play().catch(() => {}); };
 function playSeg(n) {

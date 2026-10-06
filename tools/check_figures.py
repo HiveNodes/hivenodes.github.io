@@ -43,7 +43,7 @@ import os
 import re
 import sys
 
-DEFAULT_REPO = "/home/nidhip/turtleshield"
+DEFAULT_REPO = "/home/nidhip/scattrnodes"
 HERE = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_PAGE = os.path.join(HERE, "..", "index.html")
 
@@ -59,8 +59,12 @@ def _scored_rows(repo):
     not every results.csv is scored. A campaign whose file cannot be read IS an
     error, because that is indistinguishable from a wrong count.
     """
-    pattern = os.path.join(repo, "sims", "*", "*", "results.csv")
+    # Run output lives under runs/ since the 2026-10-01 restructure (it was the top-level sims/ link).
+    pattern = os.path.join(repo, "runs", "*", "*", "results.csv")
     paths = sorted(glob.glob(pattern))
+    if not paths:
+        pattern = os.path.join(repo, "sims", "*", "*", "results.csv")
+        paths = sorted(glob.glob(pattern))
     if not paths:
         raise Missing(f"no results.csv under {pattern} -- refusing to report 0")
     rows, campaigns = [], 0
@@ -175,7 +179,9 @@ def derive_real_flights(repo):
 # Pinning the hashes converts an exemption into a real rule. It is exact,
 # reproducible, and gets MORE trustworthy with age rather than less -- where an
 # exemption gets less, because nobody re-examines it.
-ADAPTER_COMMITS = ("06ac890", "68547a1")
+# Re-pinned 2026-10-06 after the 2026-09-30 rename rewrote history: 06ac890 -> 8ce860f, 68547a1 -> 8b0b0bb
+# (map: ~/backups/rename-2026-09-30/commit-map_scattrnodes_main.txt). Same trees, renamed identifiers.
+ADAPTER_COMMITS = ("8ce860f", "8b0b0bb")
 
 
 def derive_core_files_adapter_commits(repo):
@@ -287,7 +293,7 @@ FORBIDDEN_VALUES = {
 # read: the mission count appeared BOTH in the bridge line above the Status
 # section AND in the Status table itself. Update one and the other is still
 # wrong, and a gate that only checks the keyed cell reports the page as clean.
-# turtleshield-36 named the same defect in their own checker as "prose outside
+# scattrnodes-36 named the same defect in their own checker as "prose outside
 # the ledger no longer scanned: the second stale copy survives", and a probe
 # confirmed my gate had it too -- keyed cell at 768, prose saying 742, zero
 # failures reported.

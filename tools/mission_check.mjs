@@ -3,7 +3,7 @@
 // page describes. A demo that stalls in a hold is a broken demo, however good it looks for 20 s.
 import { readFileSync } from 'node:fs';
 import { loadCore } from '../js/sim-core.js';
-const bytes = readFileSync(new URL('../sim/tscore.wasm', import.meta.url));
+const bytes = readFileSync(new URL('../sim/sncore.wasm', import.meta.url));
 const PH = ['LAUNCH', 'ASSEMBLY', 'FORMATION', 'TRANSIT', 'SPLIT', 'SEARCH', 'RENDEZVOUS', 'REFORM', 'RETURN', 'COMPLETE'];
 const verbose = process.argv.includes('--log');
 async function run(sc, seed, maxT = 5000, shared = null) {

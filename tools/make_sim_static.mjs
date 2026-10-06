@@ -2,7 +2,7 @@
 // search phase, after a loss), drawn as SVG -- not an illustration of one.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadCore } from '../js/sim-core.js';
-const m = (await loadCore(readFileSync(new URL('../sim/tscore.wasm', import.meta.url)))).mission;
+const m = (await loadCore(readFileSync(new URL('../sim/sncore.wasm', import.meta.url)))).mission;
 m.init(6, 11);
 while (m.meta()[0] < 1300 && m.meta()[1] < 9) { m.step(50); const id = m.meta()[17]; if (id) m.confirm(id); }
 m.drainLog();

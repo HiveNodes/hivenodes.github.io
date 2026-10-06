@@ -1,4 +1,4 @@
-// Loads sim/tscore.wasm and wraps its C ABI. Shared by the Web Worker and the Node gate, so the
+// Loads sim/sncore.wasm and wraps its C ABI. Shared by the Web Worker and the Node gate, so the
 // determinism the gate proves is the determinism the page runs.
 // WASI is shimmed to the minimum: the core only writes log lines to stderr, which we discard.
 export async function loadCore(bytes) {

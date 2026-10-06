@@ -3,7 +3,7 @@
 // DIFFERENT action after restoring gives a different hash (proves the restore did not freeze state).
 import { readFileSync } from 'node:fs';
 import { loadCore } from '../js/sim-core.js';
-const m = (await loadCore(readFileSync(new URL('../sim/tscore.wasm', import.meta.url)))).mission;
+const m = (await loadCore(readFileSync(new URL('../sim/sncore.wasm', import.meta.url)))).mission;
 const run = (n, acts = {}) => { for (let i = 0; i < n; i++) { if (acts[i]) acts[i](); m.step(1); const id = m.meta()[17]; if (id) m.confirm(id); } };
 m.init(7, 11); run(10000);                                    // to T+1000 s (search under way)
 const cp = m.checkpoint(), t0 = m.meta()[0];

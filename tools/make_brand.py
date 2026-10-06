@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate every Homingvector brand SVG from ONE set of construction constants.
+"""Generate every HiveNodes brand SVG from ONE set of construction constants.
 
 Hand-authored geometry, not traced: the mark is three polygons on a 48-unit grid, the wordmark is
 stroked centre-lines on a 24-unit cap height. Nothing is round -- no arcs, round joins or caps
@@ -41,12 +41,16 @@ def g_E(w=13):  return w, f'M{w} {TOP}H{A}V{BOT}H{w}M{A} {MID}H{w-2}'
 def g_C(w=16):  return w, f'M{w} {TOP}H{A+C}L{A} {TOP+C}V{BOT-C}L{A+C} {BOT}H{w}'
 def g_T(w=15):  return w, f'M0 {TOP}H{w}M{w/2} {TOP}V{BOT}'
 def g_R(w=15):  return w, f'M{A} {BOT}V{TOP}H{w-A-C}L{w-A} {TOP+C}V{MID-C+A}L{w-A-C} {MID}H{A}M{w/2} {MID}L{w-A} {BOT}'
-GLYPH = dict(H=g_H, O=g_O, M=g_M, I=g_I, N=g_N, G=g_G, E=g_E, C=g_C, T=g_T, R=g_R)
+def g_D(w=16):  return w, f'M{A} {TOP}H{w-A-C}L{w-A} {TOP+C}V{BOT-C}L{w-A-C} {BOT}H{A}Z'
+CS = 4             # S uses a 4-unit chamfer: two 5-unit chamfers would meet and leave no vertical between bowl and bar
+def g_S(w=15):  return w, (f'M{w} {TOP}H{A+CS}L{A} {TOP+CS}V{MID-CS}L{A+CS} {MID}H{w-A-CS}'
+                           f'L{w-A} {MID+CS}V{BOT-CS}L{w-A-CS} {BOT}H0')
+GLYPH = dict(H=g_H, O=g_O, M=g_M, I=g_I, N=g_N, G=g_G, E=g_E, C=g_C, T=g_T, R=g_R, D=g_D, S=g_S)
 
 def wordmark_paths(color=FG, x0=0.0):
     """Returns (svg fragment, advance width). The V is the mark's own broken V, not a font V."""
     x, parts = x0, []
-    for ch in 'HOMINGVECTOR':
+    for ch in 'HIVENODES':
         if ch == 'V':
             w = 18
             # heavy left stroke (filled, like the mark) and a hairline that stops short of the vertex
@@ -56,7 +60,7 @@ def wordmark_paths(color=FG, x0=0.0):
             w, d = GLYPH[ch]()
             # M's centre vertex is ~27 deg: a mitre there spikes 7 units through the baseline, so M alone
             # takes a BEVEL join -- a flat cut, still no curve anywhere.
-            join = 'bevel' if ch == 'M' else 'miter'
+            join = 'bevel' if ch in 'MN' else 'miter'
             parts.append(f'<path transform="translate({x:g} 0)" fill="none" stroke="{color}" stroke-width="{S}" '
                          f'stroke-linejoin="{join}" stroke-miterlimit="10" stroke-linecap="butt" d="{d}"/>')
         x += w + GAP
@@ -64,7 +68,7 @@ def wordmark_paths(color=FG, x0=0.0):
 
 def wordmark_svg(color=FG):
     frag, w = wordmark_paths(color)
-    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 {w+2:g} 26" width="{(w+2)*2:g}" height="52" role="img" aria-label="HOMINGVECTOR">{frag}</svg>'
+    return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 {w+2:g} 26" width="{(w+2)*2:g}" height="52" role="img" aria-label="HIVENODES">{frag}</svg>'
 
 def lockup_svg(color=FG, lock=RED):
     # mark sits on the cap height: 48-grid scaled so its 5..45 span equals 24 * 1.5
@@ -74,7 +78,7 @@ def lockup_svg(color=FG, lock=RED):
     m = (f'<g transform="translate(0 {-5*k-6:g}) scale({k:g})"><path fill="{color}" d="{HEAVY}"/>'
          f'<path fill="{color}" d="{hair_path(2.5)}"/><path fill="{lock}" d="{bracket(2.5)}"/></g>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -7 {total+2:g} 38" width="{(total+2)*2:g}" height="76" '
-            f'role="img" aria-label="HOMINGVECTOR">{m}<g transform="translate(0 0)">{frag}</g></svg>')
+            f'role="img" aria-label="HIVENODES">{m}<g transform="translate(0 0)">{frag}</g></svg>')
 
 files = {
     'logo-mark.svg':        mark_svg(),

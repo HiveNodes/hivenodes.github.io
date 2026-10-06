@@ -49,7 +49,7 @@ onmessage = async ({ data: q }) => {
   try {
     switch (q.type) {
       case 'init': {
-        if (!m) { const bytes = await (await fetch(new URL('../sim/tscore.wasm', import.meta.url))).arrayBuffer(); m = (await loadCore(bytes)).mission; }
+        if (!m) { const bytes = await (await fetch(new URL('../sim/sncore.wasm', import.meta.url))).arrayBuffer(); m = (await loadCore(bytes)).mission; }
         scenario = q.scenario; seed = q.seed; actions = []; cps = new Map(); k = 0;
         m.init(scenario, seed); m.drainLog(); acc = 0; geomSent = false;
         if (q.at > 0) {                        // ?at= : fast-forward; decisions on the way are confirmed by the demo operator

@@ -1,6 +1,6 @@
 // "Fly the mission yourself": renders the cross-domain swarm posted by mission-worker.js and owns every
 // control around it -- scenarios, transport, timeline (exact rewind), zoom/pan, failure injection, drawn
-// jamming zones, the movable rendezvous, keyboard shortcuts, hover read-outs -- and the Turtle Eyes console.
+// jamming zones, the movable rendezvous, keyboard shortcuts, hover read-outs -- and the Scattrnodes Eyes console.
 // It never decides anything about the swarm; every state it draws comes from the worker.
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -15,7 +15,7 @@ const KIND = ['Fixed-wing aircraft', 'Ground robot', 'Surface boat'];
 const SPEED = { 0.5: 15, 1: 30, 2: 60, 4: 120 };
 const SKIP = { 1: [1, 2, 4, 6, 7], 2: [4, 5, 6, 7] };
 const ABOUT = {
-  1: 'One aircraft, alone. With no peers TurtleShield marks it ISOLATED, so it may fly only its pre-loaded plan. GPS drops out on the way.',
+  1: 'One aircraft, alone. With no peers Scattrnodes marks it ISOLATED, so it may fly only its pre-loaded plan. GPS drops out on the way.',
   2: 'Eight aircraft: a wedge, a column through the corridor, a V, and one aircraft leaving formation for a sensor check, then rejoining.',
   3: 'Seventy aircraft, six ground robots and four boats fly the whole mission with nothing going wrong. Watch the split, the lanes over land and water, and the relay rings.',
   4: 'GPS is denied over the transit corridor. Vehicles fall back to inertial and ranging off their peers, and the formation widens as uncertainty grows.',
@@ -223,7 +223,7 @@ export function startLive({ cue, RM }) {
   function select(i) {
     selected = i;
     $$('#roster button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.u === i)));
-    if (i >= 0 && cur) hint.textContent = `${nameOf(i, cur.snap)} selected. Its telemetry is in the Turtle Eyes console; failures marked "selected" act on it.`;
+    if (i >= 0 && cur) hint.textContent = `${nameOf(i, cur.snap)} selected. Its telemetry is in the Scattrnodes Eyes console; failures marked "selected" act on it.`;
     consoleUpdate(true);
   }
 

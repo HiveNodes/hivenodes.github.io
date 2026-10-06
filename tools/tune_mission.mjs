@@ -4,7 +4,7 @@
 //   node tools/tune_mission.mjs [generations] [--baseline]
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadCore } from '../js/sim-core.js';
-const bytes = readFileSync(new URL('../sim/tscore.wasm', import.meta.url));
+const bytes = readFileSync(new URL('../sim/sncore.wasm', import.meta.url));
 const NAMES = ['along-track gain', 'aim lead (m)', 'leader lag slowdown', 'ring cut-across (m)', 'ring gain', 'ring rate'];
 const LO = [0.005, 120, 0.002, 150, 0.005, 0.3], HI = [0.12, 900, 0.04, 900, 0.1, 0.9];
 const BASE = [0.03, 350, 0.01, 350, 0.03, 0.55];

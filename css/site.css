@@ -1,4 +1,4 @@
-/* Homingvector. A defense palette -- gunmetal, flat dark earth, signal red.
+/* HiveNodes. A defense palette -- gunmetal, flat dark earth, signal red.
  *
  * GROUND: gunmetal (#0F1114), the finish of the hardware itself, with bone text (#E9E5DC).
  * SIGNAL RED (#FF4632 for text, #C42A1C behind white text): action, the lock in the mark, the active
@@ -184,7 +184,7 @@ h3{font-weight:500;font-size:20px;line-height:1.2;letter-spacing:-.01em}
 kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:0 4px;margin:0 1px;color:var(--fg);background:var(--bg3)}
 .roster-k{grid-column:1/-1;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--tan);margin-top:4px}
 .tool-hint{min-height:44px;padding:var(--s3) var(--s5);border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--g1)}
-/* Turtle Eyes console */
+/* Scattrnodes Eyes console */
 .gcs{display:flex;flex-direction:column;min-width:0;background:var(--bg0);font-family:var(--mono);font-size:12px}
 .gcs-top{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2) var(--s4);padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.12em;color:var(--g1)}
 .gcs-top b{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.12em;color:var(--fg)}

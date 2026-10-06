@@ -1,8 +1,8 @@
-// Homingvector site: CROSS-DOMAIN SWARM MISSION engine around the TurtleShield decision core.
+// HiveNodes site: CROSS-DOMAIN SWARM MISSION engine around the Scattrnodes decision core.
 // 70 fixed-wing aircraft, 6 ground robots and 4 surface boats in the full scenarios.
 //
 // WHAT IS PRODUCT CODE AND WHAT IS NOT -- stated first because the page makes claims from it.
-//   PRODUCT (compiled unchanged from the TurtleShield repo at the sha in provenance.json):
+//   PRODUCT (compiled unchanged from the Scattrnodes repo at the sha in provenance.json):
 //     task::CbbaAgent + TimeDiscountedScore + CheckEligibility
 //                       who takes which search lane or station, ACROSS DOMAINS (air may cover a ground
 //                       or water station; a robot never gets a water station), and re-tasking after a loss
@@ -15,7 +15,7 @@
 //     the fixed-wing / rover / boat capability profiles (tests/task_fixtures.h)
 //   DEMONSTRATION CODE (this file, NOT product): mission phases, wedge / V / line / column geometry,
 //     leader-follower steering, ground and water movement, the radio and GPS models, scenario scripts.
-//     TurtleShield ships no wedge/V/line/column formation logic; the page must never say it does.
+//     Scattrnodes ships no wedge/V/line/column formation logic; the page must never say it does.
 //
 // Deterministic: one xorshift64* stream, fixed step, no clock, no <random> distributions, and no
 // function-static state (it survived m_init once and broke every mission after the first).
@@ -41,10 +41,10 @@
 #include "core/task/task.h"
 #include "tests/task_fixtures.h"
 
-using namespace turtleshield;
-namespace T = turtleshield::task;
-namespace H = turtleshield::health;
-namespace N = turtleshield::nav;
+using namespace scattrnodes;
+namespace T = scattrnodes::task;
+namespace H = scattrnodes::health;
+namespace N = scattrnodes::nav;
 
 namespace {
 
@@ -164,7 +164,7 @@ enum { E_GPS_ON = 1, E_GPS_OFF, E_RADIO_ON, E_RADIO_OFF, E_CUT, E_LOSE, E_LEAVE,
 void reset(int scenario, uint64_t seed) {
   M.~Mission(); new (&M) Mission();
   M.rng.seed(seed); M.scenario = scenario;
-  M.plane = turtleshield_test::FixtureFixedWing("fw"); M.rover = turtleshield_test::FixtureRover("ugv"); M.boat = turtleshield_test::FixtureBoat("usv");
+  M.plane = scattrnodes_test::FixtureFixedWing("fw"); M.rover = scattrnodes_test::FixtureRover("ugv"); M.boat = scattrnodes_test::FixtureBoat("usv");
   GeoPoint o; o.lat_deg = 20.0; o.lon_deg = 10.0; M.frame = LocalFrame(o);
   M.nfw = 70; M.nugv = 6; M.nusv = 4;
   switch (scenario) {

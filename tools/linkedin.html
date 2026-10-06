@@ -18,8 +18,8 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .mono{font-family:"IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
 .word{font-weight:700;letter-spacing:.17em;text-transform:uppercase}
 /* The row must be explicit. Without it the single implicit row auto-sizes to the image's natural
-   height (900px wide / 16:9 = 506px), overflowing height:396px and pushing the TurtleShield /
-   Turtle Eyes line below LinkedIn's 1584x396 crop. .post never had this bug because it declares
+   height (900px wide / 16:9 = 506px), overflowing height:396px and pushing the Scattrnodes /
+   Scattrnodes Eyes line below LinkedIn's 1584x396 crop. .post never had this bug because it declares
    its rows. Verified by measuring luma below y=396: YMAX 157 before, background-only after. */
 .banner{width:1584px;height:396px;display:grid;grid-template-columns:900px 4px 680px;grid-template-rows:396px}
 .banner>div,.post>div{min-height:0;overflow:hidden}
@@ -40,14 +40,14 @@ const root = document.getElementById('root');
 if (kind === 'banner') {
   root.innerHTML = `<div class="banner"><div><img src="${bg}" alt=""></div><div class="rule"></div>
     <div class="txt">
-      <div class="brand">${mark(58)}<span class="word" style="font-size:27px">Homingvector</span></div>
+      <div class="brand">${mark(58)}<span class="word" style="font-size:27px">HiveNodes</span></div>
       <div style="font-size:35px;font-weight:500;line-height:1.08;letter-spacing:-.03em">When GPS goes dark,<br>the mission doesn’t.</div>
-      <div class="mono" style="font-size:14px;color:#a6a49d">TurtleShield AI <span style="color:#ff4a2b">/</span> Turtle Eyes GCS</div>
+      <div class="mono" style="font-size:14px;color:#a6a49d">Scattrnodes AI <span style="color:#ff4a2b">/</span> Scattrnodes Eyes GCS</div>
     </div></div>`;
 } else if (kind === 'post') {
   root.innerHTML = `<div class="post"><div><img src="${bg}" alt=""></div><div class="rule"></div>
     <div class="txt">
-      <div class="brand">${mark(64)}<div><div class="word" style="font-size:26px">Homingvector</div><div class="mono" style="font-size:13px;color:#a6a49d;margin-top:8px">TurtleShield AI <span style="color:#ff4a2b">/</span> Turtle Eyes GCS</div></div></div>
+      <div class="brand">${mark(64)}<div><div class="word" style="font-size:26px">HiveNodes</div><div class="mono" style="font-size:13px;color:#a6a49d;margin-top:8px">Scattrnodes AI <span style="color:#ff4a2b">/</span> Scattrnodes Eyes GCS</div></div></div>
       <div style="font-size:30px;font-weight:500;line-height:1.1;letter-spacing:-.025em;text-align:right">When GPS goes dark,<br>the mission doesn’t.</div>
     </div></div>`;
 } else {

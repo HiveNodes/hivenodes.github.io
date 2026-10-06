@@ -9,25 +9,25 @@
      WebAssembly; it does not permit eval() of JavaScript. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Homingvector</title>
-<meta name="description" content="Homingvector builds TurtleShield, an AI that keeps drones, ground robots and boats working as one team when GPS is jammed, and Turtle Eyes, its ground station.">
-<meta property="og:title" content="Homingvector">
-<meta property="og:description" content="Holds the mission when GPS and comms are gone. TurtleShield AI and the Turtle Eyes console.">
+<title>HiveNodes</title>
+<meta name="description" content="HiveNodes builds Scattrnodes, an AI that keeps drones, ground robots and boats working as one team when GPS is jammed, and Scattrnodes Eyes, its ground station.">
+<meta property="og:title" content="HiveNodes">
+<meta property="og:description" content="Holds the mission when GPS and comms are gone. Scattrnodes AI and the Scattrnodes Eyes console.">
 <!-- Open Graph / Twitter URLs must be ABSOLUTE: scrapers fetch these without the page's base. -->
-<meta property="og:image" content="https://nidhipsharma123-lab.github.io/homingvector/brand/og-image-1200x630.png">
+<meta property="og:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Homingvector mark, a broken V with a lock corner, above the line: Holds the mission when GPS and comms are gone.">
-<meta property="og:url" content="https://nidhipsharma123-lab.github.io/homingvector/">
+<meta property="og:image:alt" content="The HiveNodes mark, a broken V with a lock corner, above the line: Holds the mission when GPS and comms are gone.">
+<meta property="og:url" content="https://hivenodes.github.io/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Homingvector">
+<meta property="og:site_name" content="HiveNodes">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Homingvector">
-<meta name="twitter:description" content="Holds the mission when GPS and comms are gone. TurtleShield AI and the Turtle Eyes console.">
-<meta name="twitter:image" content="https://nidhipsharma123-lab.github.io/homingvector/brand/og-image-1200x630.png">
-<meta name="twitter:image:alt" content="The Homingvector mark, a broken V with a lock corner, above the line: Holds the mission when GPS and comms are gone.">
-<link rel="canonical" href="https://nidhipsharma123-lab.github.io/homingvector/">
+<meta name="twitter:title" content="HiveNodes">
+<meta name="twitter:description" content="Holds the mission when GPS and comms are gone. Scattrnodes AI and the Scattrnodes Eyes console.">
+<meta name="twitter:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
+<meta name="twitter:image:alt" content="The HiveNodes mark, a broken V with a lock corner, above the line: Holds the mission when GPS and comms are gone.">
+<link rel="canonical" href="https://hivenodes.github.io/">
 <meta name="theme-color" content="#0f1114">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
@@ -43,11 +43,11 @@
 
 <div class="boot" id="boot" hidden>
   <svg class="boot-mark" viewBox="0 0 48 48" aria-hidden="true"><path class="b-heavy" d="M3 5H13L25 34H19Z"/><path class="b-hair" d="M43 5H45.5L32 29H29.5Z"/><path class="b-lock" d="M27 39.5H36.5V32H39V42H27Z"/></svg>
-  <p class="boot-line" id="boot-line">TURTLESHIELD CORE · LINK · NAV · QUORUM</p>
+  <p class="boot-line" id="boot-line">SCATTRNODES CORE · LINK · NAV · QUORUM</p>
 </div>
 
 <header class="top" id="top">
-  <a class="brand" href="#top" aria-label="Homingvector, back to top"><img src="brand/logo-primary.svg" alt="" width="220" height="30"></a>
+  <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="220" height="30"></a>
   <nav aria-label="Main">
     <ul>
       <li><a href="#system">System</a></li>
@@ -73,16 +73,16 @@
   </figure>
   <div class="strip">
     <span aria-hidden="true">FILM <b id="ft">T+00:00</b></span><span aria-hidden="true">CHAPTER <b id="fc">01</b></span><span id="fs" aria-hidden="true">SEVENTY AIRCRAFT, ONE AI</span>
-    <input type="range" class="film-scrub" id="film-scrub" min="0" max="54" step="0.1" value="0" aria-label="Film position, 0 to 54 seconds">
+    <input type="range" class="film-scrub" id="film-scrub" min="0" max="46" step="0.1" value="0" aria-label="Film position, 0 to 46 seconds">
     <span class="inshot" id="inshot" role="group" aria-label="Vehicles in this shot of the film"></span>
     <output class="veh-info" id="veh-info" aria-live="polite"></output>
     <span class="strip-r" aria-hidden="true">PANGONG TSO · LADAKH</span>
   </div>
   <div class="hero-body">
-    <p class="eyebrow">TurtleShield AI · Turtle Eyes</p>
+    <p class="eyebrow">Homing Vector · Scattrnodes · Scattrnodes Eyes</p>
     <h1 id="h1">Holds the mission when GPS and comms are gone.</h1>
     <div class="hero-foot">
-      <p id="film-desc">TurtleShield keeps drones, ground robots and boats working as one team when GPS is jammed and the radio drops out. Turtle Eyes is the console its operators supervise it from.</p>
+      <p id="film-desc">Scattrnodes keeps drones, ground robots and boats working as one team when GPS is jammed and the radio drops out. Scattrnodes Eyes is the console its operators supervise it from.</p>
       <div class="cta"><a class="go mag" href="#live" data-cursor="engage">Break it yourself</a><button class="ctrl" id="film-toggle" type="button" aria-pressed="true">Pause film</button></div>
     </div>
     <ol class="film-steps" aria-label="Film chapters: choose one to jump to it">
@@ -94,7 +94,6 @@
       <li><button type="button" data-t="28.5"><span>0:28</span>Aircraft lost, wedge re-forms</button></li>
       <li><button type="button" data-t="34"><span>0:34</span>Split and search</button></li>
       <li><button type="button" data-t="40"><span>0:40</span>Sensor lock</button></li>
-      <li><button type="button" data-t="46"><span>0:46</span>A person decides</button></li>
     </ol>
   </div>
 </section>
@@ -117,7 +116,7 @@
       <div class="chapter c0 on" data-ch="0">
         <p class="idx">02 · The mission</p>
         <h2>Step through the mission.</h2>
-        <p>Each step replays the moment in the film where it happens, and says what TurtleShield does about it.</p>
+        <p>Each step replays the moment in the film where it happens, and says what Scattrnodes does about it.</p>
         <p class="hint desk">Scroll to advance</p>
         <p class="hint mob">Swipe the cards below the picture</p>
       </div>
@@ -125,7 +124,7 @@
         <article class="chapter" data-ch="1">
           <span class="clock">T+00:06</span>
           <h2>Seventy aircraft. One AI on every one of them.</h2>
-          <p>Five wedges of fourteen fixed-wing aircraft cross the lake, each running TurtleShield. No aircraft waits for a base station and none of them is the boss. This is the fleet TurtleShield is built for; the largest formation flown in its simulator so far is 8 aircraft.</p>
+          <p>Five wedges of fourteen fixed-wing aircraft cross the lake, each running Scattrnodes. No aircraft waits for a base station and none of them is the boss. This is the fleet Scattrnodes is built for; the largest formation flown in its simulator so far is 8 aircraft.</p>
         </article>
         <article class="chapter" data-ch="2">
           <span class="clock">T+00:11</span>
@@ -158,9 +157,9 @@
           <p>A relay aircraft keeps its thermal sensor locked on the robot convoy below: the swarm watching over its own ground vehicles.</p>
         </article>
         <article class="chapter" data-ch="8">
-          <span class="clock">T+00:46</span>
+          <span class="clock">T+00:00</span>
           <h2>It recommends. A person decides.</h2>
-          <p>TurtleShield plans and reports. The operator in Turtle Eyes supervises, and can pause, stop or recall every vehicle at any time. There is no weapon employment in either product.</p>
+          <p>Scattrnodes plans and reports. The operator in Scattrnodes Eyes supervises, and can pause, stop or recall every vehicle at any time. There is no weapon employment in either product.</p>
         </article>
       </div>
       <div class="car-nav">
@@ -187,7 +186,7 @@
     <p class="idx">03 · Live</p>
     <div class="live-head">
       <h2 id="lv" class="rv">Fly the mission yourself.</h2>
-      <p class="rv">Seventy fixed-wing aircraft, six ground robots and four boats. They launch, assemble, fly in formation, split, search land and water, meet again and come home. Draw jamming zones, cut links, destroy vehicles, move the rendezvous, rewind the timeline, and watch the swarm keep going. The decisions that matter are made by TurtleShield’s own code, compiled from commit <code id="sim-sha">2fe5908</code> and running in your browser. The formation shapes and the mission script are demonstration code written for this page.</p>
+      <p class="rv">Seventy fixed-wing aircraft, six ground robots and four boats. They launch, assemble, fly in formation, split, search land and water, meet again and come home. Draw jamming zones, cut links, destroy vehicles, move the rendezvous, rewind the timeline, and watch the swarm keep going. The decisions that matter are made by Scattrnodes’s own code, compiled from commit <code id="sim-sha">17ac9ee</code> and running in your browser. The formation shapes and the mission script are demonstration code written for this page.</p>
     </div>
   </div>
   <div class="mission" id="rig">
@@ -235,11 +234,11 @@
           <button type="button" class="tool" data-tool="rdv" aria-pressed="false">Move rendezvous</button>
           <button type="button" class="tool" data-ev="clearzones">Clear zones</button>
         </div>
-        <p class="tool-hint" id="tool-hint" aria-live="polite">Loading the TurtleShield core…</p>
+        <p class="tool-hint" id="tool-hint" aria-live="polite">Loading the Scattrnodes core…</p>
         <p class="map-keys" id="map-keys">Keys with the map focused: <kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> select · <kbd>+</kbd><kbd>−</kbd> zoom · <kbd>E</kbd> engineering · <kbd>F</kbd> follow · <kbd>G</kbd> GPS · <kbd>R</kbd> radio · <kbd>C</kbd> cut · <kbd>L</kbd> lose · <kbd>V</kbd> leave formation · <kbd>T</kbd> formation · <kbd>Z</kbd> draw zone · <kbd>1</kbd>–<kbd>7</kbd> scenario</p>
       </div>
-      <aside class="gcs" id="gcs" aria-label="Turtle Eyes console for the live mission">
-        <div class="gcs-top"><b>TURTLE EYES</b><span>PERSISTENT OVERWATCH</span><span class="gcs-mode">SIMULATION</span><span id="sim-clock">T+00:00</span></div>
+      <aside class="gcs" id="gcs" aria-label="Scattrnodes Eyes console for the live mission">
+        <div class="gcs-top"><b>SCATTRNODES EYES</b><span>PERSISTENT OVERWATCH</span><span class="gcs-mode">SIMULATION</span><span id="sim-clock">T+00:00</span></div>
         <div class="gcs-grid">
           <section class="gcs-block" aria-labelledby="g-status"><h3 id="g-status">Swarm status</h3>
             <dl class="stat">
@@ -282,24 +281,24 @@
   </div>
   <div class="w">
     <div class="live-note">
-      <p><b>TurtleShield code, unchanged:</b> which vehicle takes which search lane or station, across air, ground and water, and who takes over after a loss (CBBA, with its domain rules: a robot never gets a water station); when a silent vehicle counts as lost; what a degraded or cut-off vehicle may still do, including how much it widens its spacing; what a group of this size may still do; the separation monitor that makes aircraft climb to a new layer; peer-aided navigation without GPS; and the assembly, relay and rendezvous rings.</p>
-      <p><b>Written for this page:</b> the mission phases, the wedge, V, line and column shapes, the leader-follower steering, the radio and GPS models, and the scenario scripts. The search area is abstract. This is a browser simulation, not a flight result: TurtleShield is built for a fleet this size, but the largest formation it has flown in simulation so far is the 8 aircraft in Evidence below. The same seed always gives the same run.</p>
+      <p><b>Scattrnodes code, unchanged:</b> which vehicle takes which search lane or station, across air, ground and water, and who takes over after a loss (CBBA, with its domain rules: a robot never gets a water station); when a silent vehicle counts as lost; what a degraded or cut-off vehicle may still do, including how much it widens its spacing; what a group of this size may still do; the separation monitor that makes aircraft climb to a new layer; peer-aided navigation without GPS; and the assembly, relay and rendezvous rings.</p>
+      <p><b>Written for this page:</b> the mission phases, the wedge, V, line and column shapes, the leader-follower steering, the radio and GPS models, and the scenario scripts. The search area is abstract. This is a browser simulation, not a flight result: Scattrnodes is built for a fleet this size, but the largest formation it has flown in simulation so far is the 8 aircraft in Evidence below. The same seed always gives the same run.</p>
     </div>
   </div>
 </section>
 
 <section class="product sec" id="system" aria-labelledby="ts">
   <div class="w">
-    <p class="idx">04 · TurtleShield AI</p>
+    <p class="idx">04 · Scattrnodes AI</p>
     <h2 id="ts" class="rv">Above the autopilot. Below the operator.</h2>
-    <p class="lede rv">Every drone already flies itself. What breaks under jamming is the team. TurtleShield is the coordination layer on every vehicle: one shared picture of the world, one plan, and rules for what each vehicle may still do as things degrade.</p>
+    <p class="lede rv">Every drone already flies itself. What breaks under jamming is the team. Scattrnodes is the coordination layer on every vehicle: one shared picture of the world, one plan, and rules for what each vehicle may still do as things degrade.</p>
     <figure class="arch rv">
       <svg viewBox="0 0 1200 520" role="img" aria-labelledby="arch-t arch-d">
-        <title id="arch-t">Where TurtleShield sits</title>
-        <desc id="arch-d">Five layers, top to bottom: the operator in Turtle Eyes, supervisory only; TurtleShield AI on every vehicle, holding the shared world model, task allocation, mission decomposition, health monitoring, cross-domain reassignment and degraded modes; one vehicle abstraction; the PX4 and ArduPilot autopilots; and the aircraft, ground robots and boats.</desc>
-        <g class="a-row"><rect x="1" y="1" width="1198" height="80"/><text x="28" y="36" class="a-k">OPERATOR</text><text x="28" y="62" class="a-v">Turtle Eyes · supervises · outside the decision loop · no weapons interface</text></g>
+        <title id="arch-t">Where Scattrnodes sits</title>
+        <desc id="arch-d">Five layers, top to bottom: the operator in Scattrnodes Eyes, supervisory only; Scattrnodes AI on every vehicle, holding the shared world model, task allocation, mission decomposition, health monitoring, cross-domain reassignment and degraded modes; one vehicle abstraction; the PX4 and ArduPilot autopilots; and the aircraft, ground robots and boats.</desc>
+        <g class="a-row"><rect x="1" y="1" width="1198" height="80"/><text x="28" y="36" class="a-k">OPERATOR</text><text x="28" y="62" class="a-v">Scattrnodes Eyes · supervises · outside the decision loop · no weapons interface</text></g>
         <path class="a-link" d="M600 81V111"/>
-        <g class="a-row a-hot"><rect x="1" y="111" width="1198" height="150"/><text x="28" y="146" class="a-k">TURTLESHIELD AI · ON EVERY VEHICLE</text>
+        <g class="a-row a-hot"><rect x="1" y="111" width="1198" height="150"/><text x="28" y="146" class="a-k">SCATTRNODES AI · ON EVERY VEHICLE</text>
           <g class="a-cells"><rect x="28" y="166" width="178" height="72"/><text x="44" y="208">World model</text><rect x="222" y="166" width="178" height="72"/><text x="238" y="208">Task allocation</text><rect x="416" y="166" width="178" height="72"/><text x="432" y="208">Mission plan</text><rect x="610" y="166" width="178" height="72"/><text x="626" y="208">Health</text><rect x="804" y="166" width="178" height="72"/><text x="820" y="208">Cross-domain</text><rect x="998" y="166" width="174" height="72"/><text x="1014" y="208">Degraded modes</text></g></g>
         <path class="a-link" d="M600 261V291"/>
         <g class="a-row"><rect x="1" y="291" width="1198" height="64"/><text x="28" y="330" class="a-k">ONE VEHICLE ABSTRACTION</text></g>
@@ -318,15 +317,15 @@
   </div>
 </section>
 
-<section class="product sec" id="turtleeyes" aria-labelledby="te">
+<section class="product sec" id="scattrnodeseyes" aria-labelledby="te">
   <div class="w">
-    <p class="idx">05 · Turtle Eyes</p>
+    <p class="idx">05 · Scattrnodes Eyes</p>
     <h2 id="te" class="rv">Supervises. Never decides.</h2>
-    <p class="lede rv">Turtle Eyes is the console operators run a TurtleShield team from. The console beside the live mission above is Turtle Eyes supervising that swarm: status, groups, the event log, one aircraft’s telemetry, and the decisions it leaves to a person. Nothing changes phase until someone holds the button down. Three choices define it, and each is deliberate.</p>
+    <p class="lede rv">Scattrnodes Eyes is the console operators run a Scattrnodes team from. The console beside the live mission above is Scattrnodes Eyes supervising that swarm: status, groups, the event log, one aircraft’s telemetry, and the decisions it leaves to a person. Nothing changes phase until someone holds the button down. Three choices define it, and each is deliberate.</p>
     <div class="notes three">
       <div class="rv"><h3>Outside the decision loop.</h3><p>The swarm does not wait for the console to act, so losing the console does not stop a mission while the vehicles can still hear each other. The operator can pause, stop or recall every vehicle at any time.</p></div>
       <div class="rv"><h3>Air-gapped by default.</h3><p>It carries its own maps and runs on a rugged laptop with no internet connection. A Rust trusted core handles credentials, roles and the audit log.</p></div>
-      <div class="rv"><h3>No weapons interface.</h3><p>There is nothing in Turtle Eyes that can command an effector, and nothing in TurtleShield that employs a weapon. That is written into both products’ scope.</p></div>
+      <div class="rv"><h3>No weapons interface.</h3><p>There is nothing in Scattrnodes Eyes that can command an effector, and nothing in Scattrnodes that employs a weapon. That is written into both products’ scope.</p></div>
     </div>
   </div>
 </section>
@@ -335,17 +334,17 @@
   <div class="w">
     <p class="idx">06 · Evidence</p>
     <h2 id="ev" class="rv">Every number, with where it came from.</h2>
-    <p class="lede rv">Each figure below is recounted from the TurtleShield repository by a script before this page can be published. If the repository disagrees, the page does not ship.</p>
+    <p class="lede rv">Each figure below is recounted from the Scattrnodes repository by a script before this page can be published. If the repository disagrees, the page does not ship.</p>
     <table class="ledger">
-      <caption class="vh">Results as of 16 September 2026, with how each was measured</caption>
+      <caption class="vh">Results recounted on 6 October 2026, with how each was measured</caption>
       <thead><tr><th scope="col">Figure</th><th scope="col">Value</th><th scope="col">How it was measured</th><th scope="col">Source</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Test missions flown in simulation</th><td class="v" data-figure="missions">768</td><td class="n">555 passed, 141 failed, 72 skipped, across 114 campaigns. Every result row recounted.</td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Test missions flown in simulation</th><td class="v" data-figure="missions">768</td><td class="n">555 passed, 141 failed, 72 skipped, across 114 campaigns. Every result row recounted. About 700 five-aircraft first-flight rehearsals flown since 17 September are scored separately.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Orders from our software accepted by the autopilot</th><td class="v">2,000+</td><td class="n">Counted once from recorded runs. The logs behind it are not all kept, so unlike the other figures here we cannot recount it today.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Aircraft in tight formation</th><td class="v" data-figure="formation_fleet_max">8</td><td class="n">All six runs passed the separation check. That check measures distance in three dimensions, so side-by-side spacing is still unmeasured. We treat it as an open defect, not a result.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Position error without GPS</th><td class="v" data-figure="nav_error_without_gps">396–750 m &rarr; 25.5–39.0 m</td><td class="n">After one day of fixes, from a written report and two named campaigns. Still not good enough to rely on.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Core files changed by the two adapter commits</th><td class="v" data-figure="autopilot_core_files_per_commit">0</td><td class="n">Counted from the repository history. Core edits in that period belong to a separate terrain-following change.</td><td class="s">Code history</td></tr>
-        <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">151</td><td class="n">67 closed, 84 still not closed: 48 open and 36 fixed but not yet proven.</td><td class="s">Bug log</td></tr>
+        <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">250</td><td class="n">105 closed, 145 still not closed: 64 open and 81 fixed but not yet proven.</td><td class="s">Bug log</td></tr>
         <tr class="zero"><th scope="row">Flights on a real aircraft</th><td class="v" data-figure="real_flights">0</td><td class="n">None yet. The first is planned for the next few weeks.</td><td class="s">Flight</td></tr>
       </tbody>
     </table>
@@ -359,16 +358,16 @@
       <h2 id="st" class="rv">Where it stands.</h2>
       <div class="body rv">
         <p>Validated in simulation and on a real flight controller wired to a simulator. Flight campaign pending: we have not flown a real aircraft yet, and you should hear that from us before anything else.</p>
-        <p>Still open: navigation without GPS is not accurate enough yet, each vehicle uses about 33 times the radio capacity we budget for, and some backup behaviours are written and tested but not yet switched on.</p>
-        <p class="sig">Nidhip Sharma<span>Founder, Homingvector</span></p>
+        <p>Still open: navigation without GPS is not accurate enough yet, in flown missions each vehicle still uses about twice the radio capacity we budget for, and some backup behaviours are written and tested but not yet switched on.</p>
+        <p class="sig">Nidhip Sharma and Karan Tiwari<span>Co-founders, HiveNodes</span></p>
       </div>
     </div>
     <h3 class="tl-h rv">The next few weeks: out of the simulator and into the air.</h3>
     <ol class="tl">
-      <li class="rv"><span class="mo">Next few weeks</span><h4>First real flight with TurtleShield in charge</h4><p>A safety pilot on standby, every bench check done first.</p></li>
+      <li class="rv"><span class="mo">Next few weeks</span><h4>First real flight with Scattrnodes in charge</h4><p>A safety pilot on standby, every bench check done first.</p></li>
       <li class="rv"><span class="mo">Month 6</span><h4>Three aircraft in formation, in real wind</h4><p>Radio use brought down to budget. Real numbers replace simulated ones.</p></li>
       <li class="rv"><span class="mo">Month 9</span><h4>Flying without GPS, against a jamming rig</h4><p>Backup behaviours switched on. The core idea, tested for real.</p></li>
-      <li class="rv"><span class="mo">Month 10</span><h4>A five-aircraft field trial, run by an outsider</h4><p>Operated through Turtle Eyes and signed off by someone who watched.</p></li>
+      <li class="rv"><span class="mo">Month 10</span><h4>A five-aircraft field trial, run by an outsider</h4><p>Operated through Scattrnodes Eyes and signed off by someone who watched.</p></li>
     </ol>
   </div>
 </section>
@@ -378,13 +377,13 @@
     <p class="idx">08 · Contact</p>
     <h2 id="ct" class="rv">Talk to the engineer.</h2>
     <div class="contact-row">
-      <p class="rv">We are raising a pre-seed round to take TurtleShield from simulation to a field trial that someone outside the company signs off. If you fly drones, build them, or back the people who do, write directly.</p>
+      <p class="rv">We are raising a pre-seed round to take Scattrnodes from simulation to a field trial that someone outside the company signs off. If you fly drones, build them, or back the people who do, write directly.</p>
       <div class="reach rv">
         <a class="mail mag" id="mail" href="#contact" data-cursor="engage">nidhip.sharma.123 [at] gmail.com</a>
         <a class="li" href="https://www.linkedin.com/in/nidhip-sharma/" rel="noopener">LinkedIn</a>
       </div>
     </div>
-    <div class="legal"><span>&copy; 2026 Homingvector, India</span><span>Performance figures are from simulation unless stated otherwise.</span><span>No cookies, no trackers, no third-party requests.</span></div>
+    <div class="legal"><span>&copy; 2026 HiveNodes, India</span><span>This site is under development.</span><span>Performance figures are from simulation unless stated otherwise.</span><span>No cookies, no trackers, no third-party requests.</span></div>
   </div>
 </section>
 </main>

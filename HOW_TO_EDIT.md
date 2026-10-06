@@ -44,7 +44,7 @@ Pages redeploys within a minute or two of a push.
 
 ## Rules that do not bend
 - No text over a picture. Words go in the bars and panels beside it.
-- No weapons imagery or language: no crosshairs, reticles, "engage", "strike", "kill", "effector", "munition".
+- No weapons imagery or language: no crosshairs or reticles, and none of the words listed in the owner's brief §1.2 (the publish gate checks them).
 - Red means a lost vehicle, amber means a person is being asked to decide or a warning, nothing else.
 - No third-party requests of any kind (fonts, analytics, video hosts). Everything is served from this repository.
 - Never `git add -A`; stage files by name.

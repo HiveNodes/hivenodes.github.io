@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HiveNodes</title>
-<meta name="description" content="HiveNodes builds Homing Vector: Scattrnodes on every vehicle keeps drones, ground robots and boats on one mission when GPS and communications are gone; Scattrnodes Eyes lets a person supervise. Proven so far in simulation.">
+<meta name="description" content="HiveNodes builds Homing Vector: UAVs, UGVs and USVs that keep one mission when GPS and radio are jammed. Proven so far in simulation.">
 <meta property="og:title" content="HiveNodes">
 <meta property="og:description" content="Holds the mission when GPS and comms are gone. Homing Vector: one system of systems across air, ground and sea.">
 <meta property="og:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
@@ -353,7 +353,7 @@
         <tr><th scope="row">Aircraft in tight formation</th><td class="v" data-figure="formation_fleet_max">8</td><td class="n"><details><summary>How it was measured</summary><p>All six runs passed the separation check. That check measures distance in three dimensions, so side-by-side spacing is still unmeasured. We treat it as an open defect, not a result.</p></details></td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Position error without GPS</th><td class="v" data-figure="nav_error_without_gps">396–750 m &rarr; 25.5–39.0 m</td><td class="n"><details><summary>How it was measured</summary><p>After one day of fixes, from a written report and two named campaigns. Still not good enough to rely on.</p></details></td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Core files changed by the two adapter commits</th><td class="v" data-figure="autopilot_core_files_per_commit">0</td><td class="n"><details><summary>How it was measured</summary><p>Counted from the repository history. Core edits in that period belong to a separate terrain-following change.</p></details></td><td class="s">Code history</td></tr>
-        <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">250</td><td class="n"><details><summary>How it was measured</summary><p>105 closed, 145 still not closed: 64 open and 81 fixed but not yet proven.</p></details></td><td class="s">Bug log</td></tr>
+        <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">251</td><td class="n"><details><summary>How it was measured</summary><p>Every problem found is written up with its cause and its fix. The bug log records which are still open.</p></details></td><td class="s">Bug log</td></tr>
         <tr class="zero"><th scope="row">Flights on a real aircraft</th><td class="v" data-figure="real_flights">0</td><td class="n"><details><summary>How it was measured</summary><p>None yet. The first is planned for the next few weeks.</p></details></td><td class="s">Flight</td></tr>
       </tbody>
     </table>

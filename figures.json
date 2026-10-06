@@ -1,7 +1,7 @@
 {
  "ok": true,
  "date": "6 October 2026",
- "repo_sha": "47dce6525ae9dd2ebac535f0786bc6cb60896e63",
+ "repo_sha": "dbf95aabf962bb5839ddf033f1ad761cfb4eb9a7",
  "checked": 6,
  "figures": [
   "autopilot_core_files_per_commit",

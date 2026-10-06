@@ -11,7 +11,7 @@ export async function startTerrain3D({ cv, onTime, RM }) {
     fetch('media/t3d-near-385.u16').then(r => r.arrayBuffer()), fetch('media/t3d-far-201.u16').then(r => r.arrayBuffer()),
   ]);
   const gcv = document.createElement('canvas');
-  const gl = gcv.getContext('webgl2', { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: true });
+  const gl = gcv.getContext("webgl2", { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: false })   // copied to the visible canvas in the same frame: no readback;
   if (!gl) throw new Error('no webgl2');
   const ctx = cv.getContext('2d');
   const V = Object.entries(tr.v), N = tr.n, DT = tr.dt, DUR = N * DT;
@@ -62,7 +62,7 @@ void main(){ vec3 c = texture(tex, vt).rgb; float f = 1. - exp(-dist / 11000.); 
   let W = 0, H = 0, dp = 1, t = 0, last = performance.now(), running = false, seekTo = null, M = null;
   const fit = () => { const r = cv.getBoundingClientRect(); dp = Math.min(devicePixelRatio || 1, 1.5); W = cv.width = gcv.width = Math.round(r.width * dp); H = cv.height = gcv.height = Math.round(r.height * dp); };
   new ResizeObserver(fit).observe(cv); fit();
-  const cam = { tx: 300, tz: -600, ready: false };
+  const cam = { tx: 300, tz: -600, ready: false, hd: NaN };
   const at = (p, u) => { const i = Math.min(N - 2, Math.floor(u)), f = Math.min(1, u - i), a = p[i], b = p[i + 1]; return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]; };
   const proj = (x, y, z) => { const v = [M[0] * x + M[4] * y + M[8] * z + M[12], M[1] * x + M[5] * y + M[9] * z + M[13], M[3] * x + M[7] * y + M[11] * z + M[15]];
     return v[2] > 1 ? [W / 2 + v[0] / v[2] * W / 2, H / 2 - v[1] / v[2] * H / 2, v[2]] : null; };
@@ -74,8 +74,19 @@ void main(){ vec3 c = texture(tex, vt).rgb; float f = 1. - exp(-dist / 11000.); 
     for (const [, v] of V) { if (v.k !== 'lead' && v.k !== 'air') continue; const p = at(v.p, u); if (v.k === 'lead' && t > 20 && p[2] < LOST_BELOW) continue; cx += p[0]; cz -= p[1]; n++; }
     cx /= n; cz /= n; const k = cam.ready && !RM ? .02 : 1; cam.tx += (cx - cam.tx) * k; cam.tz += (cz - cam.tz) * k; cam.ready = true;
     // camera: an oblique view from the south-west, 2.6 km back and 1.1 km up, orbiting very slowly
-    const ang = -2.35 + Math.sin(t / DUR * Math.PI * 2) * .3, D = 3200;
-    const eye = [cam.tx + Math.cos(ang) * D, 1150, cam.tz - Math.sin(ang) * D], tgt = [cam.tx, 300, cam.tz];   // steep enough that the frame never leaves the real 8.2 km of imagery
+    // a shot list over one loop of the film's timeline: [t, distance back, height, angle off the fleet's heading]
+    // establishing push-in -> low chase -> side orbit through the GPS-jammed beat -> wide as the groups split -> rise
+    const KEYS = [[0, 5200, 2300, 2.6], [6, 2600, 900, 3.0], [14, 1700, 560, 3.1], [17, 2200, 800, 2.2], [28, 2400, 900, 1.5],
+                  [34, 4200, 1900, 2.4], [44, 3600, 1500, 2.9], [DUR, 5200, 2300, 2.6]];
+    let k0 = KEYS[0], k1 = KEYS[1]; for (let i = 0; i < KEYS.length - 1; i++) if (t >= KEYS[i][0] && t <= KEYS[i + 1][0]) { k0 = KEYS[i]; k1 = KEYS[i + 1]; }
+    const e = (t - k0[0]) / Math.max(k1[0] - k0[0], 1e-3), sm = e * e * (3 - 2 * e);
+    const D = k0[1] + (k1[1] - k0[1]) * sm, HH = k0[2] + (k1[2] - k0[2]) * sm, off = k0[3] + (k1[3] - k0[3]) * sm;
+    // the fleet's heading, from the leads' motion over the last two seconds; the camera follows it with lag
+    let hx = 0, hz = 0; for (const [, v] of V) { if (v.k !== 'lead') continue; const a1 = at(v.p, u), a0 = at(v.p, Math.max(0, u - 4)); hx += a1[0] - a0[0]; hz += -(a1[1] - a0[1]); }
+    const hd = Math.atan2(hz, hx); if (!Number.isFinite(cam.hd)) cam.hd = hd;
+    let dh = hd - cam.hd; dh = Math.atan2(Math.sin(dh), Math.cos(dh)); cam.hd += dh * (RM ? 1 : .015);
+    const ang = cam.hd + off;
+    const eye = [cam.tx + Math.cos(ang) * D, HH, cam.tz + Math.sin(ang) * D], tgt = [cam.tx, 320, cam.tz];   // steep enough that the frame never leaves the real 8.2 km of imagery
     M = mul(persp(.6, W / H, 40, 60000), look(eye, tgt));
     gl.viewport(0, 0, W, H); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
     gl.uniformMatrix4fv(uM, false, new Float32Array(M)); gl.uniform3f(uEye, ...eye); gl.uniform3f(uHaze, .70, .76, .83);

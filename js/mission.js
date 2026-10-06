@@ -334,6 +334,7 @@ export function startLive({ cue, RM }) {
   function addLine(text, cls) {
     const li = document.createElement('li'), b = document.createElement('b');
     b.textContent = clock(cur ? cur.meta[0] : 0); li.append(b, text); if (cls) li.className = cls; dlog.prepend(li);
+    while (dlog.children.length > 8) dlog.lastElementChild.remove();   // the latest eight: nothing hidden below the panel
   }
   function ingest(text) {
     const frag = document.createDocumentFragment();
@@ -350,7 +351,7 @@ export function startLive({ cue, RM }) {
       else if (/^PHASE|took (lane|station)|link restored|MISSION COMPLETE|leader U/.test(body)) { cue('good'); sayQueue = body; }
     }
     dlog.prepend(frag);
-    while (dlog.children.length > 220) dlog.lastChild.remove();
+    while (dlog.children.length > 8) dlog.lastChild.remove();   // the latest eight (was 220): nothing hidden below the panel
     const now = performance.now();
     if (sayQueue && now - lastSay > 2500) { narrate.textContent = sayQueue; sayQueue = ''; lastSay = now; }
   }

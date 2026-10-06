@@ -142,3 +142,6 @@ kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:
 .mission{background:linear-gradient(180deg,var(--glass-top),var(--glass-bot)),var(--bg2);border-top:1px solid var(--glass-edge);border-bottom:1px solid var(--glass-edge)}
 .gcs{background:linear-gradient(180deg,rgba(207,233,255,.04),rgba(207,233,255,.01)),var(--bg)}
 .dlog li,.tele dd,.stat dd,#sim-clock,.timeline output{font-variant-numeric:tabular-nums}
+/* the decision log scrolls inside its panel; it must never grow past the console (tall screens) */
+.dlog{max-height:min(420px,46vh);overflow-y:auto;overscroll-behavior:contain}
+.mission{overflow:hidden}

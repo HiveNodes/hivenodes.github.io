@@ -8,22 +8,6 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 // e-mail
 (() => { const a = $('#mail'), u = 'nidhip.sharma.123', d = 'gmail.com'; if (a) { a.textContent = `${u}@${d}`; a.href = `mailto:${u}@${d}?subject=HiveNodes`; } })();
 
-// the mission, step by step
-import('./story.js').then(m => m.startStory()).catch(() => {});
-
-// live display: the real engine, fetched only when near, never by itself on a slow or Save-Data link
-(() => {
-  const root = $('#live'); if (!root) return;
-  const btns = $$('[data-lv]', root).filter(b => b.dataset.lv !== 'start'), startB = $('[data-lv="start"]', root);
-  if (!('WebAssembly' in window) || !('Worker' in window)) { $('#lv-log').textContent = 'This browser cannot run the live engine; the simulation page has a recorded version.'; return; }
-  const c = navigator.connection || {}, slow = c.saveData || /(^|-)2g|3g/.test(c.effectiveType || '');
-  let started = false;
-  const go = () => { if (started) return; started = true; startB.hidden = true; $('#lv-log').textContent = 'Starting the engine…';
-    import('./live.js').then(m => { m.startLiveDisplay(root); btns.forEach(b => { b.disabled = false; }); }).catch(() => { $('#lv-log').textContent = 'The live engine could not start.'; }); };
-  if (slow) { startB.hidden = false; startB.addEventListener('click', go); $('#lv-log').textContent = 'Paused to save your data. Start it when you like.'; return; }
-  if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); go(); } }, { rootMargin: '300px 0px' }); io.observe(root); } else go();
-})();
-
 // formation morph, loaded only when its section is near
 (() => {
   const fx = $('#fx'); if (!fx) return;

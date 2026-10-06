@@ -30,7 +30,7 @@
 <link rel="icon" href="brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" sizes="180x180" href="brand/apple-touch-icon-180.png">
 <link rel="preload" href="fonts/HostGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="media/cine/c0073_1600.webp" imagesrcset="media/cine/c0073_800.webp 800w, media/cine/c0073_1600.webp 1600w" imagesizes="100vw">
+<link rel="preload" as="image" href="media/ops-map-1200.webp" imagesrcset="media/ops-map-600.webp 600w, media/ops-map-1200.webp 1200w" imagesizes="100vw">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/console.css">
 <script type="module" src="js/main.js"></script>
@@ -69,7 +69,7 @@
 
 <section class="hero" aria-labelledby="h1">
   <div class="plate" id="hero-plate">
-    <img src="media/ops-map-1200.webp" alt="Satellite image of Pangong Tso, Ladakh: the deep-blue lake between ochre mountain shores." width="1200" height="1200" fetchpriority="high">
+    <img src="media/ops-map-1200.webp" srcset="media/ops-map-600.webp 600w, media/ops-map-1200.webp 1200w" sizes="100vw" alt="Satellite image of Pangong Tso, Ladakh: the deep-blue lake between ochre mountain shores." width="1200" height="1200" fetchpriority="high">
     <canvas id="hero-cv" role="img" aria-label="Ops display over real satellite imagery of Pangong Tso: the simulated fleet of aircraft, ground robots and boats moving along their tracks, with navigation uncertainty rings while GPS is denied."></canvas>
   </div>
   <div class="hero-bar w">
@@ -280,7 +280,7 @@
     </div>
     <div class="rig-fallback" id="rig-fallback" hidden>
       <p>This browser cannot run the live simulation (it needs WebAssembly and Web Workers). Below is a frame of it: seventy aircraft split into two groups over the search area with ground robots and boats on their stations, lanes assigned, and a lost aircraft’s lane taken over.</p>
-      <img src="brand/sim-static.svg" alt="Diagram: seventy aircraft split into Group A and Group B over an abstract search area of land and water, ground robots and boats on stations, and a lost aircraft whose lane another aircraft took over." width="1600" height="960">
+      <img src="brand/sim-static.svg" loading="lazy" alt="Diagram: seventy aircraft split into Group A and Group B over an abstract search area of land and water, ground robots and boats on stations, and a lost aircraft whose lane another aircraft took over." width="1600" height="960">
     </div>
   </div>
   <div class="w">
@@ -372,7 +372,7 @@
       <div class="body glass">
         <p class="first">Validated in simulation and on a real flight controller wired to a simulator. Flight campaign pending: we have not flown a real aircraft yet, and you should hear that from us before anything else.</p>
         <p>Still to fix: navigation without GPS is not accurate enough yet, and radio use is about twice our budget.</p>
-        <p class="sig">Nidhip Sharma and Karan Tiwari<span>Co-founders, HiveNodes</span></p>
+        <p class="sig">Nidhip Sharma<span>Founder, HiveNodes</span></p>
       </div>
     </div>
     <h3 class="tl-h">The next few weeks: out of the simulator and into the air.</h3>
@@ -394,7 +394,7 @@
       <div class="reach">
         <a class="mail" id="mail" href="#contact">nidhip.sharma.123 [at] gmail.com</a>
         <a class="li" href="https://www.linkedin.com/in/nidhip-sharma/" rel="noopener">LinkedIn</a>
-        <p class="who">Nidhip Sharma and Karan Tiwari, Co-founders, HiveNodes</p>
+        <p class="who">Nidhip Sharma, Founder, HiveNodes</p>
         <a class="li" href="capabilities/">Every capability, and how far it is proven</a>
       </div>
     </div>

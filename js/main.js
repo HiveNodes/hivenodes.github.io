@@ -36,7 +36,8 @@ const FILM_END = 40;
   const tick = () => {
     const now = new Date(), t = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
     if (clk) clk.textContent = t;
-    if (line) { const el = sun(now), up = el > -.833; let m = 0; while (m < 1440 && (sun(new Date(now.getTime() + (m + 1) * 6e4)) > -.833) === up) m++;
+    if (line) { const el = sun(now), up = el > -.833, on = k => (sun(new Date(now.getTime() + k * 6e4)) > -.833) === up;
+      let m = 0; while (m < 1440 && on(m + 10)) m += 10; while (m < 1440 && on(m + 1)) m++;   // 10-minute steps, then the minute
       line.textContent = `Pangong Tso, Ladakh, now · ${t} · sun ${Math.abs(Math.round(el))}° ${el >= 0 ? 'above' : 'below'} the horizon · ${up ? 'sunset' : 'sunrise'} in ${dur(m)}`; }
   };
   tick(); setInterval(tick, 30000);
@@ -165,7 +166,7 @@ $$('.rail [data-cue]').forEach(b => b.addEventListener('click', () => { const t 
   const show = i => {
     if (i === cur) return; cur = i; const b = beats[i];
     $('#beat-clock').textContent = `Step ${i + 1} of ${beats.length} · ${b.clock}`; $('#beat-h').textContent = b.h; $('#beat-p').textContent = b.p;
-    if (!RM) { card.classList.remove('swap'); void card.offsetWidth; card.classList.add('swap'); }
+    if (!RM && card.animate) card.animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 550, easing: 'cubic-bezier(.16,.84,.24,1)' });
     still.src = `media/cine/${b.still}_${big()}.webp`; still.srcset = '';
     plates.walk.seg = [b.t0, Math.min(b.t1, FILM_END)]; plates.walk.stillOnly = b.stillOnly;
     setTelem(plates.walk.telem, b.t0);

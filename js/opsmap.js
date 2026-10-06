@@ -34,7 +34,7 @@ export async function startOpsMap({ cv, onTime, RM }) {
     // the real ground
     const mpp = SZ / img.width, sx = W / 2 - (cam.x + SZ / 2) / mpp * cam.s * mpp, sy = H / 2 - (SZ / 2 - cam.y) / mpp * cam.s * mpp;
     ctx.fillStyle = '#05070a'; ctx.fillRect(0, 0, W, H);
-    ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, sx, sy, img.width * mpp * cam.s, img.height * mpp * cam.s);
+    ctx.imageSmoothingQuality = 'medium'; ctx.drawImage(img, sx, sy, img.width * mpp * cam.s, img.height * mpp * cam.s);
     ctx.fillStyle = 'rgba(5,7,10,.18)'; ctx.fillRect(0, 0, W, H);                   // a little density, so the marks read
     // 1 km grid with a scale bar
     const g = 1000 * cam.s; ctx.strokeStyle = 'rgba(207,233,255,.07)'; ctx.lineWidth = dp; ctx.beginPath();

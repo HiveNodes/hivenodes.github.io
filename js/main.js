@@ -152,7 +152,10 @@ let lastRail = -1;
   const flat = () => import('./opsmap.js').then(m => m.startOpsMap({ cv, RM, onTime })).then(o => { ops = o; }).catch(() => {});
   // 3D: the real Sentinel-2 imagery draped on the real DEM (about 1 MB more); the flat map on slow links or without WebGL2
   // desktop-class screens only: on phones the flat real-satellite map is smoother and lighter
-  const has3d = !SLOW && matchMedia('(pointer: fine) and (min-width: 1000px)').matches && !!document.createElement('canvas').getContext('webgl2');
+  const hwGL = () => { try { const g = document.createElement('canvas').getContext('webgl2'); if (!g) return false;
+    const d = g.getExtension('WEBGL_debug_renderer_info'), r = String(d ? g.getParameter(d.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER));
+    g.getExtension('WEBGL_lose_context')?.loseContext(); return !/swiftshader|llvmpipe|softpipe|software|basic render|mesa offscreen/i.test(r); } catch { return false; } };
+  const has3d = !SLOW && matchMedia('(pointer: fine) and (min-width: 1000px)').matches && hwGL();   // real GPU only: never a software rasteriser
   const go = () => has3d ? import('./terrain3d.js').then(m => m.startTerrain3D({ cv, RM, onTime })).then(o => { ops = o; }).catch(flat) : flat();
   const idle = window.requestIdleCallback || (f => setTimeout(f, 1));
   const later = () => setTimeout(() => idle(go, { timeout: 2500 }), 1200);   // after the page is up and quiet

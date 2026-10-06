@@ -609,11 +609,24 @@ def main():
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--summary", action="store_true", help="headline-figures page: skip the tally sub-figures")
     ap.add_argument("--json", help="also write the outcome (ok, date, repo sha, figures checked) to this file for the page to show")
+    ap.add_argument("--fix", action="store_true", help="first WRITE every derivable data-figure value into the page from the repo (the pipeline produces the numbers), then check")
     args = ap.parse_args()
 
     if args.self_test:
         return self_test(args.repo)
 
+    if args.fix:
+        import re as _re
+        page = os.path.normpath(args.page); html = open(page).read(); changed = []
+        for key, fn in DERIVATIONS.items():
+            want = fn(args.repo)
+            def sub(m):
+                if m.group(2) != want: changed.append(f"{key}: {m.group(2)} -> {want}")
+                return m.group(1) + want + m.group(3)
+            html = _re.sub(r'(data-figure="' + _re.escape(key) + r'"[^>]*>)([^<]*)(<)', sub, html)
+        if changed:
+            open(page, "w").write(html)
+        print("Figure fix:", "; ".join(changed) if changed else "nothing to change")
     print(f"Figure check: {os.path.normpath(args.page)}")
     print(f"  against repo: {args.repo}")
     try:

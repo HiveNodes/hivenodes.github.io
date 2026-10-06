@@ -6,13 +6,20 @@ const LOST_BELOW = 80;
 
 export async function startTerrain3D({ cv, onTime, RM }) {
   const im = s => new Promise((res, rej) => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(i); i.onerror = rej; i.src = s; });
-  const [tr, imgN, imgF, hN, hF] = await Promise.all([
+  const [tr, imgN, imgF, hN, hF, sky] = await Promise.all([
     fetch('media/ops-tracks.json').then(r => r.json()), im('media/t3d-near-2048.webp'), im('media/t3d-far-1024.webp'),
     fetch('media/t3d-near-385.u16').then(r => r.arrayBuffer()), fetch('media/t3d-far-201.u16').then(r => r.arrayBuffer()),
+    im('media/hero-sky-2048.webp').catch(() => null),
   ]);
+  // the sky: a real CC0 photograph (Poly Haven table_mountain_2, the film's own sky), +18 to -0.5 deg of elevation, 360 deg wide
+  let skyTop = '#5c7ea3'; if (sky) { const c = document.createElement('canvas'); c.width = 64; c.height = 1; const x = c.getContext('2d'); x.drawImage(sky, 0, 0, sky.width, 1, 0, 0, 64, 1); const d = x.getImageData(0, 0, 64, 1).data; let r = 0, g = 0, b = 0; for (let i = 0; i < 64; i++) { r += d[i * 4]; g += d[i * 4 + 1]; b += d[i * 4 + 2]; } skyTop = `rgb(${r / 64 | 0},${g / 64 | 0},${b / 64 | 0})`; }
   const gcv = document.createElement('canvas');
-  const gl = gcv.getContext("webgl2", { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: false })   // copied to the visible canvas in the same frame: no readback;
+  const gl = gcv.getContext("webgl2", { antialias: true, alpha: true, premultipliedAlpha: false, preserveDrawingBuffer: false });
   if (!gl) throw new Error('no webgl2');
+  // never on a software rasteriser (blocklisted GPUs, headless and audit tools): a frame takes seconds there.
+  // The caller's .catch() shows the flat real-imagery map instead. (Found by nidhip-a3: SwiftShader, Lighthouse 59.)
+  const dri = gl.getExtension('WEBGL_debug_renderer_info'), rend = String(dri ? gl.getParameter(dri.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER));
+  if (/swiftshader|llvmpipe|softpipe|software|basic render|mesa offscreen/i.test(rend)) throw new Error('software webgl: ' + rend);
   const ctx = cv.getContext('2d');
   const V = Object.entries(tr.v), N = tr.n, DT = tr.dt, DUR = N * DT;
   const TILES = [{ size: 40000, n: 201, h: new Uint16Array(hF), img: imgF, sink: true }, { size: 20000, n: 385, h: new Uint16Array(hN), img: imgN }];
@@ -89,11 +96,23 @@ void main(){ vec3 c = texture(tex, vt).rgb; float f = 1. - exp(-dist / 11000.); 
     const eye = [cam.tx + Math.cos(ang) * D, HH, cam.tz + Math.sin(ang) * D], tgt = [cam.tx, 320, cam.tz];   // steep enough that the frame never leaves the real 8.2 km of imagery
     M = mul(persp(.6, W / H, 40, 60000), look(eye, tgt));
     gl.viewport(0, 0, W, H); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.uniformMatrix4fv(uM, false, new Float32Array(M)); gl.uniform3f(uEye, ...eye); gl.uniform3f(uHaze, .70, .76, .83);
+    gl.uniformMatrix4fv(uM, false, new Float32Array(M)); gl.uniform3f(uEye, ...eye); gl.uniform3f(uHaze, .74, .77, .79);
     for (const T of TILES) { gl.bindVertexArray(T.vao); gl.bindTexture(gl.TEXTURE_2D, T.tx); gl.drawElements(gl.TRIANGLES, T.idx.length, gl.UNSIGNED_INT, 0); }
     // sky gradient above the horizon, then the terrain
     const g = ctx.createLinearGradient(0, 0, 0, H * .5); g.addColorStop(0, '#4f6f93'); g.addColorStop(1, '#b3c2d4');
-    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.drawImage(gcv, 0, 0);
+    if (sky) {
+      const yaw = Math.atan2(tgt[2] - eye[2], tgt[0] - eye[0]), dist = Math.hypot(tgt[0] - eye[0], tgt[2] - eye[2]);
+      const pitch = Math.atan2(eye[1] - tgt[1], dist), fy = .6, fx = 2 * Math.atan(Math.tan(fy / 2) * W / H);
+      const yAt = e => H / 2 - (H / 2) * Math.tan(e + pitch) / Math.tan(fy / 2);       // screen row of elevation e (camera pitched down by pitch)
+      const yT = yAt(18 * Math.PI / 180), yB = yAt(-.5 * Math.PI / 180), sw = sky.width;
+      const x0 = ((((-yaw - fx / 2) / (2 * Math.PI)) % 1) + 1) % 1 * sw, xw = fx / (2 * Math.PI) * sw;
+      ctx.fillStyle = skyTop; ctx.fillRect(0, 0, W, Math.max(0, yT) + 1);
+      const first = Math.min(xw, sw - x0);
+      ctx.drawImage(sky, x0, 0, first, sky.height, 0, yT, W * first / xw, yB - yT);
+      if (first < xw) ctx.drawImage(sky, 0, 0, xw - first, sky.height, W * first / xw, yT, W * (xw - first) / xw, yB - yT);
+      ctx.fillStyle = 'rgb(189,196,201)'; ctx.fillRect(0, yB - 1, W, H - yB + 1);
+    } else { ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); }
+    ctx.drawImage(gcv, 0, 0);
     // the fleet: track lines in 3D, then the marks
     ctx.font = `${11 * dp}px "IBM Plex Mono", monospace`; ctx.lineWidth = dp; const labels = [];
     for (const [name, v] of V) {
@@ -125,7 +144,9 @@ void main(){ vec3 c = texture(tex, vt).rgb; float f = 1. - exp(-dist / 11000.); 
     if (seekTo !== null) { t = seekTo; seekTo = null; } else t = (t + dt) % DUR;
     draw(); onTime(t);
   }
-  draw(); onTime(0);
+  const t0d = performance.now(); draw();
+  if (performance.now() - t0d > 80) { cv.getContext('2d').clearRect(0, 0, W, H); throw new Error('3d too slow on this device'); }   // then the flat map
+  onTime(0);
   const vis = on => { if (on && !running && !RM) { running = true; last = performance.now(); requestAnimationFrame(frame); } else if (!on) running = false; };
   if ('IntersectionObserver' in window) new IntersectionObserver(es => vis(es.some(e => e.isIntersecting))).observe(cv); else vis(true);
   cv.classList.add('on'); cv.parentElement.classList.add('filmon');

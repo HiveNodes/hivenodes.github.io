@@ -1,0 +1,15 @@
+{
+ "ok": true,
+ "date": "6 October 2026",
+ "repo_sha": "47dce6525ae9dd2ebac535f0786bc6cb60896e63",
+ "checked": 6,
+ "figures": [
+  "autopilot_core_files_per_commit",
+  "defects",
+  "formation_fleet_max",
+  "missions",
+  "nav_error_without_gps",
+  "real_flights"
+ ],
+ "failures": []
+}

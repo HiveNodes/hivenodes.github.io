@@ -608,6 +608,7 @@ def main():
     ap.add_argument("--page", default=DEFAULT_PAGE)
     ap.add_argument("--self-test", action="store_true")
     ap.add_argument("--summary", action="store_true", help="headline-figures page: skip the tally sub-figures")
+    ap.add_argument("--json", help="also write the outcome (ok, date, repo sha, figures checked) to this file for the page to show")
     args = ap.parse_args()
 
     if args.self_test:
@@ -621,6 +622,13 @@ def main():
         print(f"  REFUSED: {exc}")
         return 1
 
+    if args.json:
+        import json, datetime, subprocess, re as _re
+        sha = subprocess.run(["git", "-C", args.repo, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+        hooks = sorted(set(_re.findall(r'data-figure="([^"]+)"', open(os.path.normpath(args.page)).read())))
+        with open(args.json, "w") as fh:
+            json.dump({"ok": not failures, "date": datetime.date.today().strftime("%-d %B %Y"), "repo_sha": sha,
+                       "checked": len(hooks), "figures": hooks, "failures": failures}, fh, indent=1)
     if failures:
         print(f"\n  FAILED -- {len(failures)} figure(s) must be fixed before publishing:")
         for f in failures:

@@ -10,7 +10,7 @@ Written before any UI work, as the build brief (step 1) requires. Verified again
 | Local, not pushed | `fa85c62` | cinematic short homepage + `/capabilities/` + `/simulation/` split + fact-check fixes |
 | Rebuild work | branch `cinematic` | from `fa85c62`; swapped to `main` only after every gate passes |
 
-The old personal repo (nidhipsharma123-lab/homingvector) now only redirects to hivenodes.github.io.
+The previous personal-handle repository now only redirects to hivenodes.github.io.
 
 ## 2. File map (shipped)
 

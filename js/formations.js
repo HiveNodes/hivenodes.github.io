@@ -3,12 +3,12 @@
 // slot with a turn-rate and speed limit, so the change of shape looks like flight, not a tween.
 // Draws only inside its own canvas; labels are HTML below it. Reduced motion: slots shown at once, no cycling.
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const N = 8;
+const N = 5;   // five: the ghost-leader ring and line abreast were flown in simulation with five aircraft
 
 // slot patterns in a unit frame (x right, y down), centred on the ghost leader
 const SHAPES = {
   ring: k => { const a = -Math.PI / 2 + k * 2 * Math.PI / N; return [Math.cos(a) * .36, Math.sin(a) * .36]; },
-  line: k => [(k - (N - 1) / 2) * .11, 0],
+  line: k => [(k - (N - 1) / 2) * .15, 0],
   tight: k => { const a = -Math.PI / 2 + k * 2 * Math.PI / N; return [Math.cos(a) * .17, Math.sin(a) * .17]; },
 };
 

@@ -1,0 +1,144 @@
+/* Scattrnodes Eyes console for the live mission: the rules from site.css (simulation page) that style
+ * the rig, lifted unchanged so js/mission.js finds the same structure; restyled by css/main.css tokens. */
+/* ---------- live mission ---------- */
+.live{padding-top:var(--sec)}
+.live-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s5) var(--s8);align-items:end}
+.live-head p{color:var(--g1);max-width:58ch}
+.live-head code{color:var(--fg)}
+.mission{max-width:1920px;margin:var(--s7) auto 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.scen{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.scen button{background:var(--bg2);border:0;border-right:1px solid var(--line);min-height:56px;padding:var(--s2) var(--s4);text-align:left;font-size:14.5px;color:var(--g1);display:flex;flex-direction:column;justify-content:center;gap:2px}
+.scen button:last-child{border-right:0}
+.scen button span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--g2t)}
+.scen button:hover{color:var(--fg);background:var(--bg3)}
+.scen button[aria-checked="true"]{color:var(--fg);background:var(--bg3);box-shadow:inset 0 -3px 0 var(--acc-btn)}
+.scen button[aria-checked="true"] span{color:var(--acc)}
+.phases{list-style:none;display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+.phases::-webkit-scrollbar{display:none}
+.phases li{flex:1 0 auto;padding:var(--s3) var(--s4);color:var(--g2t);border-right:1px solid var(--line);white-space:nowrap;position:relative}
+.phases li:last-child{border-right:0}
+.phases li.done{color:var(--g1)}
+.phases li.on{color:#fff;background:var(--acc-btn)}
+.phases li.skip{color:#34423f;text-decoration:line-through}
+.theatre{display:grid;grid-template-columns:minmax(0,1fr) 440px}
+.map-col{min-width:0;border-right:1px solid var(--line);overflow:hidden}   /* the glitch alarm shifts the canvas a few px; never the page */
+.map{width:100%;height:auto;aspect-ratio:5/3;background:var(--bg0);touch-action:none;cursor:grab}
+.map:active{cursor:grabbing}
+.map.glitch{animation:glitch .42s steps(6,end)}
+@keyframes glitch{
+  0%{filter:none;transform:none}
+  17%{filter:drop-shadow(3px 0 0 rgba(255,74,43,.85)) drop-shadow(-3px 0 0 rgba(95,208,196,.7));transform:translateX(2px)}
+  34%{clip-path:inset(12% 0 60% 0);transform:translateX(-4px)}
+  51%{clip-path:inset(55% 0 20% 0);transform:translateX(3px)}
+  68%{clip-path:none;filter:drop-shadow(-2px 0 0 rgba(255,74,43,.8));transform:none}
+  100%{filter:none;transform:none}
+}
+.transport,.inject{display:flex;flex-wrap:wrap;gap:1px;background:var(--line);border-top:1px solid var(--line)}
+.tool{background:var(--bg2);border:0;min-height:44px;padding:0 var(--s4);font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--g1);white-space:nowrap}
+.tool:hover{color:var(--fg);background:var(--bg3)}
+.tool[aria-pressed="true"],.tool[aria-checked="true"]{color:var(--ink);background:var(--fg)}
+.inject .tool[aria-pressed="true"]{background:var(--acc-btn);color:#fff}
+.tool:disabled{opacity:.4;cursor:default}
+.speed{display:flex;gap:1px}
+.inject-k{background:var(--bg2);display:flex;align-items:center;padding:0 var(--s4);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.timeline{display:flex;align-items:center;gap:var(--s3);padding:var(--s2) var(--s4);border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--tan)}
+.timeline input{flex:1;accent-color:#c42a1c;min-height:32px}
+.timeline output{color:var(--fg);min-width:7ch;text-align:right;font-variant-numeric:tabular-nums}
+.map.tool-zone,.map.tool-rdv{cursor:crosshair}
+.map-keys{padding:0 var(--s5) var(--s3);font-family:var(--mono);font-size:11.5px;color:var(--g2t);line-height:1.9}
+kbd{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:0 4px;margin:0 1px;color:var(--fg);background:var(--bg3)}
+.roster-k{grid-column:1/-1;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--tan);margin-top:4px}
+.tool-hint{min-height:44px;padding:var(--s3) var(--s5);border-top:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--g1)}
+/* Scattrnodes Eyes console */
+.gcs{display:flex;flex-direction:column;min-width:0;background:var(--bg0);font-family:var(--mono);font-size:12px}
+.gcs-top{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2) var(--s4);padding:var(--s3) var(--s4);border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.12em;color:var(--g1)}
+.gcs-top b{font-family:var(--sans);font-size:15px;font-weight:600;letter-spacing:.12em;color:var(--fg)}
+.gcs-mode{border:1px solid var(--tan);padding:2px 6px;color:var(--tan)}
+.gcs-top #sim-clock{margin-left:auto;color:var(--fg)}
+.gcs-grid{display:flex;flex-direction:column;flex:1;min-height:0}
+.gcs-block{padding:var(--s3) var(--s4);border-bottom:1px solid var(--line)}
+.gcs-block h3{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--g2t);margin-bottom:var(--s2)}
+.stat{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s2) var(--s3)}
+.stat dt{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--g2t)}
+.stat dd{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--fg)}
+.stat dd.warn{color:var(--g1)}
+.stat dd.bad{color:var(--red)}
+.chain{color:var(--g2t);letter-spacing:.06em;text-transform:uppercase;font-size:12px}
+.chain span.done{color:var(--g1)}
+.chain span.on{color:var(--acc);box-shadow:inset 0 -1px 0 var(--acc)}
+.groups{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s3)}
+.grp{display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--tan);padding-left:var(--s3);color:var(--g1)}
+.grp b{font-weight:500;color:var(--fg);letter-spacing:.08em;text-transform:uppercase;font-size:11.5px}
+.grp.off,.grp.off b{color:var(--g2t)}   /* dimmed by colour: opacity took it below AA */
+.rec p{font-family:var(--sans);font-size:15px;line-height:1.35;color:var(--g1)}
+.rec.live-dec{box-shadow:inset 3px 0 0 var(--amber)}
+.rec.live-dec h3{color:var(--amber)}
+.rec.live-dec p{color:var(--fg)}
+.hold{--p:0;position:relative;overflow:hidden;width:100%;margin-top:var(--s3);background:var(--bg3);color:var(--fg);border:1px solid var(--amber);min-height:44px;padding:0 var(--s3);letter-spacing:.18em;text-transform:uppercase;font-family:var(--mono);font-size:11.5px;user-select:none;-webkit-user-select:none;touch-action:none}
+.hold::before{content:"";position:absolute;inset:0;background:rgba(242,181,68,.35);transform:scaleX(var(--p));transform-origin:left}
+.hold span{position:relative;color:var(--fg)}
+.hold:disabled{opacity:.35;cursor:not-allowed}
+.hold.rel::before{transition:transform .25s}
+.hold-hint{min-height:1.4em;margin-top:var(--s1);font-size:11.5px;color:var(--g1)}
+.demo-op{display:flex;align-items:center;gap:var(--s2);margin-top:var(--s1);font-size:11.5px;color:var(--g1);min-height:32px}
+.demo-op input{accent-color:#c42a1c;width:16px;height:16px}
+.tele{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px var(--s3);min-height:196px;align-content:start}
+.tele div{display:flex;justify-content:space-between;gap:var(--s2);border-bottom:1px dashed var(--line);padding:2px 0}
+.tele dt{color:var(--g2t);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}
+.tele dd{color:var(--fg);text-align:right;font-variant-numeric:tabular-nums}
+.tele dd.bad{color:var(--red)}
+.roster{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;min-height:320px;align-content:start}   /* reserve the 20-aircraft grid: no layout shift when it fills */
+.roster button{background:none;border:1px solid var(--line);min-height:26px;font:inherit;font-size:9.5px;padding:0;color:var(--fg)}
+.roster button.b{color:var(--g1);border-style:dashed}
+.roster button.rej{color:var(--g1);border-color:var(--g2)}
+.roster button.cl{color:var(--amber);border-color:var(--amber)}
+.roster button.lost{color:var(--red);border-color:var(--red)}
+.roster button.lost{text-decoration:line-through}
+.roster button.land{color:var(--g2t)}
+.roster button[aria-pressed="true"]{background:var(--acc-btn);color:#fff;border-color:var(--acc-btn)}
+.log-b{flex:1;min-height:0;display:flex;flex-direction:column;border-bottom:0}
+.dlog{list-style:none;flex:1;min-height:180px;max-height:300px;overflow-y:auto;font-size:11.5px;line-height:1.45}
+.dlog li{padding:3px 0 3px var(--s2);border-left:2px solid transparent;color:var(--g1);overflow-wrap:anywhere}
+.dlog li b{font-weight:400;color:var(--g2t);margin-right:var(--s2)}
+.dlog li.adv{border-left-color:var(--amber);color:var(--fg)}
+.dlog li.adv b{color:var(--amber)}
+.dlog li.good{color:var(--fg)}
+.dlog li.op{border-left-color:var(--tan);color:var(--fg)}
+.rig-fallback{padding:var(--s5) var(--gut)}
+.rig-fallback[hidden]{display:none}
+.rig-fallback p{color:var(--g1);max-width:70ch;margin-bottom:var(--s5)}
+.live-note{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5) var(--s8);padding:var(--s6) 0 var(--sec);font-size:14.5px;color:var(--g1)}
+.live-note b{color:var(--fg);font-weight:500}
+
+@media (max-width:1100px){
+  .theatre{grid-template-columns:1fr}
+  .map-col{border-right:0}
+  .gcs{border-top:1px solid var(--line)}
+  .gcs-grid{display:grid;grid-template-columns:1fr 1fr}
+  .log-b{grid-column:1/-1}
+  .scen{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .scen button:nth-child(4){border-right:0}
+  .scen button:nth-child(n+5){border-top:1px solid var(--line)}
+}
+@media (max-width:999px){
+  .live-head,.letter,.contact-row,.live-note{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .gcs-grid{grid-template-columns:1fr}
+  .scen{grid-template-columns:1fr 1fr}
+  .scen button{border-top:1px solid var(--line)}
+  .map{aspect-ratio:4/5}
+  .tool{flex:1 1 auto;padding:0 var(--s3)}
+  .inject-k{flex-basis:100%;min-height:32px}
+  .live-note{grid-template-columns:1fr}
+  .roster{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .roster button{min-height:32px;font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .sec.arrived::before,.map.glitch,.boot *{animation:none}
+}
+
+/* glass material for the console (2026-10-06 reskin) */
+.mission{background:linear-gradient(180deg,var(--glass-top),var(--glass-bot)),var(--bg2);border-top:1px solid var(--glass-edge);border-bottom:1px solid var(--glass-edge)}
+.gcs{background:linear-gradient(180deg,rgba(207,233,255,.04),rgba(207,233,255,.01)),var(--bg)}
+.dlog li,.tele dd,.stat dd,#sim-clock,.timeline output{font-variant-numeric:tabular-nums}

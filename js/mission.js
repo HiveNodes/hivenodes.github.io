@@ -23,7 +23,8 @@ const ABOUT = {
   6: 'The lead aircraft is lost in transit, then two working aircraft and a working ground robot during the search. Leadership passes on and the survivors take over their lanes and station.',
   7: 'Everything at once: GPS denial, degraded radio, a comms loss, an aircraft leaving formation, a lost aircraft and a lost ground robot, and a commanded formation change.',
 };
-const C = { bg: '#0b0d10', fg: '#e9e5dc', steel: '#a3a8ae', quiet: '#868c93', tan: '#c4a574', red: '#ff4632', redBtn: '#c42a1c', grid: 'rgba(233,229,220,.035)' };
+// palette (2026-10-06 reskin): amber = a warning or a person being asked; cyan-white = selected/active; red = LOST only
+const C = { bg: '#0b0d10', fg: '#e6eaee', steel: '#a9b3bd', quiet: '#8d97a1', tan: '#9fb6c9', red: '#f2b544', redBtn: '#cfe9ff', sel: '#cfe9ff', grid: 'rgba(207,233,255,.035)' };
 const WORLD = { x0: 0, y0: 0, x1: 27000, y1: 13500 };
 const pad2 = n => String(n).padStart(2, '0');
 const clock = t => `T+${pad2(Math.floor(t / 60))}:${pad2(Math.floor(t % 60))}`;
@@ -411,7 +412,7 @@ export function startLive({ cue, RM }) {
     for (let x = Math.floor(wx(0) / step) * step; x < wx(W); x += step) { ctx.moveTo(sx(x), 0); ctx.lineTo(sx(x), H); }
     for (let y = Math.floor(wy(H) / step) * step; y < wy(0); y += step) { ctx.moveTo(0, sy(y)); ctx.lineTo(W, sy(y)); }
     ctx.stroke();
-    const jam = (r, name) => { const [x, y, w, h] = r; ctx.fillStyle = 'rgba(255,70,50,.07)'; ctx.fillRect(x, y, w, h); ctx.strokeStyle = 'rgba(255,70,50,.8)'; ctx.setLineDash([6 * dp, 5 * dp]); ctx.lineWidth = 1.2 * dp; ctx.strokeRect(x, y, w, h); ctx.setLineDash([]); label(name, x + 8 * dp, y + 18 * dp, C.red); };
+    const jam = (r, name) => { const [x, y, w, h] = r; ctx.fillStyle = 'rgba(242,181,68,.07)'; ctx.fillRect(x, y, w, h); ctx.strokeStyle = 'rgba(242,181,68,.8)'; ctx.setLineDash([6 * dp, 5 * dp]); ctx.lineWidth = 1.2 * dp; ctx.strokeRect(x, y, w, h); ctx.setLineDash([]); label(name, x + 8 * dp, y + 18 * dp, C.red); };
     if (me[14]) jam(rectW(G[19], G[20], G[21], G[22]), 'GPS DENIED');
     const Z = cur.zones || []; for (let z = 0; z < Z.length; z += 4) jam(rectW(Z[z], Z[z + 1], Z[z + 2], Z[z + 3]), `JAMMING ZONE ${z / 4 + 1}`);
     if (drag && drag.mode === 'zone' && drag.moved) { const x = Math.min(drag.p[0], drag.cur[0]), y = Math.min(drag.p[1], drag.cur[1]); ctx.strokeStyle = C.red; ctx.setLineDash([4 * dp, 4 * dp]); ctx.strokeRect(x, y, Math.abs(drag.cur[0] - drag.p[0]), Math.abs(drag.cur[1] - drag.p[1])); ctx.setLineDash([]); }
@@ -470,7 +471,7 @@ export function startLive({ cue, RM }) {
     for (let i = 0; i < n; i++) {
       const o = i * UF, st = S[o + 7]; if (st === 0 || st === 6) continue;
       const x = sx(X(i)), y = sy(Y(i)), hd = lerp(P[o + 3], S[o + 3], k), grp = S[o + 5], kind = S[o + 24];
-      if (st === 5) { ctx.strokeStyle = 'rgba(255,70,50,.85)'; ctx.lineWidth = 2 * dp; ctx.beginPath(); ctx.moveTo(x - 6 * dp, y - 6 * dp); ctx.lineTo(x + 6 * dp, y + 6 * dp); ctx.moveTo(x + 6 * dp, y - 6 * dp); ctx.lineTo(x - 6 * dp, y + 6 * dp); ctx.stroke(); label(`${nameOf(i, S)} LOST`, x + 9 * dp, y - 8 * dp, C.red); continue; }
+      if (st === 5) { ctx.strokeStyle = 'rgba(255,90,74,.9)'; ctx.lineWidth = 2 * dp; ctx.beginPath(); ctx.moveTo(x - 6 * dp, y - 6 * dp); ctx.lineTo(x + 6 * dp, y + 6 * dp); ctx.moveTo(x + 6 * dp, y - 6 * dp); ctx.lineTo(x - 6 * dp, y + 6 * dp); ctx.stroke(); label(`${nameOf(i, S)} LOST`, x + 9 * dp, y - 8 * dp, C.red); continue; }
       if (eng) {
         arrow(x, y, x + S[o + 17] * 25 * cam.s, y - S[o + 18] * 25 * cam.s, 'rgba(233,229,220,.8)');
         const tx = sx(S[o + 13]), ty = sy(S[o + 14]), L = Math.hypot(tx - x, ty - y), c = Math.min(1, 140 * dp / Math.max(L, 1));
@@ -478,16 +479,16 @@ export function startLive({ cue, RM }) {
         if (S[o + 15] >= 0) { const qx = sx(S[o + 15]), qy = sy(S[o + 16]); ctx.strokeStyle = 'rgba(233,229,220,.55)'; ctx.setLineDash([dp, 3 * dp]); ctx.beginPath(); ctx.moveTo(sx(S[o + 21]), sy(S[o + 22])); ctx.lineTo(qx, qy); ctx.stroke(); ctx.setLineDash([]); ctx.strokeRect(qx - 3 * dp, qy - 3 * dp, 6 * dp, 6 * dp); }
         if (S[o + 19] > 0) label(`L${S[o + 19]}`, x - 18 * dp, y + 16 * dp, C.steel, 10);
       }
-      if (S[o + 8] > 12) { ctx.strokeStyle = st === 4 ? 'rgba(255,70,50,.55)' : 'rgba(163,168,174,.4)'; ctx.lineWidth = dp; ctx.beginPath(); ctx.arc(sx(S[o + 21]), sy(S[o + 22]), Math.max(4 * dp, S[o + 8] * cam.s), 0, Math.PI * 2); ctx.stroke(); }
+      if (S[o + 8] > 12) { ctx.strokeStyle = st === 4 ? 'rgba(242,181,68,.55)' : 'rgba(169,179,189,.4)'; ctx.lineWidth = dp; ctx.beginPath(); ctx.arc(sx(S[o + 21]), sy(S[o + 22]), Math.max(4 * dp, S[o + 8] * cam.s), 0, Math.PI * 2); ctx.stroke(); }
       const fill = st === 4 ? null : st === 2 || st === 3 ? C.steel : kind === 0 ? (grp ? C.bg : C.tan) : kind === 1 ? '#8f7a55' : '#7d9bb5';
       const stroke = st === 4 ? C.red : kind === 0 && grp && st === 1 ? C.fg : kind ? C.fg : null;
       if (kind === 0) plane(x, y, hd, z, fill, stroke); else if (kind === 1) rover(x, y, hd, z * .8, fill || C.bg, stroke); else boat(x, y, hd, z * .9, fill || C.bg, stroke);
       if (S[o + 6]) { ctx.strokeStyle = C.fg; ctx.lineWidth = dp; const r = z + 5 * dp; ctx.beginPath(); ctx.moveTo(x, y - r); ctx.lineTo(x + r, y); ctx.lineTo(x, y + r); ctx.lineTo(x - r, y); ctx.closePath(); ctx.stroke(); }
-      if (i === selected || i === hover) { ctx.strokeStyle = C.red; ctx.lineWidth = (i === selected ? 2 : 1.2) * dp; const r = z + 10 * dp, l = 7 * dp; ctx.beginPath();
+      if (i === selected || i === hover) { ctx.strokeStyle = C.sel; ctx.lineWidth = (i === selected ? 2 : 1.2) * dp; const r = z + 10 * dp, l = 7 * dp; ctx.beginPath();
         for (const [a, b] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { ctx.moveTo(x + a * r, y + b * (r - l)); ctx.lineTo(x + a * r, y + b * r); ctx.lineTo(x + a * (r - l), y + b * r); } ctx.stroke(); }
       if (showIds || i === selected || st !== 1 || S[o + 6] || kind) {
         const tag = `${nameOf(i, S)}${S[o + 6] ? ' L' : ''}${st === 4 ? ' COMMS LOST' : st === 3 ? ' REJOINING' : st === 2 ? ' LEFT' : ''}`;
-        label(tag, x + z + 4 * dp, y - z * .6, st === 4 || i === selected ? C.red : C.steel, 10);
+        label(tag, x + z + 4 * dp, y - z * .6, st === 4 ? C.red : i === selected ? C.sel : C.steel, 10);
       }
     }
     if (hover >= 0 && hover < n && S[hover * UF + 7] !== 6 && S[hover * UF + 7] !== 0) {

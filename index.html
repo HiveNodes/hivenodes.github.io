@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HiveNodes</title>
-<meta name="description" content="Homing Vector by HiveNodes: a drone swarm that finishes the mission when GPS and communications fail. Built for search, surveillance, tracking and disaster mapping.">
+<meta name="description" content="HiveNodes builds Homing Vector: Scattrnodes on every vehicle keeps drones, ground robots and boats on one mission when GPS and communications are gone; Scattrnodes Eyes lets a person supervise. Proven so far in simulation.">
 <meta property="og:title" content="HiveNodes">
 <meta property="og:description" content="Holds the mission when GPS and comms are gone. Homing Vector: one system of systems across air, ground and sea.">
 <meta property="og:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
@@ -31,118 +31,93 @@
 <link rel="apple-touch-icon" sizes="180x180" href="brand/apple-touch-icon-180.png">
 <link rel="preload" href="fonts/HostGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="media/cine/c0073_1600.webp" imagesrcset="media/cine/c0073_800.webp 800w, media/cine/c0073_1600.webp 1600w" imagesizes="100vw">
-<link rel="stylesheet" href="css/home.css">
-<script type="module" src="js/home.js"></script>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/console.css">
+<script type="module" src="js/main.js"></script>
 </head>
-<body class="cine">
+<body>
 <a class="skip" href="#main">Skip to content</a>
+<video id="film" class="vh" muted playsinline preload="none" aria-hidden="true" tabindex="-1">
+  <source data-src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
+  <source data-src="media/hero-film.webm" type="video/webm">
+  <source data-src="media/hero-film.mp4" type="video/mp4">
+</video>
 
-<header class="top" id="top">
-  <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="200" height="27"></a>
+<header class="bar-top" id="top">
+  <div class="brandline">
+    <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="200" height="27"></a>
+    <span class="sysline">Homing Vector · Scattrnodes · Scattrnodes Eyes</span>
+  </div>
   <nav aria-label="Main">
     <ul>
-      <li><a href="#mission">The mission</a></li>
+      <li><a href="#mission">Mission</a></li>
       <li><a href="#live">Live</a></li>
-      <li><a href="#missions">Uses</a></li>
-      <li><a href="#proof">Proof</a></li>
-      <li><a href="capabilities/">Capabilities</a></li>
-      <li><a href="simulation/">Simulation</a></li>
-      <li><button type="button" class="snd" id="snd" aria-pressed="false" title="Wind and a low note, made in your browser">Sound</button></li>
+      <li><a href="#system">System</a></li>
+      <li><a href="#evidence">Evidence</a></li>
+      <li><a href="#status">Status</a></li>
+      <li class="keep"><button type="button" class="snd" id="snd" aria-pressed="false" title="Wind, a low note and the console's cues, made in your browser">Sound</button></li>
       <li><a class="nav-cta" href="#contact">Contact</a></li>
     </ul>
   </nav>
+  <div class="chrome-r" aria-label="Live state">
+    <span>Pangong <b id="clock">--:--</b> IST</span>
+    <span class="eng">Engine <b id="eng-sha">17ac9ee</b></span>
+  </div>
 </header>
 
 <main id="main">
 
-<section class="open" aria-labelledby="h1">
-  <div class="frame open-frame"><img src="media/cine/c0073_1600.webp" srcset="media/cine/c0073_800.webp 800w, media/cine/c0073_1600.webp 1600w" sizes="100vw" alt="Rendered: a formation of fixed-wing aircraft crossing a mountain ridge above Pangong Tso, Ladakh." width="1600" height="800" fetchpriority="high"></div>
-  <div class="title-card w">
-    <p class="credit">HiveNodes &middot; Homing Vector</p>
-    <p class="sunline" id="sunline">Pangong Tso, Ladakh &middot; 4,244 m</p>
-    <h1 id="h1">The swarm that flies on when GPS and comms fail.</h1>
-    <p class="sub">A fleet of drones that works as one team and finishes the mission on its own.</p>
-    <div class="cta"><a class="btn" href="#mission">Watch the mission</a><a class="btn ghost" href="#contact">Talk to us</a></div>
+<section class="hero" aria-labelledby="h1">
+  <div class="plate" id="hero-plate">
+    <img src="media/ops-map-1200.webp" alt="Satellite image of Pangong Tso, Ladakh: the deep-blue lake between ochre mountain shores." width="1200" height="1200" fetchpriority="high">
+    <canvas id="hero-cv" role="img" aria-label="Ops display over real satellite imagery of Pangong Tso: the simulated fleet of aircraft, ground robots and boats moving along their tracks, with navigation uncertainty rings while GPS is denied."></canvas>
   </div>
-</section>
-
-<section class="story" id="mission" aria-labelledby="ms-title">
-  <h2 id="ms-title" class="vh">The mission, step by step</h2>
-  <div class="stage">
-    <div class="frame story-frame">
-      <img class="still" id="story-still" src="media/cine/c0073_1600.webp" srcset="media/cine/c0073_800.webp 800w, media/cine/c0073_1600.webp 1600w" sizes="100vw" alt="" width="1600" height="800" loading="lazy">
-      <video class="story-v" id="story-v" muted playsinline preload="none" aria-hidden="true" tabindex="-1">
-        <source data-src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
-        <source data-src="media/hero-film.webm" type="video/webm">
-        <source data-src="media/hero-film.mp4" type="video/mp4">
-      </video>
+  <div class="hero-bar w">
+    <div>
+      <h1 id="h1">Holds the mission when GPS and comms are gone.</h1>
+      <p class="sub">Software that lets a group of drones, ground robots and boats work as one team, and keep working when satellite navigation (GPS) and radio contact are jammed. Proven so far in simulation.</p>
+      <div class="cta"><a class="btn" href="#live">Fly it yourself</a><a class="btn ghost" href="#mission">Step through the mission</a></div>
+      <p class="sunline" id="sunline">Pangong Tso, Ladakh · 4,244 m</p>
+      <p class="attrib">Ground: Copernicus Sentinel-2 imagery (2024) and Copernicus DEM, real. Fleet: simulation.</p>
     </div>
-    <div class="subtitle w" aria-hidden="true">
-      <p class="sub-n"><span id="cap-n">01</span> / 09</p>
-      <p class="sub-t" id="cap-t">The operator sets one intent: search this valley. Every aircraft carries the whole plan.</p>
-      <div class="ticks" id="ticks"></div>
+    <div class="telem glass" id="hero-telem" aria-label="Scattrnodes Eyes readout for the ops display">
+      <div class="telem-top"><span class="lab">Scattrnodes Eyes · ops</span><span class="simtag">SIMULATION · REAL TERRAIN</span></div>
+      <dl>
+        <div><dt>Aircraft</dt><dd class="lit" data-t="uav">70</dd></div>
+        <div><dt>Ground · boats</dt><dd class="lit" data-t="gs">6 · 4</dd></div>
+        <div><dt>GPS</dt><dd class="lit" data-t="gps">OK</dd></div>
+        <div><dt>Radio</dt><dd class="lit" data-t="radio">NOMINAL</dd></div>
+        <div><dt>Relays</dt><dd class="lit" data-t="relays">0</dd></div>
+        <div><dt>Lost</dt><dd class="lit" data-t="lost">0</dd></div>
+      </dl>
+      <div class="rail" role="group" aria-label="Film chapters">
+        <button type="button" data-cue="0" aria-current="true">0:00</button><button type="button" data-cue="1">0:06</button><button type="button" data-cue="2">0:11</button><button type="button" data-cue="3">0:17</button><button type="button" data-cue="4">0:23</button><button type="button" data-cue="5">0:28</button><button type="button" data-cue="6">0:34</button><button type="button" data-cue="7">0:40</button>
+      </div>
     </div>
   </div>
-  <ol class="chapters">
-    <li data-t0="0" data-t1="6" data-still="c0073"><b>Intent.</b> The operator sets one intent: search this valley. Every aircraft carries the whole plan.</li>
-    <li data-t0="6" data-t1="12" data-still="c0217"><b>Share the work.</b> The aircraft split the area between them. No leader: each takes the lanes it can reach first.</li>
-    <li data-t0="12" data-t1="18" data-still="c0325"><b>Ground team.</b> Ground robots take the shoreline road, on the same plan and the same network.</li>
-    <li data-t0="18" data-t1="24" data-still="c0505"><b>Relay.</b> Aircraft up high pass messages on for robots and boats beyond radio range.</li>
-    <li data-t0="24" data-t1="28.5" data-still="c0640"><b>GPS jammed.</b> Every vehicle navigates on its own sensors and checks its position against its neighbours.</li>
-    <li data-t0="28.5" data-t1="36" data-still="c0775"><b>Aircraft lost.</b> One goes silent. The others take over its lanes, with no one telling them to.</li>
-    <li data-t0="36" data-t1="40" data-still="c0880"><b>The coast.</b> The sweep reaches the shoreline, where boats are tasked to watch the water.</li>
-    <li data-t0="40" data-t1="45.5" data-still="c1009"><b>Found.</b> An aircraft spots the target. It keeps it in view while the rest hold the search.</li>
-    <li data-t0="40" data-t1="45.5" data-still="c0865" data-still-only="1"><b>The operator decides.</b> The find goes to the operator, who decides what happens next. Then the fleet comes home and lands, one by one.</li>
-  </ol>
-  <p class="fine w story-note">How the system is designed to work. The aircraft steps are flown in simulation; ground robots and boats are in development. Film rendered.</p>
 </section>
 
-<section class="sec live-sec" id="live" aria-labelledby="lv-h">
-  <div class="w live-head">
-    <p class="credit">Live &middot; the real Scattrnodes core, running in your browser (simulation)</p>
-    <h2 id="lv-h">Not a video. The real software, flying.</h2>
-    <p class="sub">The Scattrnodes core, built for the browser from the same source as the aircraft software, flies 70 aircraft, 6 ground robots and 4 boats through a whole mission. Break something and watch the fleet re-plan.</p>
-  </div>
-  <div class="live-stage" id="live-stage">
-    <canvas class="live-cv" width="1600" height="760" role="img" aria-label="Live tactical display: the Scattrnodes mission engine flying aircraft, ground robots and boats, with their radio links and position uncertainty. Changes as you use the controls below."></canvas>
-  </div>
-  <div class="live-bar w">
-    <dl class="lv-read">
-      <div><dt>Mission time</dt><dd id="lv-t">T+00:00</dd></div>
-      <div><dt>Phase</dt><dd id="lv-ph">Waiting</dd></div>
-      <div><dt>Fleet</dt><dd id="lv-act">&ndash;</dd></div>
-      <div><dt>Navigating by</dt><dd id="lv-nav">&ndash;</dd></div>
-    </dl>
-    <div class="lv-btns">
-      <button type="button" class="lv-b" data-lv="start" hidden>Start the live engine (0.6 MB)</button>
-      <button type="button" class="lv-b" data-lv="gps" aria-pressed="false" disabled>Jam GPS</button>
-      <button type="button" class="lv-b" data-lv="radio" aria-pressed="false" disabled>Degrade radio</button>
-      <button type="button" class="lv-b" data-lv="lose" disabled>Lose an aircraft</button>
-      <button type="button" class="lv-b ghost" data-lv="again" disabled>New mission</button>
-    </div>
-    <p class="lv-log"><span class="lv-k">Latest decision</span> <span id="lv-log">The engine starts when you reach this section.</span></p>
-  </div>
-  <p class="fine w">Engine: Scattrnodes source at commit 17ac9ee, compiled to WebAssembly, unchanged. A person confirms some re-plans; on this page that confirmation is given automatically. The full operator console is on the <a href="simulation/">simulation page</a>.</p>
-</section>
-
-<section class="scenes" id="missions" aria-labelledby="sc-h">
-  <div class="w scenes-head"><p class="credit">Built for</p><h2 id="sc-h">Cover more ground. Miss less.</h2></div>
-  <figure class="scene"><img src="media/cine/c0217_1600.webp" srcset="media/cine/c0217_800.webp 800w, media/cine/c0217_1600.webp 1600w" sizes="100vw" alt="Rendered: a dozen aircraft spread low over a lake, each on its own search lane." width="1600" height="800" loading="lazy"><figcaption class="w"><b>Wide-area search</b><span>Forests, mountains and disaster zones, swept in parallel lanes to find a person or a crash site sooner.</span></figcaption></figure>
-  <figure class="scene"><img src="media/cine/c0505_1600.webp" srcset="media/cine/c0505_800.webp 800w, media/cine/c0505_1600.webp 1600w" sizes="100vw" alt="Rendered: aircraft high above a mountain range under scattered cloud." width="1600" height="800" loading="lazy"><figcaption class="w"><b>Border and perimeter watch</b><span>A long line patrolled day and night, without a pilot for every aircraft.</span></figcaption></figure>
-  <figure class="scene"><img src="media/cine/c1009_1600.webp" srcset="media/cine/c1009_800.webp 800w, media/cine/c1009_1600.webp 1600w" sizes="100vw" alt="Rendered thermal sensor view: an aircraft's camera locked on vehicles on the ground." width="1600" height="800" loading="lazy"><figcaption class="w"><b>Detect and track</b><span>Find a vehicle and keep it in view, even when an aircraft drops out.</span></figcaption></figure>
-  <figure class="scene"><img src="media/cine/c0880_1600.webp" srcset="media/cine/c0880_800.webp 800w, media/cine/c0880_1600.webp 1600w" sizes="100vw" alt="Rendered: the fleet spread along a lake shoreline." width="1600" height="800" loading="lazy"><figcaption class="w"><b>Coast and sea patrol</b><span>Aircraft and boats watching one coastline under one plan.</span></figcaption></figure>
-  <figure class="scene"><img src="media/cine/c0325_1600.webp" srcset="media/cine/c0325_800.webp 800w, media/cine/c0325_1600.webp 1600w" sizes="100vw" alt="Rendered: three ground robots on a lake shore, part of the same mission." width="1600" height="800" loading="lazy"><figcaption class="w"><b>Convoy and ground-team overwatch</b><span>Aircraft circling the robots below, moving with them and watching around them.</span></figcaption></figure>
-  <p class="fine w">Missions the system is designed for. Results so far are from simulation; ground and sea vehicles are in development.</p>
-</section>
-
-<section class="sec fly" id="fly" aria-labelledby="fx-h">
+<section class="sec plain" id="plain" aria-labelledby="pl">
   <div class="w">
-    <p class="credit">See it fly</p>
-    <h2 id="fx-h">Change the shape. Every aircraft finds its place.</h2>
+    <p class="idx">In plain words</p>
+    <h2 id="pl" class="scr">How it works.</h2>
+    <ol class="steps3">
+      <li class="glass"><span class="num lit">1</span><h3>A person sets the goal.</h3><p>"Search this valley."</p></li>
+      <li class="glass"><span class="num lit">2</span><h3>The vehicles split the work.</h3><p>No boss vehicle. Every one carries the plan.</p></li>
+      <li class="glass"><span class="num lit">3</span><h3>Jammed? They carry on.</h3><p>Without GPS or radio, they keep the mission and come home.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec ring" id="ring" aria-labelledby="rg">
+  <div class="w">
+    <p class="idx">How they fly</p>
+    <h2 id="rg" class="scr">A ring around a leader that isn’t there.</h2>
+    <p class="lede">The “leader” is a point on the route. Every aircraft takes its own place around it, so losing any one aircraft breaks nothing.</p>
     <div class="fx" id="fx">
       <canvas class="fx-cv" width="1200" height="520" role="img" aria-label="Animation, top view: eight fixed-wing aircraft change formation around a ghost leader, a moving point that no aircraft owns. Illustration of the slot geometry, not a recording."></canvas>
       <div class="fx-pick" aria-label="Formation shape">
-        <button type="button" data-shape="ring" aria-pressed="true"><b>Ghost-leader ring</b><span>Flown in simulation</span></button>
+        <button type="button" data-shape="ring" aria-pressed="true"><b>Ghost-leader ring</b><span>Flown in simulation · 5 aircraft</span></button>
         <button type="button" data-shape="line" aria-pressed="false"><b>Line abreast, 15–20 m</b><span>Flown in simulation</span></button>
         <button type="button" data-shape="tight" aria-pressed="false"><b>Tight ring, 15–20 m</b><span>In development</span></button>
       </div>
@@ -150,38 +125,278 @@
   </div>
 </section>
 
-<section class="sec proof" id="proof" aria-labelledby="st-h">
+<section class="sec" id="problem" aria-labelledby="pb">
   <div class="w">
-    <p class="credit">Proof</p>
-    <h2 id="st-h">Five aircraft. Every failure at once.</h2>
-    <dl class="nums3">
-      <div><dt>Test missions flown and scored in simulation</dt><dd data-figure="missions">768</dd></div>
-      <div><dt>Losses of separation in the all-conditions mission</dt><dd>0</dd></div>
-      <div><dt>Seconds with zero satellites, all five aircraft</dt><dd>150</dd></div>
-    </dl>
-    <div class="shots">
-      <figure><img src="media/stills/mission_route.jpg" alt="Ground-station map: all five aircraft on the operator's route." loading="lazy" width="1500" height="898"><figcaption>On the operator's route.</figcaption></figure>
-      <figure><img src="media/stills/mission_zerosat.jpg" alt="Ground-station map: all five aircraft still flying the mission with zero satellites." loading="lazy" width="1500" height="898"><figcaption>Zero satellites, still on mission.</figcaption></figure>
-      <figure><img src="media/stills/mission_landing.jpg" alt="Ground-station map: one aircraft landed, the next on approach, three waiting their turn." loading="lazy" width="1500" height="898"><figcaption>Landing one by one.</figcaption></figure>
+    <p class="idx">01 · The problem</p>
+    <h2 id="pb" class="scr">GPS is the first thing taken.</h2>
+    <div class="cards3">
+      <div class="card glass"><canvas data-model="jam" width="640" height="360" role="img" aria-label="Illustrative model: satellite signal power against a jammer's power as a vehicle approaches it; the signal is drowned kilometres out."></canvas><p class="model">Illustrative model</p><h3>Jamming</h3><p>A cheap transmitter wipes out GPS for kilometres.</p></div>
+      <div class="card glass"><canvas data-model="spoof" width="640" height="360" role="img" aria-label="Illustrative model: a spoofed position drifting slowly away from the true track while the receiver stays confident."></canvas><p class="model">Illustrative model</p><h3>Spoofing</h3><p>A fake signal quietly drags a drone off course.</p></div>
+      <div class="card glass"><canvas data-model="links" width="640" height="360" role="img" aria-label="Illustrative model: a network of vehicles whose radio links drop out one by one under jamming."></canvas><p class="model">Illustrative model</p><h3>Contested links</h3><p>Cut the radio, and most drone teams fall apart.</p></div>
     </div>
-    <p class="fine">Simulation with real autopilot software; hardware-in-the-loop on an earlier autopilot stack. <a href="simulation/#evidence">How every number is measured</a>.</p>
   </div>
 </section>
 
-<section class="sec credits" id="contact" aria-labelledby="ct-h">
+<section class="mission-sec" id="mission" aria-labelledby="ms">
+  <div class="w mission-head">
+    <p class="idx">02 · The mission</p>
+    <h2 id="ms" class="scr">Step through the mission.</h2>
+    <p class="lede">Scroll. Eight moments, one line each.</p>
+  </div>
+  <div class="walk" id="walk">
+    <div class="stage">
+      <div class="plate" id="walk-plate">
+        <img id="walk-still" src="media/cine/c0217_1600.webp" srcset="media/cine/c0217_800.webp 800w, media/cine/c0217_1600.webp 1600w" sizes="100vw" alt="" width="1600" height="800" loading="lazy">
+        <canvas id="walk-cv" aria-hidden="true"></canvas>
+      </div>
+      <div class="beat w" aria-hidden="true">
+        <div class="beat-card glass" id="beat-card"><span class="clock" id="beat-clock">T+00:00</span><h3 id="beat-h">Seventy aircraft. One AI on every one of them.</h3><p id="beat-p"></p></div>
+        <div class="telem glass" id="walk-telem">
+          <div class="telem-top"><span class="lab">Scattrnodes Eyes · film</span><span class="simtag">SIMULATION · RENDERED</span></div>
+          <dl>
+            <div><dt>Aircraft</dt><dd class="lit" data-t="uav">70</dd></div>
+            <div><dt>Ground · boats</dt><dd class="lit" data-t="gs">6 · 4</dd></div>
+            <div><dt>GPS</dt><dd class="lit" data-t="gps">OK</dd></div>
+            <div><dt>Radio</dt><dd class="lit" data-t="radio">NOMINAL</dd></div>
+            <div><dt>Relays</dt><dd class="lit" data-t="relays">0</dd></div>
+            <div><dt>Lost</dt><dd class="lit" data-t="lost">0</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+    <ol class="beats w">
+      <li data-cue="0" data-t0="0" data-t1="11" data-clock="T+00:00" data-still="c0073"><h3>Built for seventy aircraft. Scattrnodes on every one.</h3><p>Five wedges cross the lake. No leader, no base station. (Largest flown in simulation so far: 8.)</p></li>
+      <li data-cue="2" data-t0="11" data-t1="17" data-clock="T+00:11" data-still="c0325"><h3>Air, ground and water, one plan.</h3><p>Robots on the shore, boats on the water, aircraft above: one shared plan.</p></li>
+      <li data-cue="3" data-t0="17" data-t1="23" data-clock="T+00:17" data-still="c0505"><h3>GPS goes dark.</h3><p>Each vehicle keeps track of itself and its neighbours, and spreads out as it grows less sure.</p></li>
+      <li data-cue="4" data-t0="23" data-t1="28.5" data-clock="T+00:23" data-still="c0640"><h3>The radio degrades.</h3><p>Four aircraft climb to pass messages along.</p></li>
+      <li data-cue="5" data-t0="28.5" data-t1="34" data-clock="T+00:28" data-still="c0775"><h3>A lead aircraft is lost.</h3><p>Its followers join the other groups. Nobody has to tell them.</p></li>
+      <li data-cue="6" data-t0="34" data-t1="40" data-clock="T+00:34" data-still="c0880"><h3>Split and search.</h3><p>Two groups peel off to search land and water.</p></li>
+      <li data-cue="7" data-t0="40" data-t1="45.5" data-clock="T+00:40" data-still="c1009"><h3>Eyes on the ground team.</h3><p>A relay aircraft watches over the robots below.</p></li>
+      <li data-cue="7" data-t0="40" data-t1="45.5" data-clock="T+00:46" data-still="c0865" data-still-only="1"><h3>It recommends. A person decides.</h3><p>The operator supervises. No weapons in either product.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec live" id="live" aria-labelledby="lv">
   <div class="w">
-    <h2 id="ct-h">Fly with us.</h2>
-    <p class="sub">We are raising a pre-seed round to take Homing Vector to its first field trial.</p>
-    <dl class="roll">
-      <div><dt>The system</dt><dd>Homing Vector</dd></div>
-      <div><dt>On every vehicle</dt><dd>Scattrnodes</dd></div>
-      <div><dt>The operator station</dt><dd>Scattrnodes Eyes <small>in development</small></dd></div>
-      <div><dt>Founders</dt><dd>Nidhip Sharma &middot; Karan Tiwari</dd></div>
-    </dl>
-    <div class="reach">
-      <a class="mail" id="mail" href="#contact">nidhip.sharma.123 [at] gmail.com</a>
-      <a class="li" href="https://www.linkedin.com/in/nidhip-sharma/" rel="noopener">LinkedIn</a>
-      <a class="li" href="capabilities/">Every capability, and how far it is proven</a>
+    <p class="idx">03 · Live</p>
+    <div class="live-head">
+      <h2 id="lv" class="scr">Fly the mission yourself.</h2>
+      <p class="rv">Our real software, running in your browser. Press a failure and watch the fleet adapt.</p>
+      <p class="sim-disclaim">Browser simulation, not a flight result</p>
+    </div>
+  </div>
+  <div class="mbar w" id="mbar" aria-live="polite">
+    <div class="mb-step glass"><span class="lab">Phase</span><b id="mb-n">1 of 10</b><ol class="mb-dots" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol></div>
+    <div class="mb-now glass"><span class="lab">Happening now</span><h3 id="mb-ph">Launch</h3><p id="mb-what">The aircraft take off one after another; ground robots and boats leave their start points.</p></div>
+    <div class="mb-next glass"><span class="lab">Next</span><b id="mb-next">Assembly</b><span class="lab mb-ev">Failures active</span><b id="mb-fail">None</b></div>
+  </div>
+  <div class="mission lite" id="rig">
+    <div class="scen" role="radiogroup" aria-label="Scenario">
+      <button type="button" role="radio" aria-checked="false" data-scen="1"><span>01</span>Single UAV</button>
+      <button type="button" role="radio" aria-checked="false" data-scen="2"><span>02</span>Formation flight</button>
+      <button type="button" role="radio" aria-checked="false" data-scen="3"><span>03</span>Swarm 70 + 10</button>
+      <button type="button" role="radio" aria-checked="false" data-scen="4"><span>04</span>GPS denied</button>
+      <button type="button" role="radio" aria-checked="false" data-scen="5"><span>05</span>Comms loss</button>
+      <button type="button" role="radio" aria-checked="false" data-scen="6"><span>06</span>UAV loss</button>
+      <button type="button" role="radio" aria-checked="true" data-scen="7"><span>07</span>Full mission</button>
+    </div>
+    <ol class="phases" id="phases" tabindex="0" aria-label="Mission phase">
+      <li>Launch</li><li>Assembly</li><li>Formation</li><li>Transit</li><li>Split</li><li>Search</li><li>Rendezvous</li><li>Reform</li><li>Return</li><li>Complete</li>
+    </ol>
+    <div class="theatre">
+      <div class="map-col">
+        <canvas id="map" class="map" width="1600" height="960" tabindex="0" role="img" aria-label="Live map of the simulated swarm. With the map focused: Space plays or pauses, arrow keys select a vehicle, plus and minus zoom; see the keys listed below the controls." aria-describedby="tool-hint map-keys"></canvas>
+        <div class="timeline">
+          <label for="tl">Timeline</label>
+          <input type="range" id="tl" min="0" max="4200" step="10" value="0" aria-describedby="tl-note">
+          <output id="tl-out" for="tl">T+00:00</output>
+          <span class="vh" id="tl-note">Drag to rewind or jump ahead. Rewind is exact: the simulation restores its own saved state and replays your actions.</span>
+        </div>
+        <div class="transport" role="toolbar" aria-label="Simulation controls">
+          <button type="button" class="tool" data-act="play" aria-pressed="true">Pause</button>
+          <button type="button" class="tool more" data-act="step">Step 1 s</button>
+          <button type="button" class="tool" data-act="restart">Restart</button>
+          <span class="speed" role="radiogroup" aria-label="Simulation speed">
+            <button type="button" class="tool" role="radio" aria-checked="false" data-speed="0.5">0.5×</button><button type="button" class="tool" role="radio" aria-checked="true" data-speed="1">1×</button><button type="button" class="tool" role="radio" aria-checked="false" data-speed="2">2×</button><button type="button" class="tool" role="radio" aria-checked="false" data-speed="4">4×</button>
+          </span>
+          <button type="button" class="tool more" data-act="zoomin" aria-label="Zoom in">Zoom +</button><button type="button" class="tool more" data-act="zoomout" aria-label="Zoom out">Zoom −</button>
+          <button type="button" class="tool more" data-act="follow" aria-pressed="true">Follow swarm</button>
+          <button type="button" class="tool more" data-act="eng" aria-pressed="false">Engineering view</button>
+        </div>
+        <div class="inject" role="toolbar" aria-label="Introduce failures">
+          <span class="inject-k" aria-hidden="true">Introduce</span>
+          <button type="button" class="tool" data-ev="gps" aria-pressed="false">GPS unavailable</button>
+          <button type="button" class="tool" data-ev="radio" aria-pressed="false">Degrade radio</button>
+          <button type="button" class="tool more" data-ev="cut">Cut comms to selected</button>
+          <button type="button" class="tool more" data-ev="leave">Selected leaves formation</button>
+          <button type="button" class="tool" data-ev="lose">Lose selected UAV</button>
+          <button type="button" class="tool more" data-ev="form">Change formation</button>
+          <button type="button" class="tool more" data-tool="zone" aria-pressed="false">Draw jamming zone</button>
+          <button type="button" class="tool more" data-tool="rdv" aria-pressed="false">Move rendezvous</button>
+          <button type="button" class="tool more" data-ev="clearzones">Clear zones</button>
+        </div>
+        <p class="tool-hint" id="tool-hint" aria-live="polite">Loading the Scattrnodes core…</p>
+        <button type="button" class="tool moretoggle" id="moretoggle" aria-expanded="false" aria-controls="rig">More controls and keyboard</button>
+        <p class="map-keys more" id="map-keys">Keys with the map focused: <kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> select · <kbd>+</kbd><kbd>−</kbd> zoom · <kbd>E</kbd> engineering · <kbd>F</kbd> follow · <kbd>G</kbd> GPS · <kbd>R</kbd> radio · <kbd>C</kbd> cut · <kbd>L</kbd> lose · <kbd>V</kbd> leave formation · <kbd>T</kbd> formation · <kbd>Z</kbd> draw zone · <kbd>1</kbd>–<kbd>7</kbd> scenario</p>
+      </div>
+      <h2 class="vh">Scattrnodes Eyes console</h2>
+      <aside class="gcs" id="gcs" aria-label="Scattrnodes Eyes console for the live mission">
+        <div class="gcs-top"><b>SCATTRNODES EYES</b><span>PERSISTENT OVERWATCH</span><span class="gcs-mode">SIMULATION</span><span id="sim-clock">T+00:00</span></div>
+        <div class="gcs-grid">
+          <section class="gcs-block" aria-labelledby="g-status"><h3 id="g-status">Swarm status</h3>
+            <dl class="stat">
+              <div><dt>Fixed-wing</dt><dd id="s-fw">–</dd></div><div><dt>Ground</dt><dd id="s-gnd">–</dd></div><div><dt>Surface</dt><dd id="s-sea">–</dd></div>
+              <div><dt>Active</dt><dd id="s-act">–</dd></div><div><dt>Relays</dt><dd id="s-relay">–</dd></div>
+              <div><dt>Rejoining</dt><dd id="s-rej">–</dd></div><div><dt>Comms lost</dt><dd id="s-cl">–</dd></div>
+              <div><dt>Lost</dt><dd id="s-lost">–</dd></div><div><dt>Landed</dt><dd id="s-land">–</dd></div>
+            </dl>
+          </section>
+          <section class="gcs-block" aria-labelledby="g-mission"><h3 id="g-mission">Mission</h3>
+            <p class="chain" id="chain"><span data-p="3">Transit</span> → <span data-p="5">Search</span> → <span data-p="6">Rendezvous</span> → <span data-p="8">Return</span></p>
+            <div class="groups">
+              <div class="grp"><b>Group A</b><span id="ga-n">–</span><span id="ga-f">–</span><span id="ga-l">–</span></div>
+              <div class="grp"><b>Group B</b><span id="gb-n">–</span><span id="gb-f">–</span><span id="gb-l">–</span></div>
+            </div>
+          </section>
+          <section class="gcs-block rec" id="rec" aria-labelledby="g-rec"><h3 id="g-rec">Awaiting operator</h3>
+            <p id="rec-text">No decision pending. The swarm is executing the plan.</p>
+            <button type="button" class="hold" id="hold" disabled><span>Hold to confirm</span></button>
+            <p class="hold-hint" id="hold-hint" aria-live="polite"></p>
+            <label class="demo-op"><input type="checkbox" id="demo-op" checked> Demo operator confirms after 6 s</label>
+          </section>
+          <section class="gcs-block" aria-labelledby="g-sel"><h3 id="g-sel">Selected vehicle</h3>
+            <dl class="tele" id="tele"><div><dt>ID</dt><dd>–</dd></div></dl>
+          </section>
+          <section class="gcs-block roster-b" aria-labelledby="g-roster"><h3 id="g-roster">Fleet</h3>
+            <div class="roster" id="roster" role="group" aria-label="Select a vehicle"></div>
+          </section>
+          <section class="gcs-block log-b" aria-labelledby="g-log"><h3 id="g-log">Event and order log</h3>
+            <ol class="dlog" id="dlog" tabindex="0" aria-label="Event and order log"></ol>
+          </section>
+        </div>
+        <p class="vh" id="narrate" aria-live="polite"></p>
+      </aside>
+    </div>
+    <div class="rig-fallback" id="rig-fallback" hidden>
+      <p>This browser cannot run the live simulation (it needs WebAssembly and Web Workers). Below is a frame of it: seventy aircraft split into two groups over the search area with ground robots and boats on their stations, lanes assigned, and a lost aircraft’s lane taken over.</p>
+      <img src="../brand/sim-static.svg" alt="Diagram: seventy aircraft split into Group A and Group B over an abstract search area of land and water, ground robots and boats on stations, and a lost aircraft whose lane another aircraft took over." width="1600" height="960">
+    </div>
+  </div>
+  <div class="w">
+    <details class="live-note"><summary>What is real code here, and what was written for this page</summary>
+      <p><b>Scattrnodes code, unchanged:</b> which vehicle takes which search lane or station, across air, ground and water, and who takes over after a loss (CBBA, with its domain rules: a robot never gets a water station); when a silent vehicle counts as lost; what a degraded or cut-off vehicle may still do, including how much it widens its spacing; what a group of this size may still do; the separation monitor that makes aircraft climb to a new layer; peer-aided navigation without GPS; and the assembly, relay and rendezvous rings.</p>
+      <p><b>Written for this page:</b> the mission phases, the wedge, V, line and column shapes, the leader-follower steering, the radio and GPS models, and the scenario scripts. The search area is abstract. This is a browser simulation, not a flight result: Scattrnodes is built for a fleet this size, but the largest formation it has flown in simulation so far is the 8 aircraft in Evidence below. The same seed always gives the same run.</p>
+    </details>
+  </div>
+</section>
+
+
+<section class="sec" id="system" aria-labelledby="ts">
+  <div class="w">
+    <p class="idx">04 · Scattrnodes AI</p>
+    <h2 id="ts" class="scr">Above the autopilot. Below the operator.</h2>
+    <p class="lede">Every drone already flies itself. Scattrnodes makes them a team. Works with the PX4 and ArduPilot autopilots.</p>
+    <div class="stack" aria-label="Where Scattrnodes sits: five layers">
+      <ol>
+        <li class="layer glass" tabindex="0"><span class="lab">Operator</span><h3>Scattrnodes Eyes</h3><p>Supervises · outside the decision loop · no weapons interface</p></li>
+        <li class="layer glass core" tabindex="0"><span class="lab">Scattrnodes AI · on every vehicle</span>
+          <div class="cells"><span>World model</span><span>Task allocation</span><span>Mission plan</span><span>Health</span><span>Cross-domain</span><span>Degraded modes</span></div></li>
+        <li class="layer glass" tabindex="0"><span class="lab">One vehicle abstraction</span><p>The same interface for every airframe and autopilot below it.</p></li>
+        <li class="duo"><div class="layer glass" tabindex="0"><span class="lab">Autopilot</span><h3>PX4</h3></div><div class="layer glass" tabindex="0"><span class="lab">Autopilot</span><h3>ArduPilot</h3></div></li>
+        <li class="layer glass" tabindex="0"><span class="lab">Vehicles</span><p>Fixed-wing aircraft · ground robots · surface boats</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="eyes" aria-labelledby="te">
+  <div class="w">
+    <p class="idx">05 · Scattrnodes Eyes</p>
+    <h2 id="te" class="scr">Supervises. Never decides.</h2>
+    <p class="lede">The operator’s console. Nothing big happens until a person holds the button.</p>
+    <div class="notes3">
+      <div class="glass"><h3>Outside the decision loop.</h3><p>Lose the console, and the mission still goes on.</p></div>
+      <div class="glass"><h3>Air-gapped by default.</h3><p>Runs on a rugged laptop with no internet.</p></div>
+      <div class="glass"><h3>No weapons interface.</h3><p>Nothing in either product can command a weapon.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="uses" aria-labelledby="us">
+  <div class="w">
+    <p class="idx">06 · Built for</p>
+    <h2 id="us" class="scr">Cover more ground. Miss less.</h2>
+    <div class="uses">
+      <figure><img src="media/cine/c0217_800.webp" alt="Rendered: aircraft spread low over a lake, each on its own search lane." width="800" height="400" loading="lazy"><figcaption><b>Wide-area search</b></figcaption></figure>
+      <figure><img src="media/cine/c0505_800.webp" alt="Rendered: aircraft high above a mountain range." width="800" height="400" loading="lazy"><figcaption><b>Border and perimeter watch</b></figcaption></figure>
+      <figure><img src="media/cine/c0880_800.webp" alt="Rendered: the fleet spread along a lake shoreline." width="800" height="400" loading="lazy"><figcaption><b>Coast and sea patrol</b></figcaption></figure>
+      <figure><img src="media/cine/c0325_800.webp" alt="Rendered: three ground robots on a lake shore." width="800" height="400" loading="lazy"><figcaption><b>Ground-team overwatch</b></figcaption></figure>
+      <figure><img src="media/cine/c0073_800.webp" alt="Rendered: a formation crossing a ridge." width="800" height="400" loading="lazy"><figcaption><b>Disaster mapping</b></figcaption></figure>
+    </div>
+    <p class="fine">Missions the system is designed for. Renders; results so far are from simulation.</p>
+  </div>
+</section>
+
+<section class="sec evidence" id="evidence" aria-labelledby="ev">
+  <div class="w">
+    <p class="idx">07 · Evidence</p>
+    <h2 id="ev" class="scr">Every number, with where it came from.</h2>
+    <p class="lede rv">Each figure below is recounted from the Scattrnodes repository by a script before this page can be published. If the repository disagrees, the page does not ship.</p>
+    <p class="recount" id="recount"><span>Recount</span><span id="rc-state">run at every publish</span><span id="rc-src"></span></p>
+    <table class="ledger">
+      <caption class="vh">Results recounted on 6 October 2026, with how each was measured</caption>
+      <thead><tr><th scope="col">Figure</th><th scope="col">Value</th><th scope="col">How it was measured</th><th scope="col">Source</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Test missions flown in simulation</th><td class="v" data-figure="missions">768</td><td class="n"><details><summary>How it was measured</summary><p>555 passed, 141 failed, 72 skipped, across 114 campaigns. Every result row recounted. About 700 five-aircraft first-flight rehearsals flown since 17 September are scored separately.</p></details></td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Orders from our software accepted by the autopilot</th><td class="v">2,000+</td><td class="n"><details><summary>How it was measured</summary><p>Counted once from recorded runs. The logs behind it are not all kept, so unlike the other figures here we cannot recount it today.</p></details></td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Aircraft in tight formation</th><td class="v" data-figure="formation_fleet_max">8</td><td class="n"><details><summary>How it was measured</summary><p>All six runs passed the separation check. That check measures distance in three dimensions, so side-by-side spacing is still unmeasured. We treat it as an open defect, not a result.</p></details></td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Position error without GPS</th><td class="v" data-figure="nav_error_without_gps">396–750 m &rarr; 25.5–39.0 m</td><td class="n"><details><summary>How it was measured</summary><p>After one day of fixes, from a written report and two named campaigns. Still not good enough to rely on.</p></details></td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Core files changed by the two adapter commits</th><td class="v" data-figure="autopilot_core_files_per_commit">0</td><td class="n"><details><summary>How it was measured</summary><p>Counted from the repository history. Core edits in that period belong to a separate terrain-following change.</p></details></td><td class="s">Code history</td></tr>
+        <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">250</td><td class="n"><details><summary>How it was measured</summary><p>105 closed, 145 still not closed: 64 open and 81 fixed but not yet proven.</p></details></td><td class="s">Bug log</td></tr>
+        <tr class="zero"><th scope="row">Flights on a real aircraft</th><td class="v" data-figure="real_flights">0</td><td class="n"><details><summary>How it was measured</summary><p>None yet. The first is planned for the next few weeks.</p></details></td><td class="s">Flight</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<section class="sec" id="status" aria-labelledby="st">
+  <div class="w">
+    <p class="idx">08 · Status</p>
+    <div class="letter">
+      <div>
+        <h2 id="st" class="scr">Where it stands.</h2>
+        <div class="zero-fact"><b class="lit">0</b><span>Flights on a real aircraft, so far.</span></div>
+      </div>
+      <div class="body glass">
+        <p class="first">Validated in simulation and on a real flight controller wired to a simulator. Flight campaign pending: we have not flown a real aircraft yet, and you should hear that from us before anything else.</p>
+        <p>Still to fix: navigation without GPS is not accurate enough yet, and radio use is about twice our budget.</p>
+        <p class="sig">Nidhip Sharma and Karan Tiwari<span>Co-founders, HiveNodes</span></p>
+      </div>
+    </div>
+    <h3 class="tl-h">The next few weeks: out of the simulator and into the air.</h3>
+    <ol class="tl">
+      <li><span class="mo">Next few weeks</span><h4>First real flight with Scattrnodes in charge</h4></li>
+      <li><span class="mo">Month 6 after funding</span><h4>Three aircraft in formation, in real wind</h4></li>
+      <li><span class="mo">Month 9 after funding</span><h4>Flying without GPS, against a jamming rig</h4></li>
+      <li><span class="mo">Month 10 after funding</span><h4>A five-aircraft field trial, run by an outsider</h4></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec" id="contact" aria-labelledby="ct">
+  <div class="w">
+    <p class="idx">09 · Contact</p>
+    <h2 id="ct" class="scr">Talk to the engineer.</h2>
+    <div class="contact-row">
+      <p>We are raising a pre-seed round to fly it for real. Write to us.</p>
+      <div class="reach">
+        <a class="mail" id="mail" href="#contact">nidhip.sharma.123 [at] gmail.com</a>
+        <a class="li" href="https://www.linkedin.com/in/nidhip-sharma/" rel="noopener">LinkedIn</a>
+        <p class="who">Nidhip Sharma and Karan Tiwari, Co-founders, HiveNodes</p>
+        <a class="li" href="capabilities/">Every capability, and how far it is proven</a>
+      </div>
     </div>
   </div>
 </section>
@@ -191,7 +406,8 @@
 <footer class="foot w">
   <span>&copy; 2026 HiveNodes, India</span>
   <span>This site is under development.</span>
-  <span>Films and stills are rendered; flight results are from simulation unless stated otherwise.</span>
+  <span>Performance figures are from simulation unless stated otherwise.</span>
+  <span>Films and stills are rendered.</span>
   <span>No cookies, no trackers, no third-party requests.</span>
 </footer>
 </body>

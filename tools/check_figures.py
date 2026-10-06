@@ -357,7 +357,7 @@ def normalise(value):
     return re.sub(r"\s+", " ", v)
 
 
-def check(repo, page_path, verbose=True):
+def check(repo, page_path, verbose=True, summary=False):
     failures = []
     figures, page_text = page_figures(page_path)
 
@@ -461,7 +461,13 @@ def check(repo, page_path, verbose=True):
         elif verbose:
             print(f"  unmarked  {label:<28} {spec['value']}   (caveat present)")
 
-    # Sub-figures that are not their own data-figure but are read as claims.
+    # Sub-figures that are not their own data-figure but are read as claims. A SUMMARY page (the
+    # homepage) shows headline figures only and links to the evidence page that carries the tally,
+    # so it is held to every data-figure and withdrawn value above, but not to carrying the tally.
+    if summary:
+        if verbose:
+            print("  summary   verdict tally / campaigns   (carried by the evidence page)")
+        return failures
     try:
         counts = derive_verdict_counts(repo)
         campaigns = derive_campaigns_scored(repo)
@@ -601,6 +607,7 @@ def main():
     ap.add_argument("--repo", default=DEFAULT_REPO)
     ap.add_argument("--page", default=DEFAULT_PAGE)
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--summary", action="store_true", help="headline-figures page: skip the tally sub-figures")
     args = ap.parse_args()
 
     if args.self_test:
@@ -609,7 +616,7 @@ def main():
     print(f"Figure check: {os.path.normpath(args.page)}")
     print(f"  against repo: {args.repo}")
     try:
-        failures = check(args.repo, os.path.normpath(args.page))
+        failures = check(args.repo, os.path.normpath(args.page), summary=args.summary)
     except Missing as exc:
         print(f"  REFUSED: {exc}")
         return 1

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- ZERO third-party requests: every byte is served from this origin. No CDN, no analytics, no cookies. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Capabilities · HiveNodes</title>
+<meta name="description" content="What Homing Vector and Scattrnodes do, and how far each capability is proven: navigation without GPS, coordination with no leader, formation, launch and recovery, secure relay, people in charge.">
+<meta property="og:title" content="HiveNodes">
+<meta property="og:description" content="Holds the mission when GPS and comms are gone. Homing Vector: one system of systems across air, ground and sea.">
+<meta property="og:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The HiveNodes mark above the line: Holds the mission when GPS and comms are gone.">
+<meta property="og:url" content="https://hivenodes.github.io/capabilities/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HiveNodes">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HiveNodes">
+<meta name="twitter:description" content="Holds the mission when GPS and comms are gone. Homing Vector: one system of systems across air, ground and sea.">
+<meta name="twitter:image" content="https://hivenodes.github.io/brand/og-image-1200x630.png">
+<meta name="twitter:image:alt" content="The HiveNodes mark above the line: Holds the mission when GPS and comms are gone.">
+<link rel="canonical" href="https://hivenodes.github.io/capabilities/">
+<meta name="theme-color" content="#0f1114">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" sizes="180x180" href="../brand/apple-touch-icon-180.png">
+<link rel="preload" href="../fonts/HostGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../css/home.css">
+<script type="module" src="../js/home.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top" id="top">
+  <a class="brand" href="../" aria-label="HiveNodes home"><img src="../brand/logo-primary.svg" alt="" width="200" height="27"></a>
+  <nav aria-label="Main">
+    <ul>
+      <li><a href="../#why">Why</a></li>
+      <li><a href="../#missions">Missions</a></li>
+      <li><a href="../#proof">Proof</a></li>
+      <li><a href="./" aria-current="page">Capabilities</a></li>
+      <li><a href="../simulation/">Simulation</a></li>
+      <li><a class="nav-cta" href="../#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="sec caps" id="capabilities" aria-labelledby="cap-h">
+  <div class="w">
+    <p class="kick">Capabilities</p>
+    <h1 id="cap-h" class="cap-h1">What Scattrnodes does.</h1>
+    <p class="lead narrow">Two levels: each vehicle stays capable on its own, and the fleet works as one when everything around it fails.</p>
+    <h2 class="vh">Capabilities by area</h2>
+    <div class="cap-grid">
+      <div class="cap">
+        <h3>Navigation without GPS</h3>
+        <ul>
+          <li><b>Flies with zero satellites.</b> Five aircraft held the mission through 150 seconds with no GPS. Neighbour and terrain fixes are built and tested.</li>
+          <li><b>Spoofing detection.</b> A false GPS signal is spotted and outvoted. Built and unit-tested.</li>
+          <li><b>Takes off without GPS</b>, or loses it in flight and carries on.</li>
+          <li><b>Shared clock without satellites</b>, tested. A fleet wind estimate is in development.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Coordination with no leader</h3>
+        <ul>
+          <li><b>One plan, decided on every vehicle</b> from the same shared picture. No master, no single point of failure.</li>
+          <li><b>Self-healing.</b> When one vehicle's computer fails, the rest carry on and land safely.</li>
+          <li><b>Built to keep the mission if base is lost.</b> The ground station supervises; the plan lives on every vehicle.</li>
+          <li><b>Knows who is gone.</b> A vehicle silent past its deadline is declared lost and the rest plan around it.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Formation and separation</h3>
+        <ul>
+          <li><b>Ghost-leader ring.</b> Every aircraft follows the same virtual leader along the route.</li>
+          <li><b>Altitude layers.</b> A height layer per aircraft, so no two meet at the same height.</li>
+          <li><b>Predicts conflicts ahead</b> and holds or gives way, with defined right of way.</li>
+          <li><b>Close formation</b> at 15–20 m on precise positioning. In development.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Launch and recovery</h3>
+        <ul>
+          <li><b>Hand-throw one by one</b>, or launch the whole fleet with one command.</li>
+          <li><b>Pilot hand-over.</b> Fly an aircraft by hand, switch to automatic, and it joins the formation.</li>
+          <li><b>Lands itself one by one</b>, in an order decided on board, at the launch point. Separate landing spots in development.</li>
+          <li><b>Survives its own computer failing.</b> The flight controller continues and the aircraft lands.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Communications and security</h3>
+        <ul>
+          <li><b>Encrypted, authenticated messages.</b> Forged or replayed messages are rejected; key rotation is built in.</li>
+          <li><b>Relay network.</b> Messages hop vehicle to vehicle to reach whoever is out of range.</li>
+          <li><b>Keeps working under jamming</b> on the last agreed plan, and rejoins when the link returns.</li>
+          <li><b>Quiet mode.</b> Sends only when something changes.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Air, ground and sea</h3>
+        <ul>
+          <li><b>Built for aircraft, ground robots and boats</b> on one network. Task allocation tested with mixed simulated fleets of 3,000.</li>
+          <li><b>Each job to a vehicle that can do it</b>, matched by capability. Tested in simulation.</li>
+          <li><b>Fixed-wing first.</b> Multirotor, ground and boat behaviour are in development.</li>
+          <li>Real ground and sea vehicles follow the aircraft trial.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>Any vehicle, any autopilot</h3>
+        <ul>
+          <li><b>Works with PX4 and ArduPilot</b>, above the aircraft's own autopilot; no rebuild per aircraft.</li>
+          <li><b>New autopilots plug in as adapters</b>, with no change to the core.</li>
+          <li><b>One program</b> for simulation and aircraft; it identifies its flight controller on power-up.</li>
+          <li><b>Standard ground station.</b> The whole fleet appears as one vehicle in it.</li>
+        </ul>
+      </div>
+      <div class="cap">
+        <h3>People in charge</h3>
+        <ul>
+          <li><b>The pilot always wins.</b> Any manual input overrides; the software never arms or launches on its own.</li>
+          <li><b>It recommends, a person decides.</b> No weapon-release code in the system.</li>
+          <li><b>Pause, stop or recall</b> from the operator station. In development.</li>
+          <li><b>Operator actions and missions recorded</b> in a tamper-evident log.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec system" id="system" aria-labelledby="sys-h">
+  <div class="w split">
+    <div>
+      <p class="kick">A system of systems</p>
+      <h2 id="sys-h">Many vehicles. Many makers. One mission.</h2>
+    </div>
+    <div class="lead">
+      <p>Every vehicle stays a complete system: its own autopilot, sensors, navigation and computer. Homing Vector adds one shared layer on top, the mission, a secure relay network and a common clock, so aircraft, ground robots and boats work as one force.</p>
+      <p>It runs on every vehicle, above whatever autopilot and airframe it already has. If a vehicle, the radio or the ground station is lost, the rest carry on.</p>
+    </div>
+  </div>
+  <div class="w">
+    <figure class="sos">
+      <svg viewBox="0 0 1200 360" role="img" aria-labelledby="sos-t">
+        <title id="sos-t">Layers: Scattrnodes Eyes supervises; the shared Homing Vector layer runs on every vehicle; below it, fixed-wing UAVs, high-speed UAVs, ground robots, boats and any new vehicle, each with its own autopilot, navigation and computer.</title>
+        <rect x="380" y="0" width="440" height="64" class="b-dark"/>
+        <text x="600" y="28" class="t-l" text-anchor="middle">Scattrnodes Eyes · the operator</text>
+        <text x="600" y="50" class="t-m" text-anchor="middle">SETS INTENT · SUPERVISES · NEVER IN THE LOOP</text>
+        <line x1="600" y1="64" x2="600" y2="104" class="ln dash"/>
+        <rect x="0" y="104" width="1200" height="88" class="b-acc"/>
+        <text x="600" y="140" class="t-l" text-anchor="middle">Homing Vector shared layer · Scattrnodes on every vehicle</text>
+        <text x="600" y="168" class="t-s" text-anchor="middle">One mission · encrypted relay network · shared clock without GPS · shared picture of every vehicle</text>
+        <g class="ln"><line x1="108" y1="192" x2="108" y2="232"/><line x1="354" y1="192" x2="354" y2="232"/><line x1="600" y1="192" x2="600" y2="232"/><line x1="846" y1="192" x2="846" y2="232"/><line x1="1092" y1="192" x2="1092" y2="232" class="dash"/></g>
+        <g class="sys">
+          <rect x="0" y="232" width="216" height="128"/><text x="108" y="268" class="t-l" text-anchor="middle">Fixed-wing UAVs</text><text x="108" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="108" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="246" y="232" width="216" height="128"/><text x="354" y="268" class="t-l" text-anchor="middle">High-speed UAVs</text><text x="354" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="354" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="492" y="232" width="216" height="128"/><text x="600" y="268" class="t-l" text-anchor="middle">Ground robots</text><text x="600" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="600" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="738" y="232" width="216" height="128"/><text x="846" y="268" class="t-l" text-anchor="middle">Boats</text><text x="846" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="846" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="984" y="232" width="216" height="128" class="dash"/><text x="1092" y="268" class="t-l" text-anchor="middle">Any new vehicle</text><text x="1092" y="300" class="t-s" text-anchor="middle">any maker · any autopilot</text><text x="1092" y="324" class="t-s" text-anchor="middle">joins as a plug-in</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="sec products" id="products" aria-labelledby="pr-h">
+  <div class="w"><p class="kick">Products</p><h2 id="pr-h" class="vh">Products</h2></div>
+  <article class="prod w">
+    <img src="../media/stills/s_1.jpg" alt="Rendered: a formation of fifteen fixed-wing aircraft over a mountain ridge." loading="lazy" width="1600" height="900">
+    <div class="prod-t">
+      <p class="kick">The system</p>
+      <h3>Homing Vector</h3>
+      <p class="tag">One system to buy.</p>
+      <p>Complete systems for forces: vehicles, the Homing Vector software and an operator station. Or the software licensed onto a laboratory's or manufacturer's own vehicles. Works with PX4 and ArduPilot.</p>
+    </div>
+  </article>
+  <article class="prod w rev">
+    <img src="../media/stills/s_36_5.jpg" alt="Rendered: a swarm of aircraft low over a dark lake, each holding its own place." loading="lazy" width="1600" height="900">
+    <div class="prod-t">
+      <p class="kick">On every vehicle</p>
+      <h3>Scattrnodes</h3>
+      <p class="tag">The coordination core.</p>
+      <p>Built for a palm-sized computer beside each autopilot. It shares out the work, keeps every vehicle apart, holds formation, flies on without GPS and brings the fleet home, with no leader.</p>
+    </div>
+  </article>
+  <article class="prod w">
+    <svg class="eyes" viewBox="0 0 700 394" role="img" aria-labelledby="eyes-t">
+      <title id="eyes-t">Schematic of the Scattrnodes Eyes operator view: a fleet list of five aircraft, a map with the five aircraft in a ring, a typed order, the planned formation and a press-and-hold button to send.</title>
+      <rect width="700" height="394" class="e-bg"/>
+      <text x="18" y="26" class="e-t">SCATTRNODES EYES</text><text x="150" y="26" class="e-m">FIND AND FOLLOW · WATCH AN AREA · REHEARSE</text>
+      <line x1="0" y1="38" x2="700" y2="38" class="e-ln"/>
+      <g class="e-row"><rect x="14" y="52" width="150" height="40"/><text x="24" y="70" class="e-t2">UAV-1</text><text x="24" y="84" class="e-m">LAYER 1 · ON ROUTE</text>
+      <rect x="14" y="98" width="150" height="40"/><text x="24" y="116" class="e-t2">UAV-2</text><text x="24" y="130" class="e-m">LAYER 2 · ON ROUTE</text>
+      <rect x="14" y="144" width="150" height="40"/><text x="24" y="162" class="e-t2">UAV-3</text><text x="24" y="176" class="e-m">LAYER 3 · ON ROUTE</text>
+      <rect x="14" y="190" width="150" height="40"/><text x="24" y="208" class="e-t2">UAV-4</text><text x="24" y="222" class="e-m">LAYER 4 · ON ROUTE</text>
+      <rect x="14" y="236" width="150" height="40"/><text x="24" y="254" class="e-t2">UAV-5</text><text x="24" y="268" class="e-m">LAYER 5 · ON ROUTE</text></g>
+      <rect x="176" y="50" width="330" height="330" class="e-map"/>
+      <path d="M196 350 C 260 250, 330 330, 400 210 S 480 120, 496 80" class="e-route"/>
+      <circle cx="340" cy="220" r="58" class="e-ring"/>
+      <g class="e-ac"><path d="M340 156 l7 13 -14 0z"/><path d="M396 202 l10 10 -15 3z"/><path d="M372 272 l1 15 -13 -7z"/><path d="M306 272 l-12 9 4 -15z"/><path d="M284 200 l3 -15 11 10z"/></g>
+      <text x="518" y="60" class="e-m">ORDER</text>
+      <rect x="518" y="66" width="168" height="48" class="e-box"/><text x="526" y="86" class="e-t2">take the swarm of 5 to</text><text x="526" y="104" class="e-t2">the marked point</text>
+      <text x="518" y="134" class="e-m">PLAN</text>
+      <rect x="518" y="140" width="168" height="64" class="e-box"/><text x="526" y="160" class="e-t2">5 aircraft · ring · 5 layers</text><text x="526" y="178" class="e-t2">no crossing paths</text><text x="526" y="196" class="e-m">UPLOADED · READ BACK · VERIFIED</text>
+      <rect x="518" y="214" width="168" height="30" class="e-send"/><text x="602" y="234" text-anchor="middle" class="e-t2 e-w">PRESS AND HOLD TO SEND</text>
+      <rect x="518" y="252" width="80" height="26" class="e-box"/><text x="558" y="270" text-anchor="middle" class="e-m">PAUSE ALL</text>
+      <rect x="606" y="252" width="80" height="26" class="e-box"/><text x="646" y="270" text-anchor="middle" class="e-m">RECALL ALL</text>
+    </svg>
+    <div class="prod-t">
+      <p class="kick">The operator station</p>
+      <h3>Scattrnodes Eyes</h3>
+      <p class="tag">Supervises. Never decides.</p>
+      <p>One operator watches the whole fleet and stays in charge: orders in plain language, confirmed with one press and hold; missions uploaded and read back; maps that work offline on a rugged laptop. Fleet-wide pause and recall are in development.</p>
+      <p class="fine">Schematic. Fleet-scale live use is in development.</p>
+    </div>
+  </article>
+</section>
+
+<section class="sec road" aria-labelledby="rd-h">
+  <div class="w">
+    <p class="kick">Roadmap</p>
+    <h2 id="rd-h">From simulation to the field.</h2>
+    <ol class="steps">
+      <li><span>Next few weeks</span><h3>First real flight</h3><p>Five fixed-wing aircraft, a safety pilot on standby for each, every bench check done first.</p></li>
+      <li><span>Within a year</span><h3>A witnessed field trial</h3><p>Five aircraft, flying without GPS and under jamming, run by an outside observer through Scattrnodes Eyes.</p></li>
+      <li><span>Then</span><h3>Complete Homing Vector systems</h3><p>Paid trials and first orders. Bigger fleets, faster aircraft, ground and sea vehicles in the field.</p></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot w">
+  <span>&copy; 2026 HiveNodes, India</span>
+  <span>This site is under development.</span>
+  <span>Films and stills are rendered; flight results are from simulation unless stated otherwise.</span>
+  <span>No cookies, no trackers, no third-party requests.</span>
+</footer>
+</body>
+</html>

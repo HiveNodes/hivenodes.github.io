@@ -32,3 +32,8 @@ for k, v in d['tracks'].items():
 json.dump({'size_m': 8200, 'dt': d['step'] * 2 / d['fps'], 'n': len(next(iter(keep.values()))['p']), 'v': keep},
           open(f'{OUT}/ops-tracks.json', 'w'), separators=(',', ':'))
 print('map + tracks:', len(keep), 'vehicles')
+
+# 3D hero tiles (js/terrain3d.js), REAL data: Sentinel-2 TCI 40 km (film/assets/incoming/far_albedo.png, same scene) and the
+# Copernicus DEM: near = central 20 km (win20k_height.npy, 385 posts), far = 40 km ring (far_height.npy, 201 posts).
+# Built by hand on 2026-10-06 night (see film/blender/v5 notes); recipe: crop far_albedo centre half -> t3d-near-2048.webp,
+# resize whole -> t3d-far-1024.webp, heights resized bilinear and stored as little-endian uint16 metres over the lake.

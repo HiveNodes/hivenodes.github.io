@@ -148,8 +148,11 @@ const railAt = t => { let i = 0; CUES.forEach((c, j) => { if (t >= c) i = j; });
 let lastRail = -1;
 (() => {
   const cv = $('#hero-cv'); if (!cv || !cv.getContext) return;
-  const go = () => import('./opsmap.js').then(m => m.startOpsMap({ cv, RM, onTime: t => { setTelem($('#hero-telem'), t); const s = Math.floor(t); if (s !== lastRail) { lastRail = s; railAt(t); } } }))
-    .then(o => { ops = o; }).catch(() => {});
+  const onTime = t => { setTelem($('#hero-telem'), t); const s = Math.floor(t); if (s !== lastRail) { lastRail = s; railAt(t); } };
+  const flat = () => import('./opsmap.js').then(m => m.startOpsMap({ cv, RM, onTime })).then(o => { ops = o; }).catch(() => {});
+  // 3D: the real Sentinel-2 imagery draped on the real DEM (about 1 MB more); the flat map on slow links or without WebGL2
+  const has3d = !SLOW && !!document.createElement('canvas').getContext('webgl2');
+  const go = () => has3d ? import('./terrain3d.js').then(m => m.startTerrain3D({ cv, RM, onTime })).then(o => { ops = o; }).catch(flat) : flat();
   const idle = window.requestIdleCallback || (f => setTimeout(f, 1));
   const later = () => setTimeout(() => idle(go, { timeout: 2500 }), 1200);   // after the page is up and quiet
   if (document.readyState === 'complete') later(); else addEventListener('load', later);

@@ -41,35 +41,47 @@ export function startFormations(root) {
   };
   tabs.forEach((t, i) => t.addEventListener('click', () => select(i, true)));
 
+  // drawn like a tactical display table: range rings, a slow sweep, the links the UAVs talk over, glowing tracks
   const draw = now => {
-    ctx.clearRect(0, 0, W, H);
-    const cx = W / 2, cy = H / 2;
-    // ground grid, 1 cell ~ 20 m at the line-abreast spacing
-    ctx.strokeStyle = 'rgba(233,229,220,.06)'; ctx.lineWidth = 1; ctx.beginPath();
-    const g = S * .055;
+    ctx.globalCompositeOperation = 'source-over'; ctx.clearRect(0, 0, W, H);
+    const cx = W / 2, cy = H / 2, gxp = cx + gx * S, gyp = cy + gy * S, T = now / 1000;
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * .6); bg.addColorStop(0, 'rgba(40,70,95,.35)'); bg.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    // fine grid + range rings around the ghost leader
+    ctx.strokeStyle = 'rgba(160,210,255,.05)'; ctx.lineWidth = 1; ctx.beginPath(); const g = S * .055;
     for (let x = cx % g; x < W; x += g) { ctx.moveTo(x, 0); ctx.lineTo(x, H); }
     for (let y = cy % g; y < H; y += g) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
     ctx.stroke();
-    // ghost leader: a point no aircraft owns
+    for (let r = 1; r <= 4; r++) { ctx.strokeStyle = `rgba(160,215,255,${.16 - r * .025})`; ctx.beginPath(); ctx.arc(gxp, gyp, S * .14 * r, 0, 7); ctx.stroke(); }
+    ctx.globalCompositeOperation = 'lighter';
+    // the sweep
+    if (!RM) { const a0 = T * .9 % (Math.PI * 2), R = S * .6;
+      const sw = ctx.createConicGradient ? ctx.createConicGradient(a0 - .6, gxp, gyp) : null;
+      if (sw) { sw.addColorStop(0, 'rgba(160,215,255,0)'); sw.addColorStop(.095, 'rgba(160,215,255,.13)'); sw.addColorStop(.096, 'rgba(160,215,255,0)'); sw.addColorStop(1, 'rgba(160,215,255,0)');
+        ctx.fillStyle = sw; ctx.beginPath(); ctx.arc(gxp, gyp, R, 0, 7); ctx.fill(); } }
+    // ghost leader: a point no UAV owns
     const pulse = RM ? .5 : .5 + .5 * Math.sin(now / 640);
-    ctx.strokeStyle = `rgba(196,165,116,${.35 + .4 * pulse})`; ctx.setLineDash([4, 4]);
-    const gxp = cx + gx * S, gyp = cy + gy * S;
-    ctx.beginPath(); ctx.arc(gxp, gyp, 9 + 3 * pulse, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = '#c4a574'; ctx.beginPath(); ctx.arc(gxp, gyp, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = `rgba(207,233,255,${.35 + .45 * pulse})`; ctx.setLineDash([3, 5]); ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(gxp, gyp, 10 + 4 * pulse, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#cfe9ff'; ctx.beginPath(); ctx.arc(gxp, gyp, 2.5, 0, 7); ctx.fill();
+    // the links: each UAV to its two neighbours and to the ghost, with packets running
+    const P = ac.map(a => [cx + a.x * S, cy + a.y * S]);
+    const link = (p, q, k, al) => { ctx.strokeStyle = `rgba(150,215,255,${al})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.stroke();
+      if (RM) return; const u = (T * .55 + k * .37) % 1; ctx.fillStyle = 'rgba(225,245,255,.85)'; ctx.beginPath(); ctx.arc(p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u, 1.8, 0, 7); ctx.fill(); };
+    for (let k = 0; k < N; k++) { link(P[k], P[(k + 1) % N], k, .22); link([gxp, gyp], P[k], k + 9, .07); }
     // slot markers
-    ctx.strokeStyle = 'rgba(233,229,220,.28)';
-    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k); ctx.strokeRect(cx + (sx + gx) * S - 4, cy + (sy + gy) * S - 4, 8, 8); }
-    // trails then aircraft
+    ctx.strokeStyle = 'rgba(207,233,255,.25)';
+    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k), x = cx + (sx + gx) * S, y = cy + (sy + gy) * S, L = 5;
+      ctx.beginPath(); for (const [a, b] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { ctx.moveTo(x + a * L, y + b * (L - 2.5)); ctx.lineTo(x + a * L, y + b * L); ctx.lineTo(x + a * (L - 2.5), y + b * L); } ctx.stroke(); }
+    // glowing tracks
+    for (const a of ac) for (let i = 1; i < a.trail.length; i++) { const p = a.trail[i - 1], q = a.trail[i], f = i / a.trail.length;
+      ctx.strokeStyle = `rgba(150,215,255,${f * .45})`; ctx.lineWidth = 1 + f * 1.6; ctx.beginPath(); ctx.moveTo(cx + p[0] * S, cy + p[1] * S); ctx.lineTo(cx + q[0] * S, cy + q[1] * S); ctx.stroke(); }
+    ctx.globalCompositeOperation = 'source-over';
     for (const a of ac) {
-      for (let i = 1; i < a.trail.length; i++) {
-        const p = a.trail[i - 1], q = a.trail[i];
-        ctx.strokeStyle = `rgba(233,229,220,${(i / a.trail.length) * .32})`; ctx.lineWidth = 1.4;
-        ctx.beginPath(); ctx.moveTo(cx + p[0] * S, cy + p[1] * S); ctx.lineTo(cx + q[0] * S, cy + q[1] * S); ctx.stroke();
-      }
-    }
-    for (const a of ac) {
-      ctx.save(); ctx.translate(cx + a.x * S, cy + a.y * S); ctx.rotate(a.h); ctx.scale(1.45, 1.45);
-      ctx.fillStyle = '#e9e5dc'; ctx.beginPath();
+      const x = cx + a.x * S, y = cy + a.y * S, gl = ctx.createRadialGradient(x, y, 0, x, y, 26);
+      gl.addColorStop(0, 'rgba(160,215,255,.28)'); gl.addColorStop(1, 'rgba(160,215,255,0)'); ctx.fillStyle = gl; ctx.fillRect(x - 26, y - 26, 52, 52);
+      ctx.save(); ctx.translate(x, y); ctx.rotate(a.h); ctx.scale(1.45, 1.45);
+      ctx.fillStyle = '#f4f8fb'; ctx.beginPath();
       // fixed-wing silhouette: fuselage, wing, tail
       ctx.moveTo(0, -9); ctx.lineTo(1.6, -2); ctx.lineTo(10, 1.5); ctx.lineTo(10, 3.2); ctx.lineTo(1.4, 2.2); ctx.lineTo(1, 6.5);
       ctx.lineTo(4, 8.4); ctx.lineTo(4, 9.6); ctx.lineTo(0, 8.8); ctx.lineTo(-4, 9.6); ctx.lineTo(-4, 8.4); ctx.lineTo(-1, 6.5);

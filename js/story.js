@@ -8,7 +8,7 @@ export function startStory() {
   const sec = $('#mission'), v = $('#story-v'), still = $('#story-still'), capN = $('#cap-n'), capT = $('#cap-t'), ticks = $('#ticks');
   if (!sec || !still) return;
   const steps = [...sec.querySelectorAll('.chapters li')].map(li => ({
-    t0: +li.dataset.t0, t1: +li.dataset.t1, still: li.dataset.still,
+    t0: +li.dataset.t0, t1: +li.dataset.t1, still: li.dataset.still, stillOnly: li.dataset.stillOnly === '1',
     text: li.textContent.replace(/^\s*[^.]+\.\s*/, '').trim(),
   }));
   steps.forEach(() => ticks.appendChild(document.createElement('i')));
@@ -28,7 +28,7 @@ export function startStory() {
     if (film || slow || RM || !v) return; film = true;
     v.querySelectorAll('source').forEach(s => { s.src = s.dataset.src; });
     v.preload = 'auto'; v.load();
-    v.addEventListener('canplay', () => { v.classList.add('on'); seek(true); }, { once: true });
+    v.addEventListener('canplay', () => { if (!(steps[cur] && steps[cur].stillOnly)) v.classList.add('on'); seek(true); }, { once: true });
     v.addEventListener('timeupdate', () => { const s = steps[cur]; if (s && v.currentTime >= s.t1 - .05) v.currentTime = s.t0; });
   };
   const seek = force => {
@@ -42,6 +42,7 @@ export function startStory() {
     capN.textContent = String(i + 1).padStart(2, '0');
     capT.textContent = s.text;
     tickEls.forEach((t, j) => t.classList.toggle('on', j <= i));
+    if (film) v.classList.toggle('on', !s.stillOnly && v.readyState >= 2);   // a still-only chapter holds its frame over the film
     if (!v.classList.contains('on')) { still.style.opacity = '.35'; setTimeout(() => { still.src = stillSrc(s.still); still.srcset = ''; still.style.opacity = '1'; }, RM ? 0 : 180); }
     seek(true);
   };

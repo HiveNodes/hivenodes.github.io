@@ -27,6 +27,11 @@ export function startFormations(root) {
   // aircraft state in unit frame; start on the ring
   const ac = Array.from({ length: N }, (_, k) => { const [x, y] = SHAPES.ring(k); return { x, y, h: Math.atan2(y, x) + Math.PI / 2, trail: [] }; });
   let shape = 'ring', idx = 0, t0 = performance.now(), last = t0, running = false, userPicked = false;
+  // the pointer pulls the ghost leader (at most 0.15 of the display, 0.4 s behind): the swarm follows as one
+  let gx = 0, gy = 0, pgx = 0, pgy = 0;
+  const clampG = v => Math.max(-.15, Math.min(.15, v));
+  cv.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); pgx = clampG((e.clientX - r.left - r.width / 2) / S); pgy = clampG((e.clientY - r.top - r.height / 2) / S); });
+  cv.addEventListener('pointerleave', () => { pgx = 0; pgy = 0; });
 
   const select = (i, byUser) => {
     idx = i; shape = tabs[i].dataset.shape; t0 = performance.now();
@@ -46,18 +51,19 @@ export function startFormations(root) {
     for (let y = cy % g; y < H; y += g) { ctx.moveTo(0, y); ctx.lineTo(W, y); }
     ctx.stroke();
     // ghost leader: a point no aircraft owns
-    const pulse = RM ? .5 : .5 + .5 * Math.sin(now / 420);
+    const pulse = RM ? .5 : .5 + .5 * Math.sin(now / 640);
     ctx.strokeStyle = `rgba(196,165,116,${.35 + .4 * pulse})`; ctx.setLineDash([4, 4]);
-    ctx.beginPath(); ctx.arc(cx, cy, 9 + 3 * pulse, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = '#c4a574'; ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI * 2); ctx.fill();
+    const gxp = cx + gx * S, gyp = cy + gy * S;
+    ctx.beginPath(); ctx.arc(gxp, gyp, 9 + 3 * pulse, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#c4a574'; ctx.beginPath(); ctx.arc(gxp, gyp, 2.5, 0, Math.PI * 2); ctx.fill();
     // slot markers
     ctx.strokeStyle = 'rgba(233,229,220,.28)';
-    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k); ctx.strokeRect(cx + sx * S - 4, cy + sy * S - 4, 8, 8); }
+    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k); ctx.strokeRect(cx + (sx + gx) * S - 4, cy + (sy + gy) * S - 4, 8, 8); }
     // trails then aircraft
     for (const a of ac) {
       for (let i = 1; i < a.trail.length; i++) {
         const p = a.trail[i - 1], q = a.trail[i];
-        ctx.strokeStyle = `rgba(255,70,50,${(i / a.trail.length) * .45})`; ctx.lineWidth = 1.4;
+        ctx.strokeStyle = `rgba(233,229,220,${(i / a.trail.length) * .32})`; ctx.lineWidth = 1.4;
         ctx.beginPath(); ctx.moveTo(cx + p[0] * S, cy + p[1] * S); ctx.lineTo(cx + q[0] * S, cy + q[1] * S); ctx.stroke();
       }
     }
@@ -77,11 +83,12 @@ export function startFormations(root) {
   const step = (now) => {
     const dt = Math.min((now - last) / 1000, .05); last = now;
     if (!userPicked && now - t0 > 5200) select((idx + 1) % tabs.length, false);
+    const lag = Math.min(1, dt / .4); gx += (pgx - gx) * lag; gy += (pgy - gy) * lag;
     const orbit = now / 1000;
     for (let k = 0; k < N; k++) {
       const a = ac[k], [sx, sy] = SHAPES[shape](k);
       // the slot itself drifts on a small loiter circle, so arrived aircraft keep flying
-      const tx = sx + Math.cos(orbit * .9 + k) * .012, ty = sy + Math.sin(orbit * .9 + k) * .012;
+      const tx = sx + gx + Math.cos(orbit * .9 + k) * .012, ty = sy + gy + Math.sin(orbit * .9 + k) * .012;
       const dx = tx - a.x, dy = ty - a.y, dist = Math.hypot(dx, dy);
       const want = Math.atan2(dy, dx) + Math.PI / 2;
       let dh = ((want - a.h + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;

@@ -42,10 +42,12 @@
   <nav aria-label="Main">
     <ul>
       <li><a href="#mission">The mission</a></li>
+      <li><a href="#live">Live</a></li>
       <li><a href="#missions">Uses</a></li>
       <li><a href="#proof">Proof</a></li>
       <li><a href="capabilities/">Capabilities</a></li>
       <li><a href="simulation/">Simulation</a></li>
+      <li><button type="button" class="snd" id="snd" aria-pressed="false" title="Wind and a low note, made in your browser">Sound</button></li>
       <li><a class="nav-cta" href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -57,6 +59,7 @@
   <div class="frame open-frame"><img src="media/cine/c0073_1600.webp" srcset="media/cine/c0073_800.webp 800w, media/cine/c0073_1600.webp 1600w" sizes="100vw" alt="Rendered: a formation of fixed-wing aircraft crossing a mountain ridge above Pangong Tso, Ladakh." width="1600" height="800" fetchpriority="high"></div>
   <div class="title-card w">
     <p class="credit">HiveNodes &middot; Homing Vector</p>
+    <p class="sunline" id="sunline">Pangong Tso, Ladakh &middot; 4,244 m</p>
     <h1 id="h1">The swarm that flies on when GPS and comms fail.</h1>
     <p class="sub">A fleet of drones that works as one team and finishes the mission on its own.</p>
     <div class="cta"><a class="btn" href="#mission">Watch the mission</a><a class="btn ghost" href="#contact">Talk to us</a></div>
@@ -89,9 +92,37 @@
     <li data-t0="28.5" data-t1="36" data-still="c0775"><b>Aircraft lost.</b> One goes silent. The others take over its lanes, with no one telling them to.</li>
     <li data-t0="36" data-t1="40" data-still="c0880"><b>The coast.</b> The sweep reaches the shoreline, where boats are tasked to watch the water.</li>
     <li data-t0="40" data-t1="45.5" data-still="c1009"><b>Found.</b> An aircraft spots the target. It keeps it in view while the rest hold the search.</li>
-    <li data-t0="0" data-t1="6" data-still="c0865"><b>The operator decides.</b> The find goes to the operator, who decides what happens next. Then the fleet comes home and lands, one by one.</li>
+    <li data-t0="40" data-t1="45.5" data-still="c0865" data-still-only="1"><b>The operator decides.</b> The find goes to the operator, who decides what happens next. Then the fleet comes home and lands, one by one.</li>
   </ol>
   <p class="fine w story-note">How the system is designed to work. The aircraft steps are flown in simulation; ground robots and boats are in development. Film rendered.</p>
+</section>
+
+<section class="sec live-sec" id="live" aria-labelledby="lv-h">
+  <div class="w live-head">
+    <p class="credit">Live &middot; the real Scattrnodes core, running in your browser (simulation)</p>
+    <h2 id="lv-h">Not a video. The real software, flying.</h2>
+    <p class="sub">The Scattrnodes core, built for the browser from the same source as the aircraft software, flies 70 aircraft, 6 ground robots and 4 boats through a whole mission. Break something and watch the fleet re-plan.</p>
+  </div>
+  <div class="live-stage" id="live-stage">
+    <canvas class="live-cv" width="1600" height="760" role="img" aria-label="Live tactical display: the Scattrnodes mission engine flying aircraft, ground robots and boats, with their radio links and position uncertainty. Changes as you use the controls below."></canvas>
+  </div>
+  <div class="live-bar w">
+    <dl class="lv-read">
+      <div><dt>Mission time</dt><dd id="lv-t">T+00:00</dd></div>
+      <div><dt>Phase</dt><dd id="lv-ph">Waiting</dd></div>
+      <div><dt>Fleet</dt><dd id="lv-act">&ndash;</dd></div>
+      <div><dt>Navigating by</dt><dd id="lv-nav">&ndash;</dd></div>
+    </dl>
+    <div class="lv-btns">
+      <button type="button" class="lv-b" data-lv="start" hidden>Start the live engine (0.6 MB)</button>
+      <button type="button" class="lv-b" data-lv="gps" aria-pressed="false" disabled>Jam GPS</button>
+      <button type="button" class="lv-b" data-lv="radio" aria-pressed="false" disabled>Degrade radio</button>
+      <button type="button" class="lv-b" data-lv="lose" disabled>Lose an aircraft</button>
+      <button type="button" class="lv-b ghost" data-lv="again" disabled>New mission</button>
+    </div>
+    <p class="lv-log"><span class="lv-k">Latest decision</span> <span id="lv-log">The engine starts when you reach this section.</span></p>
+  </div>
+  <p class="fine w">Engine: Scattrnodes source at commit 17ac9ee, compiled to WebAssembly, unchanged. A person confirms some re-plans; on this page that confirmation is given automatically. The full operator console is on the <a href="simulation/">simulation page</a>.</p>
 </section>
 
 <section class="scenes" id="missions" aria-labelledby="sc-h">

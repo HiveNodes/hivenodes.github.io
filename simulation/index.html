@@ -10,7 +10,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HiveNodes · Live simulation</title>
-<meta name="description" content="Fly the HiveNodes swarm yourself: seventy aircraft, six ground robots and four boats run by Scattrnodes code in your browser, plus the evidence behind every published figure.">
+<meta name="description" content="Fly the HiveNodes swarm yourself: seventy UAVs, six UGVs and four USVs run by Scattrnodes code in your browser, plus the evidence behind every published figure.">
 <meta property="og:title" content="HiveNodes">
 <meta property="og:description" content="Holds the mission when GPS and comms are gone. Scattrnodes AI and the Scattrnodes Eyes console.">
 <!-- Open Graph / Twitter URLs must be ABSOLUTE: scrapers fetch these without the page's base. -->
@@ -61,7 +61,7 @@
     <p class="idx">01 · Live simulation</p>
     <div class="live-head">
       <h1 id="lv" class="rv">Fly the mission yourself.</h1>
-      <p class="rv">Seventy fixed-wing aircraft, six ground robots and four boats. They launch, assemble, fly in formation, split, search land and water, meet again and come home. Draw jamming zones, cut links, destroy vehicles, move the rendezvous, rewind the timeline, and watch the swarm keep going. The decisions that matter are made by Scattrnodes’s own code, compiled from commit <code id="sim-sha">17ac9ee</code> and running in your browser. The formation shapes and the mission script are demonstration code written for this page.</p>
+      <p class="rv">Seventy fixed-wing UAVs, six UGVs and four USVs. They launch, assemble, fly in formation, split, search land and water, meet again and come home. Draw jamming zones, cut links, destroy vehicles, move the rendezvous, rewind the timeline, and watch the swarm keep going. The decisions that matter are made by Scattrnodes’s own code, compiled from commit <code id="sim-sha">17ac9ee</code> and running in your browser. The formation shapes and the mission script are demonstration code written for this page.</p>
     </div>
   </div>
   <div class="mission" id="rig">
@@ -151,14 +151,14 @@
       </aside>
     </div>
     <div class="rig-fallback" id="rig-fallback" hidden>
-      <p>This browser cannot run the live simulation (it needs WebAssembly and Web Workers). Below is a frame of it: seventy aircraft split into two groups over the search area with ground robots and boats on their stations, lanes assigned, and a lost aircraft’s lane taken over.</p>
-      <img src="../brand/sim-static.svg" alt="Diagram: seventy aircraft split into Group A and Group B over an abstract search area of land and water, ground robots and boats on stations, and a lost aircraft whose lane another aircraft took over." width="1600" height="960">
+      <p>This browser cannot run the live simulation (it needs WebAssembly and Web Workers). Below is a frame of it: seventy UAVs split into two groups over the search area with UGVs and USVs on their stations, lanes assigned, and a lost UAV’s lane taken over.</p>
+      <img src="../brand/sim-static.svg" alt="Diagram: seventy UAVs split into Group A and Group B over an abstract search area of land and water, UGVs and USVs on stations, and a lost UAV whose lane another UAV took over." width="1600" height="960">
     </div>
   </div>
   <div class="w">
     <div class="live-note">
-      <p><b>Scattrnodes code, unchanged:</b> which vehicle takes which search lane or station, across air, ground and water, and who takes over after a loss (CBBA, with its domain rules: a robot never gets a water station); when a silent vehicle counts as lost; what a degraded or cut-off vehicle may still do, including how much it widens its spacing; what a group of this size may still do; the separation monitor that makes aircraft climb to a new layer; peer-aided navigation without GPS; and the assembly, relay and rendezvous rings.</p>
-      <p><b>Written for this page:</b> the mission phases, the wedge, V, line and column shapes, the leader-follower steering, the radio and GPS models, and the scenario scripts. The search area is abstract. This is a browser simulation, not a flight result: Scattrnodes is built for a fleet this size, but the largest formation it has flown in simulation so far is the 8 aircraft in Evidence below. The same seed always gives the same run.</p>
+      <p><b>Scattrnodes code, unchanged:</b> which vehicle takes which search lane or station, across air, ground and water, and who takes over after a loss (CBBA, with its domain rules: a UGV never gets a water station); when a silent vehicle counts as lost; what a degraded or cut-off vehicle may still do, including how much it widens its spacing; what a group of this size may still do; the separation monitor that makes UAVs climb to a new layer; peer-aided navigation without GPS; and the assembly, relay and rendezvous rings.</p>
+      <p><b>Written for this page:</b> the mission phases, the wedge, V, line and column shapes, the leader-follower steering, the radio and GPS models, and the scenario scripts. The search area is abstract. This is a browser simulation, not a flight result: Scattrnodes is built for a fleet this size, but the largest formation it has flown in simulation so far is the 8 UAVs in Evidence below. The same seed always gives the same run.</p>
     </div>
   </div>
 </section>
@@ -171,13 +171,13 @@
       <caption class="vh">Results recounted on 6 October 2026, with how each was measured</caption>
       <thead><tr><th scope="col">Figure</th><th scope="col">Value</th><th scope="col">How it was measured</th><th scope="col">Source</th></tr></thead>
       <tbody>
-        <tr><th scope="row">Test missions flown in simulation</th><td class="v" data-figure="missions">768</td><td class="n">555 passed, 141 failed, 72 skipped, across 114 campaigns. Every result row recounted. About 700 five-aircraft first-flight rehearsals flown since 17 September are scored separately.</td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">Test missions flown in simulation</th><td class="v" data-figure="missions">768</td><td class="n">555 passed, 141 failed, 72 skipped, across 114 campaigns. Every result row recounted. About 700 five-UAV first-flight rehearsals flown since 17 September are scored separately.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Orders from our software accepted by the autopilot</th><td class="v">2,000+</td><td class="n">Counted once from recorded runs. The logs behind it are not all kept, so unlike the other figures here we cannot recount it today.</td><td class="s">Simulation</td></tr>
-        <tr><th scope="row">Aircraft in tight formation</th><td class="v" data-figure="formation_fleet_max">8</td><td class="n">All six runs passed the separation check. That check measures distance in three dimensions, so side-by-side spacing is still unmeasured. We treat it as an open defect, not a result.</td><td class="s">Simulation</td></tr>
+        <tr><th scope="row">UAVs in tight formation</th><td class="v" data-figure="formation_fleet_max">8</td><td class="n">All six runs passed the separation check. That check measures distance in three dimensions, so side-by-side spacing is still unmeasured. We treat it as an open defect, not a result.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Position error without GPS</th><td class="v" data-figure="nav_error_without_gps">396–750 m &rarr; 25.5–39.0 m</td><td class="n">After one day of fixes, from a written report and two named campaigns. Still not good enough to rely on.</td><td class="s">Simulation</td></tr>
         <tr><th scope="row">Core files changed by the two adapter commits</th><td class="v" data-figure="autopilot_core_files_per_commit">0</td><td class="n">Counted from the repository history. Core edits in that period belong to a separate terrain-following change.</td><td class="s">Code history</td></tr>
         <tr><th scope="row">Problems written up with their causes</th><td class="v" data-figure="defects">265</td><td class="n">Every problem found is written up with its cause and its fix. The bug log records which are still open.</td><td class="s">Bug log</td></tr>
-        <tr class="zero"><th scope="row">Flights on a real aircraft</th><td class="v" data-figure="real_flights">0</td><td class="n">None yet. The first is planned for the next few weeks.</td><td class="s">Flight</td></tr>
+        <tr class="zero"><th scope="row">Flights on a real UAV</th><td class="v" data-figure="real_flights">0</td><td class="n">None yet. The first is planned for the next few weeks.</td><td class="s">Flight</td></tr>
       </tbody>
     </table>
   </div>

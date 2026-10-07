@@ -62,7 +62,7 @@
       <div class="cap">
         <h3>Navigation without GPS</h3>
         <ul>
-          <li><b>Flies with zero satellites.</b> Five aircraft held the mission through 150 seconds with no GPS. Neighbour and terrain fixes are built and tested.</li>
+          <li><b>Flies with zero satellites.</b> Five UAVs held the mission through 150 seconds with no GPS. Neighbour and terrain fixes are built and tested.</li>
           <li><b>Spoofing detection.</b> A false GPS signal is spotted and outvoted. Built and unit-tested.</li>
           <li><b>Takes off without GPS</b>, or loses it in flight and carries on.</li>
           <li><b>Shared clock without satellites</b>, tested. A fleet wind estimate is in development.</li>
@@ -80,8 +80,8 @@
       <div class="cap">
         <h3>Formation and separation</h3>
         <ul>
-          <li><b>Ghost-leader ring.</b> Every aircraft follows the same virtual leader along the route.</li>
-          <li><b>Altitude layers.</b> A height layer per aircraft, so no two meet at the same height.</li>
+          <li><b>Ghost-leader ring.</b> Every UAV follows the same virtual leader along the route.</li>
+          <li><b>Altitude layers.</b> A height layer per UAV, so no two meet at the same height.</li>
           <li><b>Predicts conflicts ahead</b> and holds or gives way, with defined right of way.</li>
           <li><b>Close formation</b> at 15–20 m on precise positioning. In development.</li>
         </ul>
@@ -90,9 +90,9 @@
         <h3>Launch and recovery</h3>
         <ul>
           <li><b>Hand-throw one by one</b>, or launch the whole fleet with one command.</li>
-          <li><b>Pilot hand-over.</b> Fly an aircraft by hand, switch to automatic, and it joins the formation.</li>
+          <li><b>Pilot hand-over.</b> Fly a UAV by hand, switch to automatic, and it joins the formation.</li>
           <li><b>Lands itself one by one</b>, in an order decided on board, at the launch point. Separate landing spots in development.</li>
-          <li><b>Survives its own computer failing.</b> The flight controller continues and the aircraft lands.</li>
+          <li><b>Survives its own computer failing.</b> The flight controller continues and the UAV lands.</li>
         </ul>
       </div>
       <div class="cap">
@@ -107,18 +107,18 @@
       <div class="cap">
         <h3>Air, ground and sea</h3>
         <ul>
-          <li><b>Built for aircraft, ground robots and boats</b> on one network. Task allocation tested with mixed simulated fleets of 3,000.</li>
+          <li><b>Built for UAVs, UGVs and USVs</b> on one network. Task allocation tested with mixed simulated fleets of 3,000.</li>
           <li><b>Each job to a vehicle that can do it</b>, matched by capability. Tested in simulation.</li>
-          <li><b>Fixed-wing first.</b> Multirotor, ground and boat behaviour are in development.</li>
-          <li>Real ground and sea vehicles follow the aircraft trial.</li>
+          <li><b>Fixed-wing first.</b> Multirotor, UGV and USV behaviour are in development.</li>
+          <li>Real UGVs and USVs follow the UAV trial.</li>
         </ul>
       </div>
       <div class="cap">
         <h3>Any vehicle, any autopilot</h3>
         <ul>
-          <li><b>Works with PX4 and ArduPilot</b>, above the aircraft's own autopilot; no rebuild per aircraft.</li>
+          <li><b>Works with PX4 and ArduPilot</b>, above the UAV's own autopilot; no rebuild per UAV.</li>
           <li><b>New autopilots plug in as adapters</b>, with no change to the core.</li>
-          <li><b>One program</b> for simulation and aircraft; it identifies its flight controller on power-up.</li>
+          <li><b>One program</b> for simulation and real UAVs; it identifies its flight controller on power-up.</li>
           <li><b>Standard ground station.</b> The whole fleet appears as one vehicle in it.</li>
         </ul>
       </div>
@@ -142,14 +142,14 @@
       <h2 id="sys-h">Many vehicles. Many makers. One mission.</h2>
     </div>
     <div class="lead">
-      <p>Every vehicle stays a complete system: its own autopilot, sensors, navigation and computer. Homing Vector adds one shared layer on top, the mission, a secure relay network and a common clock, so aircraft, ground robots and boats work as one force.</p>
+      <p>Every vehicle stays a complete system: its own autopilot, sensors, navigation and computer. Homing Vector adds one shared layer on top, the mission, a secure relay network and a common clock, so UAVs, UGVs and USVs work as one force.</p>
       <p>It runs on every vehicle, above whatever autopilot and airframe it already has. If a vehicle, the radio or the ground station is lost, the rest carry on.</p>
     </div>
   </div>
   <div class="w">
     <figure class="sos">
       <svg viewBox="0 0 1200 360" role="img" aria-labelledby="sos-t">
-        <title id="sos-t">Layers: Scattrnodes Eyes supervises; the shared Homing Vector layer runs on every vehicle; below it, fixed-wing UAVs, high-speed UAVs, ground robots, boats and any new vehicle, each with its own autopilot, navigation and computer.</title>
+        <title id="sos-t">Layers: Scattrnodes Eyes supervises; the shared Homing Vector layer runs on every vehicle; below it, fixed-wing UAVs, high-speed UAVs, UGVs, USVs and any new vehicle, each with its own autopilot, navigation and computer.</title>
         <rect x="380" y="0" width="440" height="64" class="b-dark"/>
         <text x="600" y="28" class="t-l" text-anchor="middle">Scattrnodes Eyes · the operator</text>
         <text x="600" y="50" class="t-m" text-anchor="middle">SETS INTENT · SUPERVISES · NEVER IN THE LOOP</text>
@@ -161,8 +161,8 @@
         <g class="sys">
           <rect x="0" y="232" width="216" height="128"/><text x="108" y="268" class="t-l" text-anchor="middle">Fixed-wing UAVs</text><text x="108" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="108" y="324" class="t-s" text-anchor="middle">own computer</text>
           <rect x="246" y="232" width="216" height="128"/><text x="354" y="268" class="t-l" text-anchor="middle">High-speed UAVs</text><text x="354" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="354" y="324" class="t-s" text-anchor="middle">own computer</text>
-          <rect x="492" y="232" width="216" height="128"/><text x="600" y="268" class="t-l" text-anchor="middle">Ground robots</text><text x="600" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="600" y="324" class="t-s" text-anchor="middle">own computer</text>
-          <rect x="738" y="232" width="216" height="128"/><text x="846" y="268" class="t-l" text-anchor="middle">Boats</text><text x="846" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="846" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="492" y="232" width="216" height="128"/><text x="600" y="268" class="t-l" text-anchor="middle">UGVs</text><text x="600" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="600" y="324" class="t-s" text-anchor="middle">own computer</text>
+          <rect x="738" y="232" width="216" height="128"/><text x="846" y="268" class="t-l" text-anchor="middle">USVs</text><text x="846" y="300" class="t-s" text-anchor="middle">own autopilot · navigation</text><text x="846" y="324" class="t-s" text-anchor="middle">own computer</text>
           <rect x="984" y="232" width="216" height="128" class="dash"/><text x="1092" y="268" class="t-l" text-anchor="middle">Any new vehicle</text><text x="1092" y="300" class="t-s" text-anchor="middle">any maker · any autopilot</text><text x="1092" y="324" class="t-s" text-anchor="middle">joins as a plug-in</text>
         </g>
       </svg>
@@ -173,7 +173,7 @@
 <section class="sec products" id="products" aria-labelledby="pr-h">
   <div class="w"><p class="kick">Products</p><h2 id="pr-h" class="vh">Products</h2></div>
   <article class="prod w">
-    <img src="../media/stills/s_1.jpg" alt="Rendered: a formation of fifteen fixed-wing aircraft over a mountain ridge." loading="lazy" width="1600" height="900">
+    <img src="../media/stills/s_1.jpg" alt="Rendered: a formation of fifteen fixed-wing UAVs over a mountain ridge." loading="lazy" width="1600" height="900">
     <div class="prod-t">
       <p class="kick">The system</p>
       <h3>Homing Vector</h3>
@@ -182,7 +182,7 @@
     </div>
   </article>
   <article class="prod w rev">
-    <img src="../media/stills/s_36_5.jpg" alt="Rendered: a swarm of aircraft low over a dark lake, each holding its own place." loading="lazy" width="1600" height="900">
+    <img src="../media/stills/s_36_5.jpg" alt="Rendered: a swarm of UAVs low over a dark lake, each holding its own place." loading="lazy" width="1600" height="900">
     <div class="prod-t">
       <p class="kick">On every vehicle</p>
       <h3>Scattrnodes</h3>
@@ -192,7 +192,7 @@
   </article>
   <article class="prod w">
     <svg class="eyes" viewBox="0 0 700 394" role="img" aria-labelledby="eyes-t">
-      <title id="eyes-t">Schematic of the Scattrnodes Eyes operator view: a fleet list of five aircraft, a map with the five aircraft in a ring, a typed order, the planned formation and a press-and-hold button to send.</title>
+      <title id="eyes-t">Schematic of the Scattrnodes Eyes operator view: a fleet list of five UAVs, a map with the five UAVs in a ring, a typed order, the planned formation and a press-and-hold button to send.</title>
       <rect width="700" height="394" class="e-bg"/>
       <text x="18" y="26" class="e-t">SCATTRNODES EYES</text><text x="150" y="26" class="e-m">FIND AND FOLLOW · WATCH AN AREA · REHEARSE</text>
       <line x1="0" y1="38" x2="700" y2="38" class="e-ln"/>
@@ -208,7 +208,7 @@
       <text x="518" y="60" class="e-m">ORDER</text>
       <rect x="518" y="66" width="168" height="48" class="e-box"/><text x="526" y="86" class="e-t2">take the swarm of 5 to</text><text x="526" y="104" class="e-t2">the marked point</text>
       <text x="518" y="134" class="e-m">PLAN</text>
-      <rect x="518" y="140" width="168" height="64" class="e-box"/><text x="526" y="160" class="e-t2">5 aircraft · ring · 5 layers</text><text x="526" y="178" class="e-t2">no crossing paths</text><text x="526" y="196" class="e-m">UPLOADED · READ BACK · VERIFIED</text>
+      <rect x="518" y="140" width="168" height="64" class="e-box"/><text x="526" y="160" class="e-t2">5 UAVs · ring · 5 layers</text><text x="526" y="178" class="e-t2">no crossing paths</text><text x="526" y="196" class="e-m">UPLOADED · READ BACK · VERIFIED</text>
       <rect x="518" y="214" width="168" height="30" class="e-send"/><text x="602" y="234" text-anchor="middle" class="e-t2 e-w">PRESS AND HOLD TO SEND</text>
       <rect x="518" y="252" width="80" height="26" class="e-box"/><text x="558" y="270" text-anchor="middle" class="e-m">PAUSE ALL</text>
       <rect x="606" y="252" width="80" height="26" class="e-box"/><text x="646" y="270" text-anchor="middle" class="e-m">RECALL ALL</text>
@@ -228,9 +228,9 @@
     <p class="kick">Roadmap</p>
     <h2 id="rd-h">From simulation to the field.</h2>
     <ol class="steps">
-      <li><span>Next few weeks</span><h3>First real flight</h3><p>Five fixed-wing aircraft, a safety pilot on standby for each, every bench check done first.</p></li>
-      <li><span>Within a year</span><h3>A witnessed field trial</h3><p>Five aircraft, flying without GPS and under jamming, run by an outside observer through Scattrnodes Eyes.</p></li>
-      <li><span>Then</span><h3>Complete Homing Vector systems</h3><p>Paid trials and first orders. Bigger fleets, faster aircraft, ground and sea vehicles in the field.</p></li>
+      <li><span>Next few weeks</span><h3>First real flight</h3><p>Five fixed-wing UAVs, a safety pilot on standby for each, every bench check done first.</p></li>
+      <li><span>Within a year</span><h3>A witnessed field trial</h3><p>Five UAVs, flying without GPS and under jamming, run by an outside observer through Scattrnodes Eyes.</p></li>
+      <li><span>Then</span><h3>Complete Homing Vector systems</h3><p>Paid trials and first orders. Bigger fleets, faster UAVs, UGVs and USVs in the field.</p></li>
     </ol>
   </div>
 </section>

@@ -17,8 +17,10 @@ const SCRIPT = [
   [34.1, 'lead', 'air', 'Split. Search lines one to five.', ''],
   [40.1, 'air', 'gnd', 'Eyes on the ground team. Path is clear.', ''],
   [43.4, 'gnd', 'op', 'Ready to move in. Operator, approve?', 'amber'],
+  [47.0, 'op', 'all', 'Approved. Ground team, go.', ''],
+  [50.5, 'gnd', 'all', 'Moving in. Fleet holding the ring above us.', ''],
 ];
-const WHO = { air: 'UAV', lead: 'UAV', gnd: 'UGV', sea: 'USV', op: 'Operator', all: 'All' };
+const WHO = { air: 'UAV', lead: 'UAV', gnd: 'UGV', sea: 'USV', op: 'Operator', all: 'All' };   // the operator speaks from the ground station (bottom right of the frame)
 const kindOf = v => v.kind.startsWith('Ground') ? 'gnd' : v.kind.startsWith('Surface') ? 'sea' : v.kind.includes('lead') ? 'lead' : 'air';
 const label = v => { const [p, n] = v.name.split('-'); return `${p === 'AIR' ? 'UAV' : p === 'GND' ? 'UGV' : 'USV'}-${n}`; };
 

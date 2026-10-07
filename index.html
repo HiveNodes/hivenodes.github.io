@@ -69,7 +69,13 @@
           <p>Autonomy for UAVs, UGVs and USVs that keeps one plan running when navigation and radio are denied.</p>
           <p class="go"><a class="btn" href="#contact">Brief us</a><a class="btn ghost" href="simulation/">Run the simulation</a></p>
         <p class="see"><span>What you see</span>A group of UAVs, robot aircraft, flying together over the mountains of Ladakh.</p></article>
-        <article class="ch" data-t0="46.2" data-t1="50"><p class="tc">T+00:00 · 02 · Tasking</p><h2>One input. The fleet does the rest.</h2>
+        <article class="ch" data-t0="6" data-t1="17"><p class="tc">T+00:06 · 02</p><h2>One network. Air, land, water.</h2><p>UAVs over the lake, UGVs on the shore: one plan on every vehicle, and each talks directly to its neighbours about what it sees and who covers what.</p><p class="see"><span>What you see</span>Robot aircraft over the lake and robot ground vehicles on the shore, working as one team.</p></article>
+        <article class="ch" data-t0="17" data-t1="23"><p class="tc">T+00:17 · 03</p><h2>GPS denied.</h2><p>Jammed. Each UAV keeps navigating on terrain and on its neighbours, and the formation holds.</p><p class="see"><span>What you see</span>Satellite signals are blocked. The aircraft still know where they are and keep their places.</p></article>
+        <article class="ch" data-t0="23" data-t1="28.5"><p class="tc">T+00:23 · 04</p><h2>Comms degraded.</h2><p>Four UAVs climb into a relay ring so the plan keeps reaching every vehicle.</p><p class="see"><span>What you see</span>The radio gets weak, so four aircraft climb high to pass messages along.</p></article>
+        <article class="ch" data-t0="28.5" data-t1="34"><p class="tc">T+00:28 · 05</p><h2>Asset lost. Mission holds.</h2><p>A lead UAV goes silent. Its followers take the open slots and its search lane is reassigned.</p><p class="see"><span>What you see</span>One aircraft stops answering. The camera flies beside another as it moves into the empty place.</p></article>
+        <article class="ch" data-t0="34" data-t1="40"><p class="tc">T+00:34 · 06</p><h2>Split and search.</h2><p>The fleet divides into search lines over land and water.</p><p class="see"><span>What you see</span>The team splits into groups to search more of the lake.</p></article>
+        <article class="ch" data-t0="40" data-t1="46"><p class="tc">T+00:40 · 07</p><h2>Eyes on the position.</h2><p>A UAV holds its thermal sensor on the UGVs at the tasked position and clears their route.</p><p class="see"><span>What you see</span>A heat camera on an aircraft watches the ground robots from above.</p></article>
+        <article class="ch" data-t0="46.2" data-t1="54"><p class="tc">T+00:46 · 08 · Operator</p><h2>One input. A human decides.</h2>
           <div class="task" role="group" aria-label="Task the fleet">
             <label class="tk-l" for="tk-ll">Target position (lat, long)</label>
             <input id="tk-ll" class="tk-in" value="33.9178 N, 78.5126 E" autocomplete="off" spellcheck="false">
@@ -80,17 +86,10 @@
             </div>
             <button type="button" class="btn tk-go" id="tk-go">Task the fleet</button>
           </div>
-          <p>That is all the operator gives: a position and the job. Routes, roles, formation and hand-offs between UAVs, UGVs and USVs are planned on board.</p><p class="see"><span>What you see</span>The operator's laptop. One place and one job is all they type.</p></article>
-        <article class="ch" data-t0="6" data-t1="17"><p class="tc">T+00:06 · 03</p><h2>One network. Air, land, water.</h2><p>UAVs over the lake, UGVs on the shore: one plan on every vehicle, and each talks directly to its neighbours about what it sees and who covers what.</p><p class="see"><span>What you see</span>Robot aircraft over the lake and robot ground vehicles on the shore, working as one team.</p></article>
-        <article class="ch" data-t0="17" data-t1="23"><p class="tc">T+00:17 · 04</p><h2>GPS denied.</h2><p>Jammed. Each UAV keeps navigating on terrain and on its neighbours, and the formation holds.</p><p class="see"><span>What you see</span>Satellite signals are blocked. The aircraft still know where they are and keep their places.</p></article>
-        <article class="ch" data-t0="23" data-t1="28.5"><p class="tc">T+00:23 · 05</p><h2>Comms degraded.</h2><p>Four UAVs climb into a relay ring so the plan keeps reaching every vehicle.</p><p class="see"><span>What you see</span>The radio gets weak, so four aircraft climb high to pass messages along.</p></article>
-        <article class="ch" data-t0="28.5" data-t1="34"><p class="tc">T+00:28 · 06</p><h2>Asset lost. Mission holds.</h2><p>A lead UAV goes silent. Its followers take the open slots and its search lane is reassigned.</p><p class="see"><span>What you see</span>One aircraft stops answering. The camera flies beside another as it moves into the empty place.</p></article>
-        <article class="ch" data-t0="34" data-t1="40"><p class="tc">T+00:34 · 07</p><h2>Split and search.</h2><p>The fleet divides into search lines over land and water.</p><p class="see"><span>What you see</span>The team splits into groups to search more of the lake.</p></article>
-        <article class="ch" data-t0="40" data-t1="46"><p class="tc">T+00:40 · 08</p><h2>Eyes on the position.</h2><p>A UAV holds its thermal sensor on the UGVs at the tasked position and clears their route.</p><p class="see"><span>What you see</span>A heat camera on an aircraft watches the ground robots from above.</p></article>
-        <article class="ch" data-t0="50" data-t1="54"><p class="tc">T+00:46 · 09</p><h2>A human decides.</h2><p>For surveillance the fleet reports. For targeting it confirms the position and holds until the operator approves in Scattrnodes Eyes.</p><p class="see"><span>What you see</span>The robots wait. A person on the laptop says yes before they move.</p></article>
+          <p>The operator gives a position and the job. For surveillance the fleet reports; for targeting it confirms the position and holds until a person approves.</p><p class="see"><span>What you see</span>The operator's laptop. One place and one job is all they type, and nothing moves until they say yes.</p></article>
       </div>
       <div class="radio" aria-label="Fleet radio"><p class="lab">Fleet radio</p><ol id="comms" aria-live="off"></ol></div>
-      <ol class="steps" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="steps" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
     </aside>
   </div>
 </section>

@@ -65,8 +65,8 @@ export async function startBrief({ RM }) {
     const go2 = () => { back.play().catch(() => {}); back.classList.add('front'); front.classList.remove('front');
       const old = front; front = back; back = old; shown = -1;
       setTimeout(() => { old.pause(); busy = false; if (pending !== null) { const p = pending; pending = null; cue(p); } }, 500); };
-    back.currentTime = at;
-    if (back.readyState >= 2 && Math.abs(back.currentTime - at) < .05) go2(); else back.addEventListener('seeked', go2, { once: true });
+    if (back.readyState >= 2 && Math.abs(back.currentTime - at) < .1) { go2(); return; }   // already parked there: fade at once
+    back.currentTime = at; back.addEventListener('seeked', go2, { once: true });
   };
 
   // ---- chapters from scroll
@@ -78,6 +78,9 @@ export async function startBrief({ RM }) {
     chs.forEach((c, k) => c.classList.toggle('on', k === i)); steps.forEach((s, k) => s.classList.toggle('on', k <= i));
     t0 = +chs[i].dataset.t0; t1 = +chs[i].dataset.t1; log.textContent = ''; shown = -1;
     if (front.readyState >= 1) cue(t0 + .05);
+    // after the fade, park the hidden layer on the NEXT chapter's first frame, so the next change needs no seek-and-decode
+    const nx = chs[Math.min(chs.length - 1, i + 1)];
+    setTimeout(() => { if (!busy && back.readyState >= 1) { back.currentTime = +nx.dataset.t0 + .05; back.dataset.at = nx.dataset.t0; } }, 700);
   };
   addEventListener('scroll', pick, { passive: true }); addEventListener('resize', pick);
   // loop inside the chapter by cross-fading back to its start shortly before its end
@@ -111,7 +114,9 @@ export async function startBrief({ RM }) {
       const to = lk === 'all' ? P.filter(p => p !== sp && alive(p)).sort((a, b) => Math.hypot(a.x - sp.x, a.y - sp.y) - Math.hypot(b.x - sp.x, b.y - sp.y)).slice(0, 4)
         : lk === 'op' ? [{ x: W - 24 * dp, y: H - 24 * dp }] : [near(lk) || { x: W / 2, y: H - 10 * dp }];
       if (i !== shown) { shown = i; say(i, sp.virt ? WHO[sk] : label(V[sp.k]), lk === 'all' ? 'All' : lk === 'op' ? 'Operator' : to[0] && to[0].k !== undefined ? label(V[to[0].k]) : WHO[lk]); }
-      if (age < 2.5) { const a = Math.min(1, age * 4) * Math.min(1, (2.5 - age) * 2);
+      // draw a link only when a real vehicle is on screen at one end (no stray lines across the ground-station shot)
+      const real = !sp.virt || to.some(b => b && b.k !== undefined);
+      if (real && P.length && age < 2.5) { const a = Math.min(1, age * 4) * Math.min(1, (2.5 - age) * 2);
         ctx.strokeStyle = `rgba(${col},${.8 * a})`; ctx.lineWidth = 1.2 * dp; ctx.beginPath();
         for (const b of to) { ctx.moveTo(sp.x, sp.y); ctx.lineTo(b.x, b.y); } ctx.stroke();
         ctx.fillStyle = `rgba(${col},${a})`; const q = Math.min(1, age / 1.2);

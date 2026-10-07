@@ -34,7 +34,7 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 @media (max-width:700px){.top li:not(:last-child){display:none}}
 
 /* the mission briefing: film pinned beside the panel; the section is tall so scrolling steps through 8 chapters */
-.brief{height:calc(100svh * 5.2)}
+.brief{height:calc(100svh * 4.6)}
 .pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr);border-bottom:1px solid var(--line)}
 .film{position:relative;overflow:hidden;background:#000 url(../media/hero-poster.jpg) center/cover}
 .film video,.film canvas{position:absolute;inset:0;width:100%;height:100%}
@@ -55,10 +55,10 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 #comms li{display:grid;gap:1px;color:var(--g2)}#comms li:last-child{color:var(--fg)}
 #comms b{font-weight:500;font-size:11px;letter-spacing:.12em;color:var(--g1)}
 #comms li.amber b,#comms li.amber span{color:var(--amber)}#comms li.red b{color:var(--red)}
-.steps{list-style:none;display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:16px}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:16px}
 .steps li{height:2px;background:var(--line)}.steps li.on{background:var(--fg)}
 @media (max-width:900px){
-  .brief{height:calc(100svh * 5.8)}
+  .brief{height:calc(100svh * 5.2)}
   .pin{grid-template-columns:1fr;grid-template-rows:42svh 1fr}
   .panel{border-left:0;border-top:1px solid var(--line);padding:18px var(--gut) 14px}
   .ch h1,.ch h2{font-size:clamp(26px,7vw,40px)}.ch p{margin-top:10px}

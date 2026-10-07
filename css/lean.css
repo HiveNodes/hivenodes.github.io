@@ -34,11 +34,12 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 @media (max-width:700px){.top li:not(:last-child){display:none}}
 
 /* the mission briefing: film pinned beside the panel; the section is tall so scrolling steps through 8 chapters */
-.brief{height:calc(100svh * 4.6)}
+.brief{height:calc(100svh * 5.2)}
 .pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr);border-bottom:1px solid var(--line)}
 .film{position:relative;overflow:hidden;background:#000 url(../media/hero-poster.jpg) center/cover}
 .film video,.film canvas{position:absolute;inset:0;width:100%;height:100%}
-.film video{object-fit:cover}
+.film video{object-fit:cover;opacity:0;transition:opacity .45s ease}
+.film video.front{opacity:1}
 .panel{display:grid;grid-template-rows:1fr auto auto;border-left:1px solid var(--line);background:var(--bg);padding:clamp(24px,3vw,48px) clamp(20px,2.6vw,40px) 24px;min-width:0}
 .chs{position:relative;display:flex;flex-direction:column;justify-content:center}
 .ch .tc{margin-bottom:18px;color:var(--acc)}
@@ -54,10 +55,10 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 #comms li{display:grid;gap:1px;color:var(--g2)}#comms li:last-child{color:var(--fg)}
 #comms b{font-weight:500;font-size:11px;letter-spacing:.12em;color:var(--g1)}
 #comms li.amber b,#comms li.amber span{color:var(--amber)}#comms li.red b{color:var(--red)}
-.steps{list-style:none;display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:16px}
+.steps{list-style:none;display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:16px}
 .steps li{height:2px;background:var(--line)}.steps li.on{background:var(--fg)}
 @media (max-width:900px){
-  .brief{height:calc(100svh * 5.2)}
+  .brief{height:calc(100svh * 5.8)}
   .pin{grid-template-columns:1fr;grid-template-rows:42svh 1fr}
   .panel{border-left:0;border-top:1px solid var(--line);padding:18px var(--gut) 14px}
   .ch h1,.ch h2{font-size:clamp(26px,7vw,40px)}.ch p{margin-top:10px}
@@ -106,3 +107,33 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 .reach{display:flex;flex-wrap:wrap;gap:12px 28px;font-size:clamp(18px,2vw,26px)!important;color:var(--fg)!important}
 .mail{overflow-wrap:anywhere}.who{font-size:15px!important}
 .foot{display:flex;flex-wrap:wrap;gap:8px 28px;padding:28px var(--gut);font:400 12px/1.5 var(--mono);letter-spacing:.06em;color:var(--g2)}
+
+/* the tasking console: the operator's whole input */
+.task{margin-top:22px;display:grid;gap:10px;max-width:420px}
+.tk-l{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--g1)}
+.tk-in{font:500 18px/1 var(--mono);letter-spacing:.04em;color:var(--fg);background:var(--bg2);border:1px solid #3a3f3f;padding:14px 14px;width:100%}
+.tk-in:focus{outline:2px solid var(--acc);outline-offset:0}
+.tk-type{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #3a3f3f}
+.tk-type button{background:transparent;border:0;border-right:1px solid #3a3f3f;padding:12px 6px;font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--g1)}
+.tk-type button:last-child{border-right:0}
+.tk-type button[aria-checked="true"]{background:var(--fg);color:var(--bg)}
+.tk-go{justify-self:start}
+.tk-go.sent{background:transparent;color:var(--acc);border-color:var(--acc)}
+@media (max-width:900px){.task{margin-top:12px;gap:8px}.tk-in{font-size:15px;padding:10px}}
+
+/* differentiators: a capability line and its proof status */
+.diff th{width:16%}
+.diff td{font:400 clamp(16px,1.25vw,19px)/1.5 var(--sans)!important;letter-spacing:0!important;color:var(--fg);width:auto!important}
+.diff td.st{font:500 11px/1.4 var(--mono)!important;letter-spacing:.14em!important;text-transform:uppercase;color:var(--acc);width:18%!important;white-space:nowrap}
+@media (max-width:700px){.diff td.st{white-space:normal}}
+.ph.none{aspect-ratio:16/9;display:grid;place-items:center;background:#0f1111;border-bottom:1px solid var(--line)}
+.ph.none span{font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--g2)}
+.road{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:clamp(28px,4vw,48px)}
+.road li{background:var(--bg);padding:20px;display:grid;gap:8px;align-content:start}
+.road .k{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--acc)}
+.road b{font:700 18px/1.2 var(--sans);text-transform:uppercase}
+.road i{font:400 14px/1.45 var(--sans);font-style:normal;color:var(--g1)}
+@media (max-width:800px){.road{grid-template-columns:1fr}}
+.ch .see{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);color:var(--fg);font-size:15px;max-width:40ch}
+.ch .see span{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--g2);margin-bottom:6px}
+@media (max-width:900px){.ch .see{margin-top:8px;padding-top:8px;font-size:14px}}

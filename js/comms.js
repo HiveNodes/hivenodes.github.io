@@ -1,34 +1,43 @@
 // HiveNodes mission briefing. The film is pinned beside a panel; the scroll position inside #mission picks the chapter,
-// the panel shows that chapter, and the film plays (and loops) that chapter's footage. Over the film, on a transparent
-// canvas in the same figure, thin lines show the network between neighbouring vehicles and, when one speaks, the link
-// to whom it speaks. The words are in the panel's fleet-radio log, never on the picture. Vehicle positions come from
-// media/film-tracks.json, exported frame by frame from the Blender scene.
+// the panel shows that chapter, and the film plays (and loops) that chapter's footage. Two video layers are used: the
+// next chapter (or the next loop) is prepared on the hidden layer and cross-faded in, so changing chapter never flashes
+// or stutters. Over the film, on a transparent canvas in the same figure, thin lines show the network between
+// neighbouring vehicles and, when one speaks, the link to whom it speaks. The words are in the panel's fleet-radio log,
+// never on the picture. Vehicle positions come from media/film-tracks.json, exported frame by frame from Blender.
 const $ = (s, r = document) => r.querySelector(s);
 
+// the operator's whole input: a position and the job
+const task = { ll: '33.9178 N, 78.5126 E', type: 'Surveillance' };
+const isTarget = () => task.type !== 'Surveillance';
+
 // [time s, speaker kind, listener kind ('all' = everyone in frame, 'op' = the operator), line, tone]
-const SCRIPT = [
-  [0.6, 'air', 'all', 'Formed up. One plan, every vehicle.', ''],
-  [6.4, 'sea', 'air', 'USVs on the lake. Shoreline covered.', ''],
-  [11.4, 'gnd', 'air', 'Ground team rolling. Watch our route.', ''],
+const script = () => [
+  [0.8, 'air', 'all', 'Formed up. One plan, every vehicle.', ''],
+  [6.4, 'air', 'gnd', 'Over the lake. Ground team, we have your route.', ''],
+  [11.4, 'gnd', 'air', 'UGVs rolling to the position. Watch our route.', ''],
   [17.1, 'air', 'all', 'GPS jammed. Navigating on terrain and neighbours.', 'amber'],
-  [20.2, 'air', 'all', 'Same map on every UAV. Holding the ring.', ''],
+  [20.2, 'air', 'all', 'Same map on every vehicle. Holding the ring.', ''],
   [23.1, 'air', 'all', 'Radio weak. Climbing to relay.', 'amber'],
   [28.6, 'air', 'all', 'UAV-03 lost. Taking its search lane.', 'red'],
   [34.1, 'lead', 'air', 'Split. Search lines one to five.', ''],
-  [40.1, 'air', 'gnd', 'Eyes on the ground team. Route clear.', ''],
-  [43.4, 'gnd', 'op', 'Ready to move in. Request approval.', 'amber'],
-  [47.0, 'op', 'all', 'Approved. Ground team, go.', ''],
-  [50.5, 'gnd', 'all', 'Moving in. UAVs holding above.', ''],
+  [40.1, 'air', 'gnd', `Eyes on ${task.ll}. Route clear.`, ''],
+  [43.4, 'air', 'op', isTarget() ? 'Target position confirmed. Holding for approval.' : 'Position under watch. Reporting.', isTarget() ? 'amber' : ''],
+  [46.6, 'op', 'all', `Task: ${task.type.toUpperCase()} at ${task.ll}.`, ''],
+  [48.2, 'air', 'op', 'Tasking received. Plan shared to every vehicle.', ''],
+  [50.6, 'op', 'all', isTarget() ? 'Approved.' : 'Keep watching. Report changes.', ''],
+  [52.2, 'gnd', 'all', 'UGVs at the position. UAVs holding above.', ''],
 ];
+let SCRIPT = script();
 const WHO = { air: 'UAV', lead: 'UAV', gnd: 'UGV', sea: 'USV', op: 'Operator', all: 'All' };
 const kindOf = v => v.kind.startsWith('Ground') ? 'gnd' : v.kind.startsWith('Surface') ? 'sea' : v.kind.includes('lead') ? 'lead' : 'air';
 const label = v => { const [p, n] = v.name.split('-'); return `${p === 'AIR' ? 'UAV' : p === 'GND' ? 'UGV' : 'USV'}-${n}`; };
 
 export async function startBrief({ RM }) {
-  const sec = $('#mission'), v = $('#filmv'), cv = $('#film-cv'), box = $('#film'), log = $('#comms');
+  const sec = $('#mission'), A = $('#filmv'), B = $('#filmv2'), cv = $('#film-cv'), box = $('#film'), log = $('#comms');
   const chs = [...sec.querySelectorAll('.ch')], steps = [...sec.querySelectorAll('.steps li')];
   const ctx = cv.getContext('2d');
   let T = null; fetch('media/film-tracks.json').then(r => r.json()).then(j => { if (j && Array.isArray(j.frames_uv)) T = j; }).catch(() => {});
+  let front = A, back = B;
 
   // ---- the radio log: lines arrive as the footage reaches them; three kept
   let shown = -1;
@@ -40,18 +49,39 @@ export async function startBrief({ RM }) {
     while (log.children.length > 3) log.firstElementChild.remove();
   };
 
+  // ---- the tasking console
+  const ll = $('#tk-ll'), types = [...sec.querySelectorAll('.tk-type button')], go = $('#tk-go');
+  types.forEach(b => b.addEventListener('click', () => { types.forEach(x => x.setAttribute('aria-checked', String(x === b))); task.type = b.dataset.type; }));
+  go?.addEventListener('click', () => {
+    task.ll = (ll.value || '').trim().slice(0, 40) || task.ll; SCRIPT = script(); log.textContent = ''; shown = -1;
+    go.textContent = 'Tasked'; go.classList.add('sent'); setTimeout(() => { go.textContent = 'Task the fleet'; go.classList.remove('sent'); }, 2500);
+    cue(t0);
+  });
+
+  // ---- double-buffered playback: prepare the hidden layer at `at`, then cross-fade to it
+  let t0 = 0, t1 = 54, busy = false, pending = null;
+  const cue = at => {
+    if (busy) { pending = at; return; } busy = true;   // a change during a fade runs right after it
+    const go2 = () => { back.play().catch(() => {}); back.classList.add('front'); front.classList.remove('front');
+      const old = front; front = back; back = old; shown = -1;
+      setTimeout(() => { old.pause(); busy = false; if (pending !== null) { const p = pending; pending = null; cue(p); } }, 500); };
+    back.currentTime = at;
+    if (back.readyState >= 2 && Math.abs(back.currentTime - at) < .05) go2(); else back.addEventListener('seeked', go2, { once: true });
+  };
+
   // ---- chapters from scroll
-  let cur = -1, t0 = 0, t1 = 54;
+  let cur = -1;
   const pick = () => {
     const r = sec.getBoundingClientRect(), span = Math.max(1, r.height - innerHeight);
     const u = Math.min(.999, Math.max(0, -r.top / span)), i = Math.floor(u * chs.length);
     if (i === cur) return; cur = i;
     chs.forEach((c, k) => c.classList.toggle('on', k === i)); steps.forEach((s, k) => s.classList.toggle('on', k <= i));
-    t0 = +chs[i].dataset.t0; t1 = +chs[i].dataset.t1; shown = -1; log.textContent = '';
-    if (v.readyState >= 1) v.currentTime = t0 + .05; else v.addEventListener('loadedmetadata', () => { v.currentTime = t0 + .05; }, { once: true });
+    t0 = +chs[i].dataset.t0; t1 = +chs[i].dataset.t1; log.textContent = ''; shown = -1;
+    if (front.readyState >= 1) cue(t0 + .05);
   };
-  addEventListener('scroll', pick, { passive: true }); addEventListener('resize', pick); pick();
-  v.addEventListener('timeupdate', () => { if (v.currentTime >= t1 - .05 || v.currentTime < t0 - .5) { v.currentTime = t0 + .05; shown = -1; } });
+  addEventListener('scroll', pick, { passive: true }); addEventListener('resize', pick);
+  // loop inside the chapter by cross-fading back to its start shortly before its end
+  setInterval(() => { if (!front.paused && front.currentTime >= t1 - .55) cue(t0 + .05); }, 100);
 
   // ---- the network overlay
   let W = 0, H = 0, dp = 1;
@@ -59,28 +89,25 @@ export async function startBrief({ RM }) {
   new ResizeObserver(fit).observe(box); fit();
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    const t = v.currentTime;
-    let i = -1; for (let k = 0; k < SCRIPT.length; k++) if (t >= SCRIPT[k][0] && SCRIPT[k][0] >= t0 - .01 && SCRIPT[k][0] < t1) i = k;
+    const v = front, t = v.currentTime;
+    let i = -1; for (let k = 0; k < SCRIPT.length; k++) if (t >= SCRIPT[k][0] && SCRIPT[k][0] >= t0 - .6 && SCRIPT[k][0] < t1) i = k;
     if (!T) { if (i >= 0 && i !== shown) { shown = i; say(i, WHO[SCRIPT[i][1]], WHO[SCRIPT[i][2]]); } return; }
     const vw = v.videoWidth || T.width, vh = v.videoHeight || T.height, s = Math.max(W / vw, H / vh), ox = (W - vw * s) / 2, oy = (H - vh * s) / 2;
     const f = Math.min(T.frames - 1, Math.max(0, Math.round(t * T.fps)));
     const V = T.vehicles, P = (T.frames_uv[f] || []).map(([k, u, w, r]) => ({ k, x: ox + u * vw * s, y: oy + w * vh * s, r: r * vw * s, kind: kindOf(V[k]) }))
       .filter(p => p.x > -20 && p.x < W + 20 && p.y > -20 && p.y < H + 20);
+    const E = T.events || {}, alive = p => !(V[p.k].name === E.lostVehicle && t >= E.lost);   // a lost UAV never speaks
     // neighbour links: each vehicle to its nearest neighbour within reach, one hairline path
     const reach = Math.max(W, H) * .2; ctx.lineWidth = dp; ctx.strokeStyle = 'rgba(236,235,231,.16)'; ctx.beginPath();
     for (let a = 0; a < P.length; a++) { let b = -1, d = reach * reach;
       for (let c = 0; c < P.length; c++) { if (c === a) continue; const dx = P[a].x - P[c].x, dy = P[a].y - P[c].y, q = dx * dx + dy * dy; if (q < d) { d = q; b = c; } }
       if (b >= 0) { ctx.moveTo(P[a].x, P[a].y); ctx.lineTo(P[b].x, P[b].y); } }
     ctx.stroke();
-    // the lost UAV: a thin red ring
-    const E = T.events || {};
-    for (const p of P) if (V[p.k].name === E.lostVehicle && t >= E.lost) { ctx.strokeStyle = 'rgba(255,90,74,.9)'; ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(8 * dp, Math.min(p.r * 1.3, 24 * dp)), 0, 7); ctx.stroke(); }
-    // the line being spoken: one link from speaker to listener(s) for 2.5 s
+    for (const p of P) if (!alive(p)) { ctx.strokeStyle = 'rgba(255,90,74,.9)'; ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(8 * dp, Math.min(p.r * 1.3, 24 * dp)), 0, 7); ctx.stroke(); }
     if (i >= 0) {
       const [ts, sk, lk, , tone] = SCRIPT[i], age = t - ts, col = tone === 'amber' ? '242,181,68' : '236,235,231';
-      const alive = p => !(V[p.k].name === E.lostVehicle && t >= E.lost);   // a lost UAV never speaks
       const near = kind => P.filter(p => alive(p) && (kind === 'air' ? p.kind === 'air' || p.kind === 'lead' : p.kind === kind)).sort((a, b) => Math.hypot(a.x - W / 2, a.y - H / 2) - Math.hypot(b.x - W / 2, b.y - H / 2))[0];
-      const sp = near(sk) || { x: W / 2, y: -10 * dp, virt: true };
+      const sp = sk === 'op' ? { x: W - 24 * dp, y: H - 24 * dp, virt: true } : near(sk) || { x: W / 2, y: -10 * dp, virt: true };
       const to = lk === 'all' ? P.filter(p => p !== sp && alive(p)).sort((a, b) => Math.hypot(a.x - sp.x, a.y - sp.y) - Math.hypot(b.x - sp.x, b.y - sp.y)).slice(0, 4)
         : lk === 'op' ? [{ x: W - 24 * dp, y: H - 24 * dp }] : [near(lk) || { x: W / 2, y: H - 10 * dp }];
       if (i !== shown) { shown = i; say(i, sp.virt ? WHO[sk] : label(V[sp.k]), lk === 'all' ? 'All' : lk === 'op' ? 'Operator' : to[0] && to[0].k !== undefined ? label(V[to[0].k]) : WHO[lk]); }
@@ -97,8 +124,10 @@ export async function startBrief({ RM }) {
   let running = false, onScreen = true, last = 0;
   const loop = now => { if (!running) return; requestAnimationFrame(loop); if (now - last < 40) return; last = now; draw(); };
   const sync = () => { const on = onScreen && document.visibilityState === 'visible';
-    if (on && !running) { running = true; if (!RM) v.play().catch(() => {}); requestAnimationFrame(loop); } else if (!on && running) { running = false; v.pause(); } };
+    if (on && !running) { running = true; if (!RM) front.play().catch(() => {}); requestAnimationFrame(loop); } else if (!on && running) { running = false; front.pause(); } };
   new IntersectionObserver(es => { onScreen = es.some(e => e.isIntersecting); sync(); }).observe(box);
-  document.addEventListener('visibilitychange', sync); v.addEventListener('seeked', draw);
-  v.preload = 'auto'; v.load(); sync();
+  document.addEventListener('visibilitychange', sync);
+  for (const v of [A, B]) { v.preload = 'auto'; v.load(); }
+  A.addEventListener('loadedmetadata', () => { cur = -1; pick(); if (cur >= 0) { A.currentTime = t0 + .05; } }, { once: true });
+  pick(); sync();
 }

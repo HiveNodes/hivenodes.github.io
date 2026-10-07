@@ -39,7 +39,7 @@
 <header class="top" id="top">
   <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="150" height="20"></a>
   <nav aria-label="Main"><ul>
-    <li><a href="#mission">Mission</a></li><li><a href="#system">System</a></li><li><a href="#evidence">Proof</a></li><li><a href="#live">Live</a></li><li><a class="cta" href="#contact">Contact</a></li>
+    <li><a href="#mission">Mission</a></li><li><a href="#system">System</a></li><li><a href="#edge">Edge</a></li><li><a href="#evidence">Proof</a></li><li><a href="#live">Live</a></li><li><a class="cta" href="#contact">Contact</a></li>
   </ul></nav>
 </header>
 
@@ -49,7 +49,12 @@
 <section class="brief" id="mission" aria-labelledby="h1">
   <div class="pin">
     <figure class="film" id="film">
-      <video id="filmv" muted playsinline preload="none" poster="media/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+      <video class="fv front" id="filmv" muted playsinline preload="none" poster="media/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+        <source src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
+        <source src="media/hero-film.webm" type="video/webm">
+        <source src="media/hero-film.mp4" type="video/mp4">
+      </video>
+      <video class="fv" id="filmv2" muted playsinline preload="none" aria-hidden="true" tabindex="-1">
         <source src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
         <source src="media/hero-film.webm" type="video/webm">
         <source src="media/hero-film.mp4" type="video/mp4">
@@ -63,17 +68,29 @@
           <h1 id="h1">Holds the mission when GPS and comms are gone.</h1>
           <p>Autonomy for UAVs, UGVs and USVs that keeps one plan running when navigation and radio are denied.</p>
           <p class="go"><a class="btn" href="#contact">Brief us</a><a class="btn ghost" href="simulation/">Run the simulation</a></p>
-        </article>
-        <article class="ch" data-t0="6" data-t1="17"><p class="tc">T+00:06 · 02</p><h2>One network. Air, land, water.</h2><p>Every vehicle carries the same plan and shares one picture with its neighbours.</p></article>
-        <article class="ch" data-t0="17" data-t1="23"><p class="tc">T+00:17 · 03</p><h2>GPS denied.</h2><p>Jammed. Each UAV keeps navigating on terrain and on its neighbours, and the formation holds.</p></article>
-        <article class="ch" data-t0="23" data-t1="28.5"><p class="tc">T+00:23 · 04</p><h2>Comms degraded.</h2><p>Four UAVs climb into a relay ring so the plan keeps reaching every vehicle.</p></article>
-        <article class="ch" data-t0="28.5" data-t1="34"><p class="tc">T+00:28 · 05</p><h2>Asset lost. Mission holds.</h2><p>A lead UAV goes silent. Its followers take the open slots and its search lane is reassigned.</p></article>
-        <article class="ch" data-t0="34" data-t1="40"><p class="tc">T+00:34 · 06</p><h2>Split and search.</h2><p>The fleet divides into search lines over land and water.</p></article>
-        <article class="ch" data-t0="40" data-t1="46"><p class="tc">T+00:40 · 07</p><h2>Eyes on the ground team.</h2><p>A UAV keeps its sensor on the UGVs and clears their route.</p></article>
-        <article class="ch" data-t0="46" data-t1="54"><p class="tc">T+00:46 · 08</p><h2>A human decides.</h2><p>The system recommends. The operator approves in Scattrnodes Eyes before the ground team moves.</p></article>
+        <p class="see"><span>What you see</span>A group of UAVs, robot aircraft, flying together over the mountains of Ladakh.</p></article>
+        <article class="ch" data-t0="46.2" data-t1="50"><p class="tc">T+00:00 · 02 · Tasking</p><h2>One input. The fleet does the rest.</h2>
+          <div class="task" role="group" aria-label="Task the fleet">
+            <label class="tk-l" for="tk-ll">Target position (lat, long)</label>
+            <input id="tk-ll" class="tk-in" value="33.9178 N, 78.5126 E" autocomplete="off" spellcheck="false">
+            <div class="tk-type" role="radiogroup" aria-label="Mission">
+              <button type="button" role="radio" aria-checked="true" data-type="Surveillance">Surveillance</button>
+              <button type="button" role="radio" aria-checked="false" data-type="Targeting">Targeting</button>
+              <button type="button" role="radio" aria-checked="false" data-type="Surveillance and targeting">Both</button>
+            </div>
+            <button type="button" class="btn tk-go" id="tk-go">Task the fleet</button>
+          </div>
+          <p>That is all the operator gives: a position and the job. Routes, roles, formation and hand-offs between UAVs, UGVs and USVs are planned on board.</p><p class="see"><span>What you see</span>The operator's laptop. One place and one job is all they type.</p></article>
+        <article class="ch" data-t0="6" data-t1="17"><p class="tc">T+00:06 · 03</p><h2>One network. Air, land, water.</h2><p>UAVs over the lake, UGVs on the shore: one plan on every vehicle, and each talks directly to its neighbours about what it sees and who covers what.</p><p class="see"><span>What you see</span>Robot aircraft over the lake and robot ground vehicles on the shore, working as one team.</p></article>
+        <article class="ch" data-t0="17" data-t1="23"><p class="tc">T+00:17 · 04</p><h2>GPS denied.</h2><p>Jammed. Each UAV keeps navigating on terrain and on its neighbours, and the formation holds.</p><p class="see"><span>What you see</span>Satellite signals are blocked. The aircraft still know where they are and keep their places.</p></article>
+        <article class="ch" data-t0="23" data-t1="28.5"><p class="tc">T+00:23 · 05</p><h2>Comms degraded.</h2><p>Four UAVs climb into a relay ring so the plan keeps reaching every vehicle.</p><p class="see"><span>What you see</span>The radio gets weak, so four aircraft climb high to pass messages along.</p></article>
+        <article class="ch" data-t0="28.5" data-t1="34"><p class="tc">T+00:28 · 06</p><h2>Asset lost. Mission holds.</h2><p>A lead UAV goes silent. Its followers take the open slots and its search lane is reassigned.</p><p class="see"><span>What you see</span>One aircraft stops answering. The camera flies beside another as it moves into the empty place.</p></article>
+        <article class="ch" data-t0="34" data-t1="40"><p class="tc">T+00:34 · 07</p><h2>Split and search.</h2><p>The fleet divides into search lines over land and water.</p><p class="see"><span>What you see</span>The team splits into groups to search more of the lake.</p></article>
+        <article class="ch" data-t0="40" data-t1="46"><p class="tc">T+00:40 · 08</p><h2>Eyes on the position.</h2><p>A UAV holds its thermal sensor on the UGVs at the tasked position and clears their route.</p><p class="see"><span>What you see</span>A heat camera on an aircraft watches the ground robots from above.</p></article>
+        <article class="ch" data-t0="50" data-t1="54"><p class="tc">T+00:46 · 09</p><h2>A human decides.</h2><p>For surveillance the fleet reports. For targeting it confirms the position and holds until the operator approves in Scattrnodes Eyes.</p><p class="see"><span>What you see</span>The robots wait. A person on the laptop says yes before they move.</p></article>
       </div>
       <div class="radio" aria-label="Fleet radio"><p class="lab">Fleet radio</p><ol id="comms" aria-live="off"></ol></div>
-      <ol class="steps" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      <ol class="steps" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
     </aside>
   </div>
 </section>
@@ -85,15 +102,38 @@
     <ul class="cards">
       <li><div class="ph"><img src="media/cine/c0812_800.webp" srcset="media/cine/c0812_800.webp 800w, media/cine/c0812_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A fixed-wing UAV banks low over a mountain lake, seen from a chase aircraft." width="800" height="450" loading="lazy"></div>
         <p class="tag ok">Flown in simulation</p><h3>UAV · fixed-wing</h3><p>Formation around a ghost leader, navigation without GPS, relay when the radio fails.</p></li>
-      <li><div class="ph"><img src="media/cine/c0325_800.webp" srcset="media/cine/c0325_800.webp 800w, media/cine/c0325_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="Three UGVs drive along a pale lake shore under a high-altitude sky." width="800" height="450" loading="lazy"></div>
+      <li><div class="ph"><img src="media/cine/ugv_close_800.webp" srcset="media/cine/ugv_close_800.webp 800w, media/cine/ugv_close_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A six-wheeled UGV with a sensor mast drives across the gravel shore of a high-altitude lake, headlights on." width="800" height="450" loading="lazy"></div>
         <p class="tag">In development</p><h3>UGV</h3><p>Ground teams on the same plan, watched and guided from above.</p></li>
-      <li><div class="ph"><img src="media/cine/c0217_800.webp" srcset="media/cine/c0217_800.webp 800w, media/cine/c0217_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A dark mountain lake with UAVs flying low across it." width="800" height="450" loading="lazy"></div>
+      <li><div class="ph none" aria-hidden="true"><span>USV footage in production</span></div>
         <p class="tag">In development</p><h3>USV</h3><p>Lake and coastal water covered by the same mission.</p></li>
     </ul>
     <div class="eyes">
-      <div class="ph"><img src="media/cine/c1201_800.webp" srcset="media/cine/c1201_800.webp 800w, media/cine/c1201_1600.webp 1600w" sizes="(max-width:900px) 100vw, 50vw" alt="The Scattrnodes Eyes ground station on a laptop in a dark shelter, showing the fleet and a plan awaiting approval." width="800" height="450" loading="lazy"></div>
+      <div class="ph"><img src="media/cine/eyes_800.webp" srcset="media/cine/eyes_800.webp 800w, media/cine/eyes_1600.webp 1600w" sizes="(max-width:900px) 100vw, 50vw" alt="The Scattrnodes Eyes ground station on a laptop in a dark shelter, showing the fleet and a plan awaiting approval." width="800" height="450" loading="lazy"></div>
       <div><p class="kick">Scattrnodes Eyes</p><h3>The operator stays in command.</h3><p>One screen for the whole fleet. The system proposes, a person approves every decision that matters.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="sec" id="edge" aria-labelledby="ed">
+  <div class="w">
+    <p class="kick">Why it is different</p>
+    <h2 id="ed">No leader. No satellites required. Any autopilot.</h2>
+    <table class="spec diff">
+      <caption class="vh">Capabilities and how far each is proven</caption>
+      <tbody>
+        <tr><th scope="row">Command</th><td>No leader. The plan is decided on every vehicle.</td><td class="st">Simulation</td></tr>
+        <tr><th scope="row">Navigation</th><td>Zero satellites: 5 UAVs, 150 s, no GPS. Spoofing outvoted.</td><td class="st">Simulation</td></tr>
+        <tr><th scope="row">Link</th><td>Encrypted mesh, vehicle to vehicle. Replay rejected. Flies on through jamming.</td><td class="st">Built · tested</td></tr>
+        <tr><th scope="row">Integration</th><td>Any PX4 or ArduPilot vehicle. Palm-sized computer, no rebuild.</td><td class="st">Bench</td></tr>
+        <tr><th scope="row">Domains</th><td>UAV, UGV, USV on one network. Allocation tested to 3,000 vehicles.</td><td class="st">Simulation</td></tr>
+        <tr><th scope="row">Control</th><td>Operator gives a lat/long and the task. A person approves.</td><td class="st">By design</td></tr>
+      </tbody>
+    </table>
+    <ol class="road" aria-label="Where we are">
+      <li><span class="k">Now</span><b>Proven in simulation</b><i>768 missions · hardware-in-the-loop bench</i></li>
+      <li><span class="k">Next</span><b>First flight test</b><i>5 fixed-wing UAVs</i></li>
+      <li><span class="k">Then</span><b>Field trial, all domains</b><i>GPS-denied · UGV · USV · high-speed and missile-class swarms (roadmap, not yet built)</i></li>
+    </ol>
   </div>
 </section>
 

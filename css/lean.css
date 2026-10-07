@@ -46,7 +46,7 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 .ch h2{font-size:clamp(32px,3.2vw,54px);max-width:12ch}
 .ch p{color:var(--g1);font-size:clamp(16px,1.2vw,19px);max-width:36ch;margin-top:18px}
 .ch .go{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.js .ch:not(.on){display:none}
+.js .ch:not(.on){position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* hidden visually, still read by screen readers (and the page keeps its h1) */
 .ch.on{animation:in .6s cubic-bezier(.2,.7,.2,1)}
 @keyframes in{from{opacity:0;transform:translateY(10px)}}
 .radio{border-top:1px solid var(--line);padding-top:14px;min-height:118px}

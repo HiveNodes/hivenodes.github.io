@@ -70,9 +70,8 @@ export function startFormations(root) {
       if (RM) return; const u = (T * .55 + k * .37) % 1; ctx.fillStyle = 'rgba(225,245,255,.85)'; ctx.beginPath(); ctx.arc(p[0] + (q[0] - p[0]) * u, p[1] + (q[1] - p[1]) * u, 1.8, 0, 7); ctx.fill(); };
     for (let k = 0; k < N; k++) { link(P[k], P[(k + 1) % N], k, .22); link([gxp, gyp], P[k], k + 9, .07); }
     // slot markers
-    ctx.strokeStyle = 'rgba(207,233,255,.25)';
-    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k), x = cx + (sx + gx) * S, y = cy + (sy + gy) * S, L = 5;
-      ctx.beginPath(); for (const [a, b] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { ctx.moveTo(x + a * L, y + b * (L - 2.5)); ctx.lineTo(x + a * L, y + b * L); ctx.lineTo(x + a * (L - 2.5), y + b * L); } ctx.stroke(); }
+    ctx.fillStyle = 'rgba(207,233,255,.35)';
+    for (let k = 0; k < N; k++) { const [sx, sy] = SHAPES[shape](k); ctx.beginPath(); ctx.arc(cx + (sx + gx) * S, cy + (sy + gy) * S, 2, 0, 7); ctx.fill(); }
     // glowing tracks
     for (const a of ac) for (let i = 1; i < a.trail.length; i++) { const p = a.trail[i - 1], q = a.trail[i], f = i / a.trail.length;
       ctx.strokeStyle = `rgba(150,215,255,${f * .45})`; ctx.lineWidth = 1 + f * 1.6; ctx.beginPath(); ctx.moveTo(cx + p[0] * S, cy + p[1] * S); ctx.lineTo(cx + q[0] * S, cy + q[1] * S); ctx.stroke(); }

@@ -12,7 +12,7 @@ export function field() {
   let W = 0, H = 0, dp = 1, bots = [];
   const DIRS = [[1, 0], [0, 1], [-1, 0], [0, -1]];
   const spawn = () => { const d = DIRS[Math.random() * 4 | 0];
-    return { x: Math.round(Math.random() * W / G) * G, y: Math.round(Math.random() * H / G) * G, d, p: 0, trail: [], free: false, fx: 0, fy: 0, slot: 0, sp: .6 + Math.random() * .8, ping: -1 }; };
+    return { x: Math.round(Math.random() * W / G) * G, y: Math.round(Math.random() * H / G) * G, d, p: 0, trail: [], free: false, fx: 0, fy: 0, slot: 0, sp: .6 + Math.random() * .8 }; };
   const fit = () => { dp = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight; cv.width = W * dp; cv.height = H * dp; ctx.setTransform(dp, 0, 0, dp, 0, 0);
     const n = Math.round(Math.min(220, W * H / 7000)); while (bots.length < n) bots.push(spawn()); bots.length = n; grid(); };
   // the grid is drawn once into its own layer
@@ -50,10 +50,8 @@ export function field() {
       while (b.p >= 1) {                                       // reached the next node: record it, maybe turn
         b.p -= 1; b.x += b.d[0] * G; b.y += b.d[1] * G; b.trail.push([b.x, b.y]); if (b.trail.length > 7) b.trail.shift();
         if (Math.random() < .28) { const t = DIRS.filter(d => d[0] !== -b.d[0] || d[1] !== -b.d[1]); b.d = t[Math.random() * t.length | 0]; }
-        if (Math.random() < .02) b.ping = 0;
         if (b.x < -G || b.x > W + G || b.y < -G || b.y > H + G) Object.assign(b, spawn(), { trail: [] });
       }
-      if (b.ping >= 0) { b.ping += dt; if (b.ping > 1.2) b.ping = -1; }
     }
   }
   function draw(T) {
@@ -67,11 +65,10 @@ export function field() {
       for (let i = n - 1; i >= 0; i--) { const [qx, qy] = b.trail[i], k = Math.min(2, ((n - 1 - i) * 3 / Math.max(n, 1)) | 0);
         band[k].moveTo(px, py); band[k].lineTo(qx, qy); px = qx; py = qy; }
       (b.free ? free : heads).push(hx, hy);
-      if (b.ping >= 0) { const r = 3 + b.ping * 18, a = (1 - b.ping / 1.2) * .35; ctx.strokeStyle = `rgba(207,233,255,${a})`; ctx.strokeRect(b.x - r, b.y - r, 2 * r, 2 * r); }
     }
     ctx.lineWidth = 1; [.2, .12, .05].forEach((a, k) => { ctx.strokeStyle = `rgba(150,215,255,${a})`; ctx.stroke(band[k]); });
-    ctx.fillStyle = 'rgba(207,233,255,.55)'; for (let i = 0; i < heads.length; i += 2) ctx.fillRect(heads[i] - 1, heads[i + 1] - 1, 2, 2);
-    ctx.fillStyle = 'rgba(235,248,255,.95)'; for (let i = 0; i < free.length; i += 2) ctx.fillRect(free[i] - 1.3, free[i + 1] - 1.3, 2.6, 2.6);
+    const dots = (a, r) => { ctx.beginPath(); for (let i = 0; i < a.length; i += 2) { ctx.moveTo(a[i] + r, a[i + 1]); ctx.arc(a[i], a[i + 1], r, 0, 7); } ctx.fill(); };
+    ctx.fillStyle = 'rgba(207,233,255,.5)'; dots(heads, 1.1); ctx.fillStyle = 'rgba(235,248,255,.9)'; dots(free, 1.4);
     if (m.on && bots.some(b => b.free)) {                     // the ghost leader the ring forms around
       ctx.strokeStyle = 'rgba(207,233,255,.35)'; ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.arc(m.x, m.y, 8, 0, 7); ctx.stroke(); ctx.setLineDash([]);
     }

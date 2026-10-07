@@ -51,10 +51,9 @@ export async function startComms({ RM }) {
     let n = 0; const tick = () => { msg.textContent = text.slice(0, ++n); if (n < text.length) setTimeout(tick, 22); }; tick();
   }
 
-  function brackets(p, c, a) {
-    const r = Math.max(9 * dp, p.r * 1.3), L = r * .45; ctx.strokeStyle = `rgba(${c},${a})`; ctx.lineWidth = 1.2 * dp; ctx.beginPath();
-    for (const [sx, sy] of [[-1, -1], [1, -1], [1, 1], [-1, 1]]) { ctx.moveTo(p.x + sx * r, p.y + sy * (r - L)); ctx.lineTo(p.x + sx * r, p.y + sy * r); ctx.lineTo(p.x + sx * (r - L), p.y + sy * r); }
-    ctx.stroke();
+  function brackets(p, c, a) {   // a thin ring around a vehicle (named for its old corner-bracket form)
+    const r = Math.max(9 * dp, Math.min(p.r * 1.3, 26 * dp)); ctx.strokeStyle = `rgba(${c},${a})`; ctx.lineWidth = 1.1 * dp;
+    ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, 7); ctx.stroke();
   }
   const lens = { on: false, a: 0, x: 0, y: 0, tx: 0, ty: 0 };
   const aim = e => { const r = box.getBoundingClientRect(); lens.tx = (e.clientX - r.left) * dp; lens.ty = (e.clientY - r.top) * dp; if (!lens.on) { lens.x = lens.tx; lens.y = lens.ty; } lens.on = true; };
@@ -82,7 +81,7 @@ export async function startComms({ RM }) {
     for (const [i, j] of edges) { ctx.moveTo(P[i].x, P[i].y); ctx.lineTo(P[j].x, P[j].y); } ctx.stroke();
     ctx.fillStyle = 'rgba(210,240,255,.7)'; const ps = 3 * dp;
     for (const [i, j] of edges) { const a = P[i], b = P[j], s = seed(a.k * 97 + b.k), q = ((t * (.35 + s * .5) + s) % 1);
-      ctx.fillRect(a.x + (b.x - a.x) * q - ps / 2, a.y + (b.y - a.y) * q - ps / 2, ps, ps); }
+      ctx.beginPath(); ctx.arc(a.x + (b.x - a.x) * q, a.y + (b.y - a.y) * q, ps / 2, 0, 7); ctx.fill(); }
     // each vehicle: a small soft glow (brackets only on the ones talking, and red on a lost one)
     const lost = T.events && T.events.lostVehicle, tl = T.events && T.events.lost;
     for (const p of P) {
@@ -123,14 +122,11 @@ export async function startComms({ RM }) {
       ctx.filter = 'grayscale(1) contrast(2.1) brightness(1.05)';
       const zs = 1.35, zx = lens.x - (lens.x - g.ox) * zs, zy = lens.y - (lens.y - g.oy) * zs;   // 1.35x magnified under the lens
       ctx.drawImage(v, zx, zy, g.vw * g.s * zs, g.vh * g.s * zs); ctx.filter = 'none';
-      ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(40,90,130,.25)'; ctx.fillRect(lens.x - R, lens.y - R, 2 * R, 2 * R);
-      ctx.fillStyle = 'rgba(255,255,255,.035)'; for (let y = lens.y - R + ((t * 60) % 4) * dp; y < lens.y + R; y += 4 * dp) ctx.fillRect(lens.x - R, y, 2 * R, dp);
-      for (const p of P) { const zx2 = lens.x + (p.x - lens.x) * zs, zy2 = lens.y + (p.y - lens.y) * zs; if (Math.hypot(zx2 - lens.x, zy2 - lens.y) < R * .92) brackets({ x: zx2, y: zy2, r: Math.min(p.r * zs, 20 * dp) }, '255,255,255', .85 * lens.a); }
+      ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(40,90,130,.18)'; ctx.fillRect(lens.x - R, lens.y - R, 2 * R, 2 * R);
       ctx.restore(); ctx.globalAlpha = 1;
-      // the lens rim: a segmented ring turning slowly
-      ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = `rgba(207,233,255,${.75 * lens.a})`; ctx.lineWidth = 1.5 * dp;
-      for (let k = 0; k < 12; k++) { const a0 = t * .4 + k * Math.PI / 6; ctx.beginPath(); ctx.arc(lens.x, lens.y, R, a0, a0 + .38); ctx.stroke(); }
-      ctx.strokeStyle = `rgba(207,233,255,${.25 * lens.a})`; ctx.lineWidth = dp; ctx.beginPath(); ctx.arc(lens.x, lens.y, R + 6 * dp, 0, 7); ctx.stroke();
+      // the lens rim: one thin, still circle
+      ctx.globalCompositeOperation = 'source-over'; ctx.strokeStyle = `rgba(207,233,255,${.6 * lens.a})`; ctx.lineWidth = dp;
+      ctx.beginPath(); ctx.arc(lens.x, lens.y, R, 0, 7); ctx.stroke();
       ctx.globalCompositeOperation = 'source-over';
     }
   }

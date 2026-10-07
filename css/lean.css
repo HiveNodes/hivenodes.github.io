@@ -138,15 +138,6 @@ html.intro-on{overflow:hidden}
 .ph,.fx{transition:transform .5s cubic-bezier(.16,.84,.24,1);transform-style:preserve-3d;will-change:transform}
 .ph{--gx:50%;--gy:50%}
 .ph:hover::before{background:radial-gradient(circle at var(--gx) var(--gy),rgba(207,233,255,.14),transparent 45%)}
-/* ---- HUD cursor ---- */
-#hud{position:fixed;left:0;top:0;z-index:90;width:0;height:0;pointer-events:none;opacity:0;transition:opacity .3s}
-#hud.on{opacity:1}
-#hud::before,#hud::after{content:"";position:absolute;border-radius:50%;transition:all .35s cubic-bezier(.16,.84,.24,1)}
-#hud::before{width:34px;height:34px;left:-17px;top:-17px;border:1px solid rgba(207,233,255,.55);border-left-color:transparent;border-right-color:transparent;animation:spin 3s linear infinite}
-#hud::after{width:4px;height:4px;left:-2px;top:-2px;background:var(--acc);box-shadow:0 0 10px var(--acc)}
-#hud.lock::before{width:52px;height:52px;left:-26px;top:-26px;border-color:var(--acc);border-left-color:transparent;border-right-color:transparent}
-#hud.film::before{opacity:0}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---- alien layer ---- */
 #field{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
@@ -164,7 +155,7 @@ h1,h2{background:linear-gradient(100deg,#f2f5f8 0%,#f2f5f8 38%,#bfe6ff 46%,#ffff
 
 /* ---- the film in acts ---- */
 .act{display:flex;align-items:center;gap:14px;font:500 12px/1 var(--mono);letter-spacing:.32em;text-transform:uppercase;color:var(--tan);margin:0 0 18px!important;max-width:none!important}
-.act span{color:var(--acc);padding:6px 10px;border:1px solid rgba(207,233,255,.25);letter-spacing:.24em}
+.act span{color:var(--acc);letter-spacing:.12em}
 .act::after{content:"";flex:0 1 120px;height:1px;background:linear-gradient(90deg,rgba(207,233,255,.4),transparent)}
 .sec h2{padding-top:0}.sec h2::before{display:none}
 /* end credits */

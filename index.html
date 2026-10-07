@@ -37,30 +37,62 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top" id="top">
-  <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="170" height="23"></a>
+  <a class="brand" href="#top" aria-label="HiveNodes, back to top"><img src="brand/logo-primary.svg" alt="" width="150" height="20"></a>
   <nav aria-label="Main"><ul>
-    <li><a href="#system">System</a></li><li><a href="#live">Live</a></li><li><a href="#evidence">Evidence</a></li><li><a class="cta" href="#contact">Contact</a></li>
+    <li><a href="#mission">Mission</a></li><li><a href="#system">System</a></li><li><a href="#evidence">Proof</a></li><li><a href="#live">Live</a></li><li><a class="cta" href="#contact">Contact</a></li>
   </ul></nav>
 </header>
 
 <main id="main">
-<section class="hero" aria-labelledby="h1">
-  <figure class="film" id="film">
-    <video id="filmv" muted loop playsinline preload="none" poster="media/hero-poster.jpg" aria-hidden="true" tabindex="-1">
-      <source src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
-      <source src="media/hero-film.webm" type="video/webm">
-      <source src="media/hero-film.mp4" type="video/mp4">
-    </video>
-    <canvas id="film-cv" role="img" aria-label="Film of a simulated mission over Pangong Tso, Ladakh: UAVs, UGVs and USVs pass messages to each other along glowing links while GPS is jammed and one UAV is lost."></canvas>
-  </figure>
-  <div class="hero-bar">
-    <div class="hl">
-      <h1 id="h1">Holds the mission when GPS and comms are gone.</h1>
-      <p>UAVs, UGVs and USVs that talk to each other and work as one team.</p>
-    </div>
-    <div class="radio" aria-label="What the fleet is saying">
-      <p class="lab"><i></i>Fleet radio</p>
-      <ol id="comms" aria-live="off"></ol>
+<!-- The mission briefing: the film is pinned on the left; scrolling steps the briefing on the right through the
+     mission, and the film plays the footage for that step. Words stay beside the picture, never on it. -->
+<section class="brief" id="mission" aria-labelledby="h1">
+  <div class="pin">
+    <figure class="film" id="film">
+      <video id="filmv" muted playsinline preload="none" poster="media/hero-poster.jpg" aria-hidden="true" tabindex="-1">
+        <source src="media/hero-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.10"'>
+        <source src="media/hero-film.webm" type="video/webm">
+        <source src="media/hero-film.mp4" type="video/mp4">
+      </video>
+      <canvas id="film-cv" role="img" aria-label="Rendered film of a simulated mission over Pangong Tso, Ladakh: UAVs, UGVs and USVs pass messages along thin network links."></canvas>
+    </figure>
+    <aside class="panel">
+      <div class="chs">
+        <article class="ch on" data-t0="0" data-t1="6">
+          <p class="tc">HiveNodes · Homing Vector</p>
+          <h1 id="h1">Holds the mission when GPS and comms are gone.</h1>
+          <p>Autonomy for UAVs, UGVs and USVs that keeps one plan running when navigation and radio are denied.</p>
+          <p class="go"><a class="btn" href="#contact">Brief us</a><a class="btn ghost" href="simulation/">Run the simulation</a></p>
+        </article>
+        <article class="ch" data-t0="6" data-t1="17"><p class="tc">T+00:06 · 02</p><h2>One network. Air, land, water.</h2><p>Every vehicle carries the same plan and shares one picture with its neighbours.</p></article>
+        <article class="ch" data-t0="17" data-t1="23"><p class="tc">T+00:17 · 03</p><h2>GPS denied.</h2><p>Jammed. Each UAV keeps navigating on terrain and on its neighbours, and the formation holds.</p></article>
+        <article class="ch" data-t0="23" data-t1="28.5"><p class="tc">T+00:23 · 04</p><h2>Comms degraded.</h2><p>Four UAVs climb into a relay ring so the plan keeps reaching every vehicle.</p></article>
+        <article class="ch" data-t0="28.5" data-t1="34"><p class="tc">T+00:28 · 05</p><h2>Asset lost. Mission holds.</h2><p>A lead UAV goes silent. Its followers take the open slots and its search lane is reassigned.</p></article>
+        <article class="ch" data-t0="34" data-t1="40"><p class="tc">T+00:34 · 06</p><h2>Split and search.</h2><p>The fleet divides into search lines over land and water.</p></article>
+        <article class="ch" data-t0="40" data-t1="46"><p class="tc">T+00:40 · 07</p><h2>Eyes on the ground team.</h2><p>A UAV keeps its sensor on the UGVs and clears their route.</p></article>
+        <article class="ch" data-t0="46" data-t1="54"><p class="tc">T+00:46 · 08</p><h2>A human decides.</h2><p>The system recommends. The operator approves in Scattrnodes Eyes before the ground team moves.</p></article>
+      </div>
+      <div class="radio" aria-label="Fleet radio"><p class="lab">Fleet radio</p><ol id="comms" aria-live="off"></ol></div>
+      <ol class="steps" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+    </aside>
+  </div>
+</section>
+
+<section class="sec" id="system" aria-labelledby="sy">
+  <div class="w">
+    <p class="kick">System</p>
+    <h2 id="sy">One autonomy layer. Three domains.</h2>
+    <ul class="cards">
+      <li><div class="ph"><img src="media/cine/c0812_800.webp" srcset="media/cine/c0812_800.webp 800w, media/cine/c0812_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A fixed-wing UAV banks low over a mountain lake, seen from a chase aircraft." width="800" height="450" loading="lazy"></div>
+        <p class="tag ok">Flown in simulation</p><h3>UAV · fixed-wing</h3><p>Formation around a ghost leader, navigation without GPS, relay when the radio fails.</p></li>
+      <li><div class="ph"><img src="media/cine/c0325_800.webp" srcset="media/cine/c0325_800.webp 800w, media/cine/c0325_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="Three UGVs drive along a pale lake shore under a high-altitude sky." width="800" height="450" loading="lazy"></div>
+        <p class="tag">In development</p><h3>UGV</h3><p>Ground teams on the same plan, watched and guided from above.</p></li>
+      <li><div class="ph"><img src="media/cine/c0217_800.webp" srcset="media/cine/c0217_800.webp 800w, media/cine/c0217_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A dark mountain lake with UAVs flying low across it." width="800" height="450" loading="lazy"></div>
+        <p class="tag">In development</p><h3>USV</h3><p>Lake and coastal water covered by the same mission.</p></li>
+    </ul>
+    <div class="eyes">
+      <div class="ph"><img src="media/cine/c1201_800.webp" srcset="media/cine/c1201_800.webp 800w, media/cine/c1201_1600.webp 1600w" sizes="(max-width:900px) 100vw, 50vw" alt="The Scattrnodes Eyes ground station on a laptop in a dark shelter, showing the fleet and a plan awaiting approval." width="800" height="450" loading="lazy"></div>
+      <div><p class="kick">Scattrnodes Eyes</p><h3>The operator stays in command.</h3><p>One screen for the whole fleet. The system proposes, a person approves every decision that matters.</p></div>
     </div>
   </div>
 </section>
@@ -68,9 +100,9 @@
 <section class="sec" id="ring" aria-labelledby="rg">
   <div class="w split">
     <div>
-      <p class="act rv"><span>01</span>Formation</p>
-      <h2 class="rv" id="rg">A ring around a leader that isn’t there.</h2>
-      <p>Each UAV holds its own place around a moving point. Lose one, and the ring closes.</p>
+      <p class="kick">Formation logic</p>
+      <h2 id="rg">A ring around a leader that isn’t there.</h2>
+      <p>Each UAV holds a slot around a moving point. Lose any one and the others close the ring.</p>
     </div>
     <div class="fx" id="fx">
       <canvas class="fx-cv" width="1200" height="520" role="img" aria-label="Animation, top view: five UAVs hold a ring around a ghost leader, a moving point no UAV owns. Move the pointer to steer it."></canvas>
@@ -83,60 +115,49 @@
   </div>
 </section>
 
-<section class="sec" id="system" aria-labelledby="sy">
+<section class="sec" id="evidence" aria-labelledby="ev">
   <div class="w">
-    <p class="act rv"><span>02</span>One team</p>
-      <h2 class="rv" id="sy">Air, ground and water. One team.</h2>
-    <ul class="uses rv">
-      <li><div class="ph"><img src="media/cine/c0325_800.webp" srcset="media/cine/c0325_800.webp 800w, media/cine/c0325_1600.webp 1600w" sizes="(max-width:800px) 100vw, 33vw" alt="Three UGVs drive along a pale lake shore under a high-altitude sky." width="800" height="450" loading="lazy"></div><b>Search and rescue</b><span>Finds people where GPS fails.</span></li>
-      <li><div class="ph"><img src="media/cine/c1009_800.webp" srcset="media/cine/c1009_800.webp 800w, media/cine/c1009_1600.webp 1600w" sizes="(max-width:800px) 100vw, 33vw" alt="Thermal view from a UAV: three UGVs seen from above on dark ground." width="800" height="450" loading="lazy"></div><b>Surveillance</b><span>Eyes on a wide area, for hours.</span></li>
-      <li><div class="ph"><img src="media/cine/c0217_800.webp" srcset="media/cine/c0217_800.webp 800w, media/cine/c0217_1600.webp 1600w" sizes="(max-width:800px) 100vw, 33vw" alt="UAVs fly low in formation over a dark mountain lake." width="800" height="450" loading="lazy"></div><b>Border and coast</b><span>Land and water, watched together.</span></li>
-    </ul>
-    <p class="note">A person approves every key decision.</p>
+    <p class="kick">Proof</p>
+    <h2 id="ev">Measured, not claimed.</h2>
+    <table class="spec">
+      <caption class="vh">Results, recounted from the code before every publish</caption>
+      <tbody>
+        <tr><th scope="row">Missions flown in simulation</th><td data-figure="missions">768</td><td class="n">555 passed, 141 failed, 72 skipped · 114 campaigns</td></tr>
+        <tr><th scope="row">UAVs in tight formation</th><td data-figure="formation_fleet_max">8</td><td class="n">Largest formation flown in simulation so far</td></tr>
+        <tr id="status"><th scope="row">Flights on a real UAV</th><td class="zero" data-figure="real_flights">0</td><td class="n">First flight test is next</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Every number is recounted from our code before this page can go live. Results are from simulation.</p>
   </div>
 </section>
 
 <section class="sec" id="live" aria-labelledby="lv">
-  <div class="w live split">
+  <div class="w split">
     <div>
-      <p class="act rv"><span>03</span>Fly it</p>
-      <h2 class="rv" id="lv">Fly it yourself.</h2>
-      <p>Our real software, running in your browser. Jam the GPS and watch the fleet adapt.</p>
-      <a class="btn" href="simulation/">Open the live mission</a>
+      <p class="kick">Live</p>
+      <h2 id="lv">Run the mission yourself.</h2>
+      <p>Our real software, running in your browser. Jam the GPS, cut the radio, and watch the fleet adapt.</p>
+      <a class="btn" href="simulation/">Open the simulation</a>
     </div>
-    <a class="ph kb" href="simulation/" tabindex="-1" aria-hidden="true"><img src="media/cine/c0812_800.webp" srcset="media/cine/c0812_800.webp 800w, media/cine/c0812_1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw" alt="" width="800" height="450" loading="lazy"></a>
-  </div>
-</section>
-
-<section class="sec" id="evidence" aria-labelledby="ev">
-  <div class="w">
-    <p class="act rv"><span>04</span>Status</p>
-      <h2 class="rv" id="ev">Where it stands.</h2>
-    <dl class="nums rv">
-      <div><dt>missions flown in simulation <small>555 passed, 141 failed, 72 skipped · 114 campaigns</small></dt><dd data-figure="missions">768</dd></div>
-      <div><dt>UAVs in tight formation</dt><dd data-figure="formation_fleet_max">8</dd></div>
-      <div id="status"><dt>real flights so far. First one is next.</dt><dd class="zero" data-figure="real_flights">0</dd></div>
-    </dl>
-    <p class="note">Every number is recounted from our code before this page goes live. Proven in simulation only.</p>
+    <a class="ph" href="simulation/" tabindex="-1" aria-hidden="true"><img src="media/cine/c0613_800.webp" srcset="media/cine/c0613_800.webp 800w, media/cine/c0613_1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw" alt="" width="800" height="450" loading="lazy"></a>
   </div>
 </section>
 
 <section class="sec" id="contact" aria-labelledby="ct">
   <div class="w contact">
-    <p class="act rv"><span>05</span>Contact</p>
-      <h2 class="rv" id="ct">Talk to us.</h2>
-    <p>We are raising a pre-seed round to fly it for real.</p>
+    <p class="kick">Contact</p>
+    <h2 id="ct">Talk to us.</h2>
+    <p>We are raising a pre-seed round to take Homing Vector into flight test.</p>
     <p class="reach"><a class="mail" id="mail" href="#contact">nidhip.sharma.123 [at] gmail.com</a><a href="https://www.linkedin.com/in/nidhip-sharma/" rel="noopener">LinkedIn</a></p>
     <p class="who">Nidhip Sharma, Founder</p>
   </div>
 </section>
 </main>
 
-<footer class="foot credits">
-  <p class="pres">A HiveNodes production</p>
-  <p class="title">Homing Vector</p>
-  <dl><div><dt>Founder</dt><dd>Nidhip Sharma</dd></div><div><dt>Autonomy</dt><dd>Scattrnodes</dd></div><div><dt>Ground station</dt><dd>Scattrnodes Eyes</dd></div><div><dt>Filmed at</dt><dd>Pangong Tso, Ladakh <small>(rendered)</small></dd></div></dl>
-  <p class="fine"><span>&copy; 2026 HiveNodes, India</span><span>Results are from simulation.</span><a href="capabilities/">Full capability list</a></p>
+<footer class="foot">
+  <span>&copy; 2026 HiveNodes, India</span>
+  <span>Film is rendered from simulation. Results are from simulation.</span>
+  <a href="capabilities/">Full capability list</a>
 </footer>
 </body>
 </html>

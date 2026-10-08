@@ -1,39 +1,39 @@
-// HiveNodes homepage: an optional sound bed, made here rather than downloaded (zero bytes of audio).
-// Wind at altitude: brown noise through a slowly wandering band-pass, with gusts. Under it, one low
-// note that breathes. Starts only when the visitor asks; fades in and out; follows the tab's visibility.
-let ctx = null, master = null;
-
+// HiveNodes: an optional sound bed, synthesised in the browser (zero bytes of audio downloaded). Only on request; fades
+// in and out; follows tab visibility. Layers: wind at altitude (brown noise, wandering band-pass, gusts); a distant small
+// turbojet (high band-passed noise whose pitch drifts slowly, as one passes far off); water lapping on gravel (low-passed
+// noise in slow irregular swells). click(): a soft radio key-up, used on each chapter change.
+let ctx = null, master = null, on = false;
+function noise(seconds, brown) {
+  const len = ctx.sampleRate * seconds, buf = ctx.createBuffer(2, len, ctx.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); let last = 0;
+    for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; if (brown) { last = (last + .02 * w) / 1.02; d[i] = last * 3.2; } else d[i] = w; } }
+  const s = ctx.createBufferSource(); s.buffer = buf; s.loop = true; return s;
+}
+const lfo = (hz, depth, target) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.frequency.value = hz; g.gain.value = depth; o.connect(g).connect(target); o.start(); };
 function build() {
   ctx = new (window.AudioContext || window.webkitAudioContext)();
   master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
-
-  // brown noise, 4 s loop
-  const len = ctx.sampleRate * 4, buf = ctx.createBuffer(2, len, ctx.sampleRate);
-  for (let c = 0; c < 2; c++) { const d = buf.getChannelData(c); let last = 0; for (let i = 0; i < len; i++) { const w = Math.random() * 2 - 1; last = (last + .02 * w) / 1.02; d[i] = last * 3.2; } }
-  const noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
-  const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 420; bp.Q.value = .6;
-  const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1400;
-  const windG = ctx.createGain(); windG.gain.value = .55;
-  noise.connect(bp).connect(lp).connect(windG).connect(master);
-  // gusts: two slow LFOs on the band centre and the level
-  const lfo1 = ctx.createOscillator(), lfo1g = ctx.createGain(); lfo1.frequency.value = .07; lfo1g.gain.value = 260; lfo1.connect(lfo1g).connect(bp.frequency);
-  const lfo2 = ctx.createOscillator(), lfo2g = ctx.createGain(); lfo2.frequency.value = .11; lfo2g.gain.value = .25; lfo2.connect(lfo2g).connect(windG.gain);
-
-  // the low note: two detuned sines an octave apart, breathing through a low-pass
-  const dr = ctx.createGain(); dr.gain.value = .0;
-  const f = ctx.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = 180;
-  [[55, 0], [55.4, 0], [110.2, .35]].forEach(([hz, det]) => { const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = hz; const g = ctx.createGain(); g.gain.value = det ? .18 : .32; o.connect(g).connect(f); o.start(); });
-  f.connect(dr).connect(master);
-  const br = ctx.createOscillator(), brg = ctx.createGain(); br.frequency.value = .045; brg.gain.value = .09; br.connect(brg).connect(dr.gain);
-  dr.gain.setValueAtTime(.12, ctx.currentTime);
-
-  noise.start(); lfo1.start(); lfo2.start(); br.start();
-  document.addEventListener('visibilitychange', () => { if (!master) return; const on = document.visibilityState === 'visible' && window.__hvSound; fade(on ? .5 : 0, .6); });
+  // wind
+  const w = noise(4, true), bp = ctx.createBiquadFilter(), wg = ctx.createGain(); bp.type = 'bandpass'; bp.frequency.value = 420; bp.Q.value = .6; wg.gain.value = .5;
+  w.connect(bp).connect(wg).connect(master); lfo(.07, 260, bp.frequency); lfo(.11, .22, wg.gain); w.start();
+  // distant turbojet: a thin high whine plus hiss, far down in the mix, pitch drifting
+  const j = noise(3, false), jb = ctx.createBiquadFilter(), jg = ctx.createGain(); jb.type = 'bandpass'; jb.frequency.value = 1800; jb.Q.value = 3; jg.gain.value = .035;
+  j.connect(jb).connect(jg).connect(master); lfo(.03, 500, jb.frequency); lfo(.05, .02, jg.gain); j.start();
+  const tone = ctx.createOscillator(), tg = ctx.createGain(); tone.type = 'sawtooth'; tone.frequency.value = 2400; tg.gain.value = .004;
+  const tl = ctx.createBiquadFilter(); tl.type = 'lowpass'; tl.frequency.value = 3000; tone.connect(tl).connect(tg).connect(master); lfo(.03, 140, tone.frequency); tone.start();
+  // water lapping: low noise in swells
+  const l = noise(4, false), lp = ctx.createBiquadFilter(), lg = ctx.createGain(); lp.type = 'lowpass'; lp.frequency.value = 700; lg.gain.value = .0;
+  l.connect(lp).connect(lg).connect(master); lfo(.45, .06, lg.gain); lfo(.17, .04, lg.gain); l.start();
+  document.addEventListener('visibilitychange', () => { if (master) fade(on && document.visibilityState === 'visible' ? .5 : 0, .6); });
 }
 function fade(to, s) { const t = ctx.currentTime; master.gain.cancelScheduledValues(t); master.gain.setValueAtTime(master.gain.value, t); master.gain.linearRampToValueAtTime(to, t + s); }
-
-export function toggleSound(on) {
-  if (!ctx) build();
-  if (ctx.state === 'suspended') ctx.resume();
-  window.__hvSound = on; fade(on ? .5 : 0, on ? 2.5 : .8);
+export function toggleSound(want) {
+  if (!ctx) build(); if (ctx.state === 'suspended') ctx.resume();
+  on = want; fade(on ? .5 : 0, on ? 2.5 : .8);
+}
+export function click() {
+  if (!ctx || !on) return;
+  const t = ctx.currentTime, s = noise(.2, false), f = ctx.createBiquadFilter(), g = ctx.createGain();
+  f.type = 'bandpass'; f.frequency.value = 2600; f.Q.value = 1.4; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.12, t + .005); g.gain.exponentialRampToValueAtTime(.001, t + .09);
+  s.connect(f).connect(g).connect(master); s.start(t); s.stop(t + .12);
 }

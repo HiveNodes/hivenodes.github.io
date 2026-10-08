@@ -162,3 +162,8 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 .slate span{font:500 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#4d565c}
 .slate p{font:400 12px/1.5 var(--mono)!important;color:#9aa3a8!important;margin:0 auto!important;max-width:34ch!important}
 @media (prefers-reduced-motion:reduce){.slate::after{animation:none}}
+.snd{background:transparent;border:0;font:500 13px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--g1);padding:6px 0}
+.snd[aria-pressed="true"]{color:var(--fg)}
+@media (max-width:700px){.top li:has(.snd){display:list-item}}
+.film .plainv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.film.nogl{background:radial-gradient(ellipse at 50% 45%,#151a1f,#07090b 75%)}

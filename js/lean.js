@@ -8,3 +8,7 @@ afterLoad(() => import('./cinema.js').then(m => m.startCinema({ RM })).catch(e =
 import('./shots.js').then(m => m.startShots({ RM })).catch(() => {});
 (() => { const fx = $('#fx'); if (!fx) return; const go = () => import('./formations.js').then(m => m.startFormations(fx)).catch(() => {});
   if ('IntersectionObserver' in window) { const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); go(); } }, { rootMargin: '300px 0px' }); io.observe(fx); } else go(); })();
+// opt-in sound: nothing plays until the visitor asks
+(() => { const b = $('#snd'); if (!b) return; let s = null;
+  b.addEventListener('click', async () => { s = s || await import('./sound.js'); const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', String(on)); b.textContent = on ? 'Sound on' : 'Sound off'; s.toggleSound(on); window.__hvClick = s.click; }); })();

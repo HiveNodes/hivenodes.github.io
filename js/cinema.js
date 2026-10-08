@@ -63,13 +63,21 @@ void main(){
 }`;
 
 export async function startCinema({ RM }) {
+  const plain = () => {          // no-GPU fallback: the first chapter's shot as a plain video, or its slate as an image
+    const box = $('#film'), cv = $('#film-gl'), s0 = Object.entries(man || {}).find(([, v]) => v.chapter === 1);
+    if (s0 && s0[1].ready) { const v = document.createElement('video'); v.muted = v.loop = v.playsInline = true; v.autoplay = !RM; v.src = `media/cine/${s0[0]}.mp4`; v.className = 'plainv'; box.append(v); }
+    cv.remove(); box.classList.add('nogl');
+  };
+  let man = null;
   const sec = $('#mission'), box = $('#film'), cv = $('#film-gl'), log = $('#comms');
   const chs = [...sec.querySelectorAll('.ch')], steps = [...sec.querySelectorAll('.steps li')];
-  let man = {}; try { man = await (await fetch('media/manifest.json')).json(); } catch {}
+  try { man = await (await fetch('media/manifest.json')).json(); } catch { man = {}; }
   // chapter -> its shots, in manifest order
   const shotsOf = i => Object.entries(man).filter(([, v]) => v.chapter === i + 1).map(([k, v]) => ({ id: k, ...v }));
   const gl = cv.getContext('webgl2', { antialias: false, alpha: false, preserveDrawingBuffer: false });
-  if (!gl) { box.classList.add('nogl'); return; }
+  // a software GL (no GPU) cannot afford the film pipeline: show the shot plainly instead, so the page stays fast
+  const dbg = gl && gl.getExtension('WEBGL_debug_renderer_info'), ren = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '';
+  if (!gl || /swiftshader|llvmpipe|software|basic render/i.test(ren)) return plain();
   const sh = (ty, s) => { const x = gl.createShader(ty); gl.shaderSource(x, s); gl.compileShader(x); if (!gl.getShaderParameter(x, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(x)); return x; };
   const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS)); gl.linkProgram(pr); gl.useProgram(pr);
   const vb = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, vb); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
@@ -106,7 +114,7 @@ export async function startCinema({ RM }) {
   const say = ([, from, to, text, tone]) => { const li = document.createElement('li'); if (tone) li.className = tone;
     const b = document.createElement('b'); b.textContent = `${from} → ${to}`; const sp = document.createElement('span'); sp.textContent = text; li.append(b, sp); log.append(li);
     while (log.children.length > 3) log.firstElementChild.remove(); };
-  const radio = i => { timers.forEach(clearTimeout); timers = []; log.textContent = ''; (RADIO()[i + 1] || []).forEach(l => timers.push(setTimeout(() => say(l), l[0] * 1000))); };
+  const radio = i => { timers.forEach(clearTimeout); timers = []; log.textContent = ''; window.__hvClick?.(); (RADIO()[i + 1] || []).forEach(l => timers.push(setTimeout(() => say(l), l[0] * 1000))); };
 
   // ---- the tasking console (final chapter)
   const ll = $('#tk-ll'), types = [...sec.querySelectorAll('.tk-type button')], go = $('#tk-go');

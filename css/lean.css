@@ -137,3 +137,14 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 .ch .see{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);color:var(--fg);font-size:15px;max-width:40ch}
 .ch .see span{display:block;font:500 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--g2);margin-bottom:6px}
 @media (max-width:900px){.ch .see{margin-top:8px;padding-top:8px;font-size:14px}}
+
+/* landscape phones (short screens): film and panel side by side, compact type, panel clipped to the screen */
+@media (max-height:520px) and (orientation:landscape){
+  .brief{height:calc(100svh * 6)}
+  .pin{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:none}
+  .panel{border-top:0;border-left:1px solid var(--line);padding:10px 14px;overflow:hidden;grid-template-rows:1fr auto}
+  .ch .tc{margin-bottom:6px}.ch h1,.ch h2{font-size:clamp(18px,4.2vh,26px)}.ch p{font-size:13px;margin-top:6px;max-width:none}
+  .ch .see,.radio{display:none}.ch .go{margin-top:8px}.ch .go .btn{padding:9px 12px;font-size:12px}
+  .task{margin-top:8px;gap:5px}.tk-in{font-size:13px;padding:7px}.tk-type button{padding:7px 4px;font-size:10px}
+  .steps{margin-top:6px}
+}

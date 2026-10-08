@@ -41,7 +41,7 @@ void main(){
   vec2 u = vec2(uv.x, 1. - (uv.y - bar) / max(1. - 2. * bar, 1e-3));
   // edge chromatic aberration
   vec2 d = u - .5; float r2 = dot(d, d);
-  vec3 c = vec3(tap(u + d * r2 * .006).r, tap(u).g, tap(u - d * r2 * .006).b);
+  vec3 c = vec3(tap(u + d * r2 * r2 * .004).r, tap(u).g, tap(u - d * r2 * r2 * .004).b);   // hairline, far edges only
   // highlights: anamorphic horizontal streak + soft bloom (thresholded taps)
   vec3 streak = vec3(0.), bloom = vec3(0.);
   for (int k = -12; k <= 12; k++) { vec3 s = tap(u + vec2(float(k) * .012, 0.)); streak += max(s - .82, 0.) * (1. - abs(float(k)) / 13.); }
@@ -86,7 +86,7 @@ export async function startCinema({ RM }) {
   const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
   for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v);
   let W = 0, H = 0;
-  const fit = () => { const r = box.getBoundingClientRect(), dp = Math.min(devicePixelRatio || 1, 1.5); W = cv.width = Math.round(r.width * dp); H = cv.height = Math.round(r.height * dp); gl.viewport(0, 0, W, H); };
+  const fit = () => { const r = box.getBoundingClientRect(), dp = Math.min(devicePixelRatio || 1, 2); W = cv.width = Math.round(r.width * dp); H = cv.height = Math.round(r.height * dp); gl.viewport(0, 0, W, H); };
   new ResizeObserver(fit).observe(box); fit();
 
   // ---- sources: a slate (2D canvas) until the shot is delivered, then its video
@@ -109,7 +109,7 @@ export async function startCinema({ RM }) {
       const go = () => { vid.currentTime = s.t0 + .05; vid.play().catch(() => {}); };
       vid.readyState >= 1 ? go() : vid.addEventListener('loadedmetadata', go, { once: true }); return; }
     vid.loop = true;
-    if (s && s.ready) { mode = 'video'; const big = s.id === 'shot01_hero' && innerWidth > 1800; vid.src = `media/cine/${s.id}${big ? '-2560' : ''}${av1 ? '-av1' : ''}.mp4`; vid.play().catch(() => {}); }
+    if (s && s.ready) { mode = 'video'; const big = s.big && Math.max(W, H) > 1700; /* sharp screens get the 2560 version when it exists */ vid.src = `media/cine/${s.id}${big ? '-2560' : ''}${av1 ? '-av1' : ''}.mp4`; vid.play().catch(() => {}); }
     else { mode = 'slate'; vid.removeAttribute('src'); vid.load(); drawSlate(s || { id: 'none', slug: '' }); upload(slate, 1920, 804); }
   };
   const upload = (el, w, h) => { gl.bindTexture(gl.TEXTURE_2D, tex); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, el); gl.uniform2f(uSrc, w, h); };

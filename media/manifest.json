@@ -69,7 +69,8 @@
   "textFrame": 24,
   "loop": true,
   "ready": true,
-  "dur": 7
+  "dur": 7,
+  "big": true
  },
  "card_uav": {
   "card": true,
@@ -109,7 +110,8 @@
   "ready": true,
   "dur": 6,
   "fallback": "eyes",
-  "alt": "The Scattrnodes Eyes ground station screen in the field shelter."
+  "alt": "The Scattrnodes Eyes ground station screen in the field shelter.",
+  "big": false
  },
  "live_teaser": {
   "slug": "LIVE \u00b7 Over the shoulder onto the simulation screen \u00b7 50 mm push",

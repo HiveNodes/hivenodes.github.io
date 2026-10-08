@@ -1,0 +1,113 @@
+{
+ "shot01_hero": {
+  "chapter": 1,
+  "slug": "SHOT 01 \u00b7 UAV formation over the ridge, USVs across the lake, UGVs on the shore \u00b7 35-50 mm \u00b7 blue hour",
+  "textFrame": 36,
+  "loop": true,
+  "ready": false,
+  "dur": 20
+ },
+ "shot03_network": {
+  "chapter": 2,
+  "slug": "SHOT 03 \u00b7 All three domains in one frame \u00b7 200 mm from the ridge \u00b7 first sun",
+  "textFrame": 24,
+  "loop": true,
+  "ready": false,
+  "dur": 8
+ },
+ "shot04_gpsdenied": {
+  "chapter": 3,
+  "slug": "SHOT 04 \u00b7 Formation holds through a cloud shadow and a gust \u00b7 air-to-air 50 mm",
+  "textFrame": 12,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "shot05_relay": {
+  "chapter": 4,
+  "slug": "SHOT 05 \u00b7 Four UAVs climb into a relay ring \u00b7 85 mm from the shore \u00b7 backlit",
+  "textFrame": 12,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "shot06_lost": {
+  "chapter": 5,
+  "slug": "SHOT 06 \u00b7 One UAV drops out, another slides into the slot \u00b7 chase 35 mm",
+  "textFrame": 12,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "shot07_search": {
+  "chapter": 6,
+  "slug": "SHOT 07 \u00b7 Fleet splits into search lines over land and water \u00b7 24 mm, nadir to oblique",
+  "textFrame": 24,
+  "loop": true,
+  "ready": false,
+  "dur": 8
+ },
+ "shot08a_thermal": {
+  "chapter": 7,
+  "slug": "SHOT 08 \u00b7 Thermal POV on the UGVs, white-hot \u00b7 UAV gimbal",
+  "textFrame": 12,
+  "loop": true,
+  "ready": false,
+  "dur": 4
+ },
+ "shot02_tasking": {
+  "chapter": 8,
+  "slug": "SHOT 02 \u00b7 The operator types one position and one task \u00b7 100 mm macro",
+  "textFrame": 12,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "shot09_decide": {
+  "chapter": 8,
+  "slug": "SHOT 09 \u00b7 A gloved hand hovers, then approves \u00b7 50 mm push-in",
+  "textFrame": 24,
+  "loop": true,
+  "ready": false,
+  "dur": 8
+ },
+ "card_uav": {
+  "card": true,
+  "slug": "CARD \u00b7 UAV banking low over the lake \u00b7 chase 50 mm",
+  "textFrame": 48,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "card_ugv": {
+  "card": true,
+  "slug": "CARD \u00b7 UGV crossing gravel toward camera \u00b7 35 mm low",
+  "textFrame": 48,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "card_usv": {
+  "card": true,
+  "slug": "CARD \u00b7 USV punching through chop, spray on the lens \u00b7 water level 35 mm",
+  "textFrame": 48,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "card_eyes": {
+  "card": true,
+  "slug": "CARD \u00b7 Scattrnodes Eyes laptop in the shelter \u00b7 50 mm slide",
+  "textFrame": 48,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ },
+ "live_teaser": {
+  "slug": "LIVE \u00b7 Over the shoulder onto the simulation screen \u00b7 50 mm push",
+  "textFrame": 24,
+  "loop": true,
+  "ready": false,
+  "dur": 6
+ }
+}

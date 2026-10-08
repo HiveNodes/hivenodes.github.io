@@ -11,6 +11,9 @@ export async function startShots({ RM }) {
       v.addEventListener('error', () => { if (/-av1\.mp4$/.test(v.src)) v.src = v.src.replace(/-av1\.mp4$/, '.mp4'); });
       el.append(v);
       if (!RM) new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: .3 }).observe(v);
+    } else if (s.fallback) {   // not delivered yet: the current still for this card (a rendered frame, matching the text)
+      const im = document.createElement('img'); im.src = `media/cine/${s.fallback}_800.webp`; im.srcset = `media/cine/${s.fallback}_800.webp 800w, media/cine/${s.fallback}_1600.webp 1600w`;
+      im.sizes = '(max-width:900px) 100vw, 33vw'; im.alt = s.alt || ''; im.loading = 'lazy'; im.width = 800; im.height = 450; el.append(im);
     } else {
       const d = document.createElement('div'); d.className = 'slate';
       const k = document.createElement('span'); k.textContent = 'Footage pending'; const t = document.createElement('p'); t.textContent = s.slug;

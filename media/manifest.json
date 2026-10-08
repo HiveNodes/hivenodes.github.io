@@ -77,7 +77,9 @@
   "textFrame": 48,
   "loop": true,
   "ready": false,
-  "dur": 6
+  "dur": 6,
+  "fallback": "c0812",
+  "alt": "A fixed-wing UAV banks low over a mountain lake, seen from a chase aircraft."
  },
  "card_ugv": {
   "card": true,
@@ -85,7 +87,9 @@
   "textFrame": 48,
   "loop": true,
   "ready": false,
-  "dur": 6
+  "dur": 6,
+  "fallback": "ugv_close",
+  "alt": "A six-wheeled UGV with a sensor mast on the gravel shore of a high-altitude lake."
  },
  "card_usv": {
   "card": true,
@@ -93,7 +97,9 @@
   "textFrame": 48,
   "loop": true,
   "ready": false,
-  "dur": 6
+  "dur": 6,
+  "fallback": "usv_water",
+  "alt": "An unmanned surface vessel with a radar mast on the lake, UGVs on the shore behind it."
  },
  "card_eyes": {
   "card": true,
@@ -101,13 +107,17 @@
   "textFrame": 48,
   "loop": true,
   "ready": false,
-  "dur": 6
+  "dur": 6,
+  "fallback": "eyes",
+  "alt": "The Scattrnodes Eyes ground station screen in the field shelter."
  },
  "live_teaser": {
   "slug": "LIVE \u00b7 Over the shoulder onto the simulation screen \u00b7 50 mm push",
   "textFrame": 24,
   "loop": true,
   "ready": false,
-  "dur": 6
+  "dur": 6,
+  "fallback": "c0613",
+  "alt": "UAVs over the lake."
  }
 }

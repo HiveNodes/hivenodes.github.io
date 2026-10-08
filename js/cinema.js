@@ -104,6 +104,11 @@ export async function startCinema({ RM }) {
   let cur = -1, shot = null, mode = 'slate', fade = 0, fadeTo = 1, shotStart = 0, sub = 0;
   const load = s => {
     shot = s; shotStart = performance.now();
+    if (s && s.film) { mode = 'video'; vid.loop = false; const want = `media/hero-film${av1 ? '-av1' : ''}.mp4`;
+      if (!vid.src.endsWith(want)) vid.src = want;
+      const go = () => { vid.currentTime = s.t0 + .05; vid.play().catch(() => {}); };
+      vid.readyState >= 1 ? go() : vid.addEventListener('loadedmetadata', go, { once: true }); return; }
+    vid.loop = true;
     if (s && s.ready) { mode = 'video'; const big = s.id === 'shot01_hero' && innerWidth > 1800; vid.src = `media/cine/${s.id}${big ? '-2560' : ''}${av1 ? '-av1' : ''}.mp4`; vid.play().catch(() => {}); }
     else { mode = 'slate'; vid.removeAttribute('src'); vid.load(); drawSlate(s || { id: 'none', slug: '' }); upload(slate, 1920, 804); }
   };
@@ -125,9 +130,11 @@ export async function startCinema({ RM }) {
   // ---- scroll -> chapter (and, inside a chapter with two shots, which half)
   const pick = () => {
     const r = sec.getBoundingClientRect(), span = Math.max(1, r.height - innerHeight), u = Math.min(.999, Math.max(0, -r.top / span));
-    const i = Math.floor(u * chs.length), p = u * chs.length - i, list = shotsOf(i), j = list.length > 1 ? Math.min(list.length - 1, Math.floor(p * list.length)) : 0;
+    const i = Math.floor(u * chs.length), p = u * chs.length - i, list = shotsOf(i).filter(x => x.ready), j = list.length > 1 ? Math.min(list.length - 1, Math.floor(p * list.length)) : 0;
     if (i !== cur) { cur = i; chs.forEach((c, k) => c.classList.toggle('on', k === i)); steps.forEach((s, k) => s.classList.toggle('on', k <= i)); radio(i); }
-    const s = list[j] || null; if ((s && s.id) !== (shot && shot.id)) { fadeTo = 0; pending = s; }
+    // a chapter with no delivered shot plays its own segment of the current film, through the same pipeline
+    const s = list[j] || { id: 'film' + i, film: true, t0: +chs[i].dataset.t0, t1: +chs[i].dataset.t1 };
+    if ((s && s.id) !== (shot && shot.id)) { fadeTo = 0; pending = s; }
   };
   let pending = undefined;
   addEventListener('scroll', pick, { passive: true }); addEventListener('resize', pick);
@@ -139,6 +146,7 @@ export async function startCinema({ RM }) {
     if (now - last < 41) return; last = now;
     fade += (fadeTo - fade) * (RM ? 1 : .35);
     if (fadeTo === 0 && fade < .03 && pending !== undefined) { load(pending); pending = undefined; fadeTo = 1; }
+    if (shot && shot.film && vid.currentTime >= shot.t1 - .06) vid.currentTime = shot.t0 + .05;   // loop inside the chapter's segment
     if (mode === 'video' && vid.readyState >= 2) upload(vid, vid.videoWidth, vid.videoHeight);
     const bright = mode === 'video' ? .8 : 0;
     gl.uniform2f(uRes, W, H); gl.uniform1f(uT, now / 1000); gl.uniform1f(uFade, fade); gl.uniform1f(uDirt, bright);
@@ -148,5 +156,5 @@ export async function startCinema({ RM }) {
   new IntersectionObserver(es => vis(es.some(e => e.isIntersecting))).observe(box);
   document.addEventListener('visibilitychange', () => vis(document.visibilityState === 'visible'));
   await document.fonts.ready.catch(() => {});
-  pick(); load(pending ?? shotsOf(0)[0] ?? null); pending = undefined; fadeTo = 1;
+  pick(); if (pending !== undefined) { load(pending); pending = undefined; } fadeTo = 1;
 }

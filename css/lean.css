@@ -35,7 +35,7 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 
 /* the mission briefing: film pinned beside the panel; the section is tall so scrolling steps through 8 chapters */
 .brief{height:calc(100svh * 4.6)}
-.pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(340px,1fr);border-bottom:1px solid var(--line)}
+.pin{position:sticky;top:0;height:100svh;display:grid;grid-template-columns:minmax(0,2.2fr) minmax(340px,1fr);border-bottom:1px solid var(--line)}
 .film{position:relative;overflow:hidden;background:#000 url(../media/hero-poster.jpg) center/cover}
 .film video,.film canvas{position:absolute;inset:0;width:100%;height:100%}
 .film video{object-fit:cover;opacity:0;transition:opacity .45s ease}
@@ -148,3 +148,22 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
   .task{margin-top:8px;gap:5px}.tk-in{font-size:13px;padding:7px}.tk-type button{padding:7px 4px;font-size:10px}
   .steps{margin-top:6px}
 }
+
+#film-gl{position:absolute;inset:0;width:100%;height:100%;display:block;background:#000}
+.film{background:#000}
+/* shot slots: real loops when delivered, slates until then */
+.ph.shot{aspect-ratio:16/9;position:relative;display:block;background:#07090b}
+.ph.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.04) saturate(.92)}
+.slate{position:absolute;inset:0;display:grid;place-content:center;gap:10px;padding:18px;text-align:center;
+  background:radial-gradient(ellipse at 50% 40%,#151a1f,#07090b 75%);overflow:hidden}
+.slate::after{content:"";position:absolute;inset:-50%;opacity:.16;pointer-events:none;
+  background-image:repeating-radial-gradient(circle at 17% 32%,rgba(255,255,255,.5) 0 1px,transparent 1px 3px);animation:grain 1s steps(6) infinite}
+@keyframes grain{to{transform:translate(3%,-2%)}}
+.slate span{font:500 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#4d565c}
+.slate p{font:400 12px/1.5 var(--mono)!important;color:#9aa3a8!important;margin:0 auto!important;max-width:34ch!important}
+@media (prefers-reduced-motion:reduce){.slate::after{animation:none}}
+.snd{background:transparent;border:0;font:500 13px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--g1);padding:6px 0}
+.snd[aria-pressed="true"]{color:var(--fg)}
+@media (max-width:700px){.top li:has(.snd){display:list-item}}
+.film .plainv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.film.nogl{background:radial-gradient(ellipse at 50% 45%,#151a1f,#07090b 75%)}

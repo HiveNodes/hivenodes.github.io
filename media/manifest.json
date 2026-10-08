@@ -68,8 +68,8 @@
   "slug": "SHOT 09 \u00b7 A gloved hand hovers, then approves \u00b7 50 mm push-in",
   "textFrame": 24,
   "loop": true,
-  "ready": false,
-  "dur": 8
+  "ready": true,
+  "dur": 7
  },
  "card_uav": {
   "card": true,
@@ -106,7 +106,7 @@
   "slug": "CARD \u00b7 Scattrnodes Eyes laptop in the shelter \u00b7 50 mm slide",
   "textFrame": 48,
   "loop": true,
-  "ready": false,
+  "ready": true,
   "dur": 6,
   "fallback": "eyes",
   "alt": "The Scattrnodes Eyes ground station screen in the field shelter."

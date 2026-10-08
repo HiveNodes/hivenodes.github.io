@@ -151,3 +151,14 @@ h3{font-size:clamp(18px,1.5vw,22px);letter-spacing:.01em;line-height:1.15}
 
 #film-gl{position:absolute;inset:0;width:100%;height:100%;display:block;background:#000}
 .film{background:#000}
+/* shot slots: real loops when delivered, slates until then */
+.ph.shot{aspect-ratio:16/9;position:relative;display:block;background:#07090b}
+.ph.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.04) saturate(.92)}
+.slate{position:absolute;inset:0;display:grid;place-content:center;gap:10px;padding:18px;text-align:center;
+  background:radial-gradient(ellipse at 50% 40%,#151a1f,#07090b 75%);overflow:hidden}
+.slate::after{content:"";position:absolute;inset:-50%;opacity:.16;pointer-events:none;
+  background-image:repeating-radial-gradient(circle at 17% 32%,rgba(255,255,255,.5) 0 1px,transparent 1px 3px);animation:grain 1s steps(6) infinite}
+@keyframes grain{to{transform:translate(3%,-2%)}}
+.slate span{font:500 10px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:#4d565c}
+.slate p{font:400 12px/1.5 var(--mono)!important;color:#9aa3a8!important;margin:0 auto!important;max-width:34ch!important}
+@media (prefers-reduced-motion:reduce){.slate::after{animation:none}}

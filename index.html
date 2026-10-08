@@ -30,7 +30,6 @@
 <link rel="icon" href="brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" sizes="180x180" href="brand/apple-touch-icon-180.png">
 <link rel="preload" href="fonts/HostGrotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" as="image" href="media/hero-poster.jpg">
 <link rel="stylesheet" href="css/lean.css">
 <script type="module" src="js/lean.js"></script>
 </head>
@@ -89,15 +88,15 @@
     <p class="kick">System</p>
     <h2 id="sy">One autonomy layer. Three domains.</h2>
     <ul class="cards">
-      <li><div class="ph"><img src="media/cine/c0812_800.webp" srcset="media/cine/c0812_800.webp 800w, media/cine/c0812_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A fixed-wing UAV banks low over a mountain lake, seen from a chase aircraft." width="800" height="450" loading="lazy"></div>
+      <li><div class="ph shot" data-shot="card_uav" role="img" aria-label="UAV banking low over the lake"></div>
         <p class="tag ok">Flown in simulation</p><h3>UAV · fixed-wing</h3><p>Formation around a ghost leader, navigation without GPS, relay when the radio fails.</p></li>
-      <li><div class="ph"><img src="media/cine/ugv_close_800.webp" srcset="media/cine/ugv_close_800.webp 800w, media/cine/ugv_close_1600.webp 1600w" sizes="(max-width:900px) 100vw, 33vw" alt="A six-wheeled UGV with a sensor mast drives across the gravel shore of a high-altitude lake, headlights on." width="800" height="450" loading="lazy"></div>
+      <li><div class="ph shot" data-shot="card_ugv" role="img" aria-label="UGV crossing gravel on the shore"></div>
         <p class="tag">In development</p><h3>UGV</h3><p>Ground teams on the same plan, watched and guided from above.</p></li>
-      <li><div class="ph none" aria-hidden="true"><span>USV footage in production</span></div>
+      <li><div class="ph shot" data-shot="card_usv" role="img" aria-label="USV running through chop on the lake"></div>
         <p class="tag">In development</p><h3>USV</h3><p>Lake and coastal water covered by the same mission.</p></li>
     </ul>
     <div class="eyes">
-      <div class="ph"><img src="media/cine/eyes_800.webp" srcset="media/cine/eyes_800.webp 800w, media/cine/eyes_1600.webp 1600w" sizes="(max-width:900px) 100vw, 50vw" alt="The Scattrnodes Eyes ground station on a laptop in a dark shelter, showing the fleet and a plan awaiting approval." width="800" height="450" loading="lazy"></div>
+      <div class="ph shot" data-shot="card_eyes" role="img" aria-label="The Scattrnodes Eyes ground station in the field shelter"></div>
       <div><p class="kick">Scattrnodes Eyes</p><h3>The operator stays in command.</h3><p>One screen for the whole fleet. The system proposes, a person approves every decision that matters.</p></div>
     </div>
   </div>
@@ -168,7 +167,7 @@
       <p>Our real software, running in your browser. Jam the GPS, cut the radio, and watch the fleet adapt.</p>
       <a class="btn" href="simulation/">Open the simulation</a>
     </div>
-    <a class="ph" href="simulation/" tabindex="-1" aria-hidden="true"><img src="media/cine/c0613_800.webp" srcset="media/cine/c0613_800.webp 800w, media/cine/c0613_1600.webp 1600w" sizes="(max-width:900px) 100vw, 55vw" alt="" width="800" height="450" loading="lazy"></a>
+    <a class="ph shot" href="simulation/" tabindex="-1" aria-hidden="true" data-shot="live_teaser"></a>
   </div>
 </section>
 
